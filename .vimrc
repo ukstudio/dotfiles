@@ -99,9 +99,9 @@ autocmd BufNewFile,BufRead *_spec.rb nnoremap ,sp :<C-u>!spec %<CR>
 
 "Scheme
 autocmd BufnewFile,BufRead *.scm nnoremap ,r :<C-u>!gosh -i < %<CR>
-autocmd BufnewFile,BufRead *.scm inoremap <expr> = smartchr#one_of('=')
-autocmd BufnewFile,BufRead *.scm inoremap <expr> - smartchr#one_of('-')
-autocmd BufnewFile,BufRead *.scm inoremap <expr> + smartchr#one_of('+')
+autocmd BufnewFile,BufRead *.scm inoremap <buffer> = = 
+autocmd BufnewFile,BufRead *.scm inoremap <buffer> + + 
+autocmd BufnewFile,BufRead *.scm inoremap <buffer> - - 
 
 "PHP
 autocmd BufWritePost *.php :!php -l %

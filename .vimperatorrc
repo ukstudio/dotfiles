@@ -1,0 +1,97 @@
+" テキストボックスにフォーカスしない
+set focuscontent
+
+" エラーコンソール出力レベル
+set verbose=9
+
+" 新規タブを開いた際にアクティブにする機能
+set activate=homepage,quickmark,tabopen,paste
+
+"補完
+set wildoptions=auto
+set complete=l
+
+" ブラウザタイトルの変更
+set titlestring=Firefox
+
+" ブックマークツールバー表示
+set go=b
+
+" 上のディレクトリに移動
+map <BS> gu
+map <C-BS> gU
+
+" j/k でのスクロール幅を1行から3行に変更
+map j 3<C-e>
+map k 3<C-y>
+
+" J/K をC-d/u互換に
+map J <C-d>
+map K <C-u>
+
+" h/l, Left/Right でタブ移動
+map h gT
+map l gt
+map <Left>  gT
+map <Right> gt
+
+" C-h/l, S-Left/Right でタブ位置変更
+map <C-h> :tabmove! -1<CR>
+map <C-l> :tabmove! +1<CR>
+map <S-Left> :tabmove! -1<CR>
+map <S-Right> :tabmove! +1<CR>
+
+" i でvimperatorを無効化
+map i <C-z>
+
+" I でcaret modeを有効化
+map I <insert>
+
+" ex modeでC-jを無効化
+cmap <C-j> <Nop>
+
+" ex modeでUp/DownをTab/S-Tab互換に
+cmap <Down> <Tab>
+cmap <Up> <S-Tab>
+
+" ! でページのCSSをon/off
+map ! :set invum<CR>
+
+" hatenabookmark_show.js
+" はてなブックマークのコメントを表示
+map b :hbinfo<CR>
+
+" direct_hb.js
+" はてなブックマークにポスト
+map a :hb<CR>
+map A :hb<space>
+
+" ldrize_cooperation.js
+" on/off
+map ,l :toggleldrc<CR>
+
+" ステータスバーにfeedボタンを表示
+" http://d.hatena.ne.jp/teramako/20071205/p1
+:javascript <<EOM
+(function(){
+ var feedPanel = document.createElement('statusbarpanel');
+ var feedButton = document.getElementById('feed-button');
+ feedPanel.setAttribute('id','feed-panel-clone');
+ feedPanel.appendChild(feedButton.cloneNode(true));
+ feedButton.parentNode.removeChild(feedButton);
+ document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
+ })();
+EOM
+
+" C-r でブラウザ再起動
+map <C-r> :restart<CR>
+
+" 設定ファイルを再読み込み
+map ,r :so .vimperatorrc<CR>
+map ,R :mapc<CR>:cmapc<CR>:imapc<CR>:so .vimperatorrc<CR> "一部pluginが動作しなくなる
+
+" hint_migemo
+set hintmatching=custom
+
+" 読み込んだ事を出力
+echo ".vimperatorrc sourced"
