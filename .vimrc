@@ -50,8 +50,10 @@ nnoremap wj <C-w>j
 nnoremap wk <C-w>k
 nnoremap wl <C-w>l
 
-inoremap { {}<LEFT>
-inoremap ( ()<LEFT>
+nnoremap tn :<C-u>tabnew<Cr>
+nnoremap th :<C-u>tabprev<Cr>
+nnoremap tl :<C-u>tabnext<Cr>
+nnoremap tc :<C-u>tabclose<Cr>
 
 "Plugin " {{{1
 " rails.vim
