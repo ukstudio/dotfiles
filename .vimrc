@@ -50,10 +50,16 @@ nnoremap wj <C-w>j
 nnoremap wk <C-w>k
 nnoremap wl <C-w>l
 
+"Tab操作
 nnoremap tn :<C-u>tabnew<Cr>
 nnoremap th :<C-u>tabprev<Cr>
 nnoremap tl :<C-u>tabnext<Cr>
 nnoremap tc :<C-u>tabclose<Cr>
+
+"set FileType
+nnoremap <Space>ftp :<C-u>set filetype=php<Cr>
+nnoremap <Space>ftr :<C-u>set filetype=ruby<Cr>
+nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 
 "Plugin " {{{1
 " rails.vim
