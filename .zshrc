@@ -2,7 +2,7 @@ export TERM=xterm-256color
 export LSCOLORS=cxfxcxdxbxegedabagacad
 
 
-alias gosh='rlwrap gosh'
+#alias gosh='rlwrap gosh'
 alias ls="ls -G"
 alias spec="spec -fs -c"
 alias v='vim'
