@@ -114,7 +114,7 @@ autocmd BufnewFile,BufRead *.scm inoremap <buffer> - -
 autocmd FileType scheme :let is_gauche=1
 
 "PHP
-autocmd BufWritePost *.php :!php -l %
+"autocmd BufWritePost *.php :!php -l %
 autocmd BufnewFile,BufRead *.php nnoremap ,r :<C-u>!php %<CR>
 
 "Haskell
