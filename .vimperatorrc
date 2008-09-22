@@ -61,10 +61,11 @@ map ! :set invum<CR>
 " はてなブックマークのコメントを表示
 map b :hbinfo<CR>
 
-" direct_hb.js
+" direct_bookmark.js
 " はてなブックマークにポスト
-map a :hb<CR>
-map A :hb<space>
+let g:direct_sbm_use_services_by_tag = "h"
+let g:direct_sbm_use_services_by_post = "h"
+map A :sbm<space>
 
 " ldrize_cooperation.js
 " on/off
