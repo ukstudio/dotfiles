@@ -96,3 +96,8 @@ set hintmatching=custom
 
 " 読み込んだ事を出力
 echo ".vimperatorrc sourced"
+
+" エンコーディング変更
+map ,j :<C-u>set fileencoding=shift_jis<Cr>
+map ,e :<C-u>set fileencoding=euc-jp<Cr>
+map ,u :<C-u>set fileencoding=utf-8<Cr>
