@@ -19,9 +19,14 @@ set nu
 set cursorline
 set ruler
 
+set wildmenu    "補完候補の一覧を表示
 set smartindent
 set hlsearch
 set laststatus=2 
+
+"オートインデントの空白文字を<BS>で削除
+"前の行の改行文字を<BS>で削除し連結
+"最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
 "<TAB>でOmni補完
@@ -43,6 +48,10 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 "Key Mapping " {{{1
 nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
+
+"行移動
+nnoremap j gj
+nnoremap k gk
 
 "window操作
 nnoremap wh <C-w>h

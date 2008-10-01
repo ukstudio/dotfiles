@@ -6,6 +6,7 @@ export LSCOLORS=cxfxcxdxbxegedabagacad
 alias ls="ls -G"
 alias spec="spec -fs -c"
 alias v='vim'
+alias mysql='mysql5'
 
 export PATH=/opt/local/ghc/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
