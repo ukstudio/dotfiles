@@ -103,16 +103,25 @@ inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
 inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
 " dictionary
-autocmd FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
+autocmd! FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
 
 " template
-autocmd BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
+autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 
 "Programming {{{1
+
 "Ruby
-autocmd BufWritePost *.rb :!ruby -c %
+autocmd! BufWritePost *.rb :!ruby -c %
 autocmd BufNewFile,BufRead *.rb nnoremap ,r :<C-u>!ruby %<CR>
 autocmd BufNewFile,BufRead *_spec.rb nnoremap ,sp :<C-u>!spec %<CR>
+
+autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> = =
+autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> + +
+autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> - -
+
+autocmd BufnewFile,BufRead *.erb inoremap <buffer> = =
+autocmd BufnewFile,BufRead *.erb inoremap <buffer> + +
+autocmd BufnewFile,BufRead *.erb inoremap <buffer> - -
 
 "Scheme
 autocmd BufnewFile,BufRead *.scm nnoremap ,r :<C-u>!gosh -i < %<CR>
@@ -123,7 +132,7 @@ autocmd BufnewFile,BufRead *.scm inoremap <buffer> - -
 autocmd FileType scheme :let is_gauche=1
 
 "PHP
-"autocmd BufWritePost *.php :!php -l %
+"autocmd! BufWritePost *.php :!php -l %
 autocmd BufnewFile,BufRead *.php nnoremap ,r :<C-u>!php %<CR>
 
 "Haskell
