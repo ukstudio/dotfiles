@@ -24,6 +24,8 @@ set smartindent
 set hlsearch
 set laststatus=2 
 
+set noswapfile
+
 "オートインデントの空白文字を<BS>で削除
 "前の行の改行文字を<BS>で削除し連結
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
