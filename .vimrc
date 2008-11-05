@@ -47,6 +47,11 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
+"changelog
+autocmd BufNewFile,BufRead *.changelog set filetype=changelog
+let g:changelog_timeformat = "%Y-%m-%d"
+let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
+
 "Key Mapping " {{{1
 nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
