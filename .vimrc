@@ -57,8 +57,8 @@ nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
 
 "行移動
-nnoremap j gj
-nnoremap k gk
+nnoremap j gjzz
+nnoremap k gkzz
 
 "window操作
 nnoremap wh <C-w>h
