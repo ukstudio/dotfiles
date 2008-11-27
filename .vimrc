@@ -115,6 +115,9 @@ autocmd! FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 
+" outputz
+let g:outputz_secret_key = 'D05fvoJPQiLV'
+
 "Programming {{{1
 
 "Ruby
