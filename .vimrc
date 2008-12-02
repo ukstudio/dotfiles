@@ -52,6 +52,10 @@ autocmd BufNewFile,BufRead *.changelog set filetype=changelog
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
 
+
+"Syntax " {{{1
+autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
+
 "Key Mapping " {{{1
 nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
