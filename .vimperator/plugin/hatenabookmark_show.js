@@ -28,7 +28,7 @@
         showString += "</dl></div>";
         liberator.commandline.echo(showString, liberator.commandline.HL_NORMAL, liberator.commandline.FORCE_MULTILINE);
     }
-    liberator.commands.addUserCommand(["hbinfo"], "show hatena bookmark comments",
+    liberator.modules.commands.addUserCommand(["hbinfo"], "show hatena bookmark comments",
         function(arg,special){
             var clipboard = readFromClipboard();
             if(special)

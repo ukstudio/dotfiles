@@ -1,5 +1,5 @@
 // Vimperator plugin: "Update Twitter"
-// Last Change: 20-Jun-2008. Jan 2008
+// Last Change: 11-Nov-2008. Jan 2008
 // License: Creative Commons
 // Maintainer: Trapezoid <trapezoid.g@gmail.com> - http://unsigned.g.hatena.ne.jp/Trapezoid
 //
@@ -96,11 +96,11 @@
         //xhr.open("POST", "http://twitter.com/statuses/user_timeline/otsune.json", false, username, password);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(null);
-        var statuses = evalFunc(xhr.responseText);
+        var statuses = evalFunc(xhr.responseText) || [];
 
         var html = <style type="text/css"><![CDATA[
             span.twitter.entry-content a { text-decoration: none; }
-            img.twitter.photo { border; 0px; width: 16px; height: 16px; vertical-align: baseline; }
+            img.twitter.photo { border; 0px; width: 16px; height: 16px; vertical-align: baseline; margin: 1px; }
         ]]></style>.toSource()
                    .replace(/(?:\r?\n|\r)[ \t]*/g, " ") +
             statuses.map(function(status)
@@ -110,9 +110,9 @@
                          title={status.user.screen_name}
                          class="twitter photo"/>
                     <strong>{status.user.name}&#x202C;</strong>
+                    : <span class="twitter entry-content">{status.text}</span>
                 </>.toSource()
-                   .replace(/(?:\r?\n|\r)[ \t]*/g, " ") +
-                    sprintf(': <span class="twitter entry-content">%s&#x202C;</span>', status.text))
+                   .replace(/(?:\r?\n|\r)[ \t]*/g, " "))
                         .join("<br/>");
 
         //liberator.log(html);
@@ -137,7 +137,7 @@
                 .replace(/(?:\r?\n|\r)[ \t]*/g, " ");
         liberator.echo(html, true);
     }
-    liberator.commands.addUserCommand(["twitter"], "Change Twitter status",
+    liberator.modules.commands.addUserCommand(["twitter"], "Change Twitter status",
         function(arg, special){
             var password;
             var username;
@@ -152,8 +152,8 @@
                 liberator.echoerr(ex);
             }
 
-            arg = arg.replace(/%URL%/g, liberator.buffer.URL)
-                .replace(/%TITLE%/g, liberator.buffer.title);
+            arg = arg.string.replace(/%URL%/g, liberator.modules.buffer.URL)
+                .replace(/%TITLE%/g, liberator.modules.buffer.title);
 
             if (special && arg.match(/^\?\s*(.*)/))
                 showTwitterSearchResult(RegExp.$1)
@@ -171,7 +171,9 @@
                 showFollowersStatus(username, password, arg)
             else
                 sayTwitter(username, password, arg);
-        },
-    { });
+        },{
+            bang: true
+        }
+    );
 })();
 // vim:sw=4 ts=4 et:

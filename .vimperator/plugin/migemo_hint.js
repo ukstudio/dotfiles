@@ -1,5 +1,5 @@
 // Vimperator plugin: 'Hint Matching with XUL/Migemo'
-// Last Change: 16-Jun-2008. Jan 2008
+// Last Change: 29-Oct-2008. Jan 2008
 // License: Creative Commons
 // Maintainer: Trapezoid <trapezoid.g@gmail.com> - http://unsigned.g.hatena.ne.jp/Trapezoid
 // Require: XUL/Migemo extension - https://addons.mozilla.org/ja/firefox/addon/5239
