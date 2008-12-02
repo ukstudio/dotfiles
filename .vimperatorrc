@@ -98,6 +98,7 @@ map ,e :<C-u>set fileencoding=euc-jp<Cr>
 map ,u :<C-u>set fileencoding=utf-8<Cr>
 
 "twitter
-map ,t :<C-u>twitter<Space>
+map ,tw :<C-u>twitter<Space>
+map ,tl :<C-u>twitter!<CR>
 map ,T :<C-u>twitter!<Space>
 map ,@ :<C-u>twitter!@<CR>
