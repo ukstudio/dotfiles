@@ -82,7 +82,7 @@ function completion(array, filter){
 }
 var sbCharDefault = sbService.createBundle(gPrefService.getDefaultBranch('intl.charset.').getCharPref('default'));
 const DEFAULT_CHARSET = sbCharDefault.GetStringFromName('intl.charset.default');
-liberator.options.add(['fileencoding','fenc'],'set the charactor encoding for the current page','string', DEFAULT_CHARSET,
+liberator.modules.options.add(['fileencoding','fenc'],'set the charactor encoding for the current page','string', DEFAULT_CHARSET,
     {
         setter: function(value){
             if (!value) return;
@@ -100,7 +100,7 @@ liberator.options.add(['fileencoding','fenc'],'set the charactor encoding for th
 );
 var sbCharDetector = sbService.createBundle(gPrefService.getDefaultBranch('intl.charset.').getCharPref('detector'));
 const DEFAULT_DETECTOR = createDetector(sbCharDetector.GetStringFromName('intl.charset.detector'))[0];
-liberator.options.add(['autodetector','audet'],'set auto detect character encoding','string',DEFAULT_DETECTOR,
+liberator.modules.options.add(['autodetector','audet'],'set auto detect character encoding','string',DEFAULT_DETECTOR,
     {
         setter: function(value){
             var pref = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch);
@@ -146,7 +146,7 @@ function listCharset(arg, current, list){
     str.push('</table>');
     liberator.echo( str.join(''), true);
 }
-liberator.commands.addUserCommand(['listencoding','lsenc'],'list all encodings',
+liberator.modules.commands.addUserCommand(['listencoding','lsenc'],'list all encodings',
     function(arg){
         listCharset(arg, liberator.options.fileencoding, encodings);
     },{
@@ -154,7 +154,7 @@ liberator.commands.addUserCommand(['listencoding','lsenc'],'list all encodings',
             [0,completion(encodings, filter)]
     }
 );
-liberator.commands.addUserCommand(['listdetector','lsdet'],'list all auto detectors',
+liberator.modules.commands.addUserCommand(['listdetector','lsdet'],'list all auto detectors',
     function(arg){
         listCharset(arg, liberator.options.autodetector, detectors);
     },{
