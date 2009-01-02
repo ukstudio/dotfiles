@@ -23,7 +23,7 @@
 " }}}
 " Interface  "{{{1
 function! outputz#default_uri_function()  "{{{2
-  return 'vim://filetype.' . &l:filetype
+  return 'vim://' . &l:filetype
 endfunction
 
 
