@@ -8,7 +8,9 @@ alias spec="spec -fs -c"
 alias v='vim'
 alias mysql='mysql5'
 
-export PATH=/opt/local/ghc/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
+export JRUBY_HOME=/usr/local/bin/jruby-1.1.5 #jruby
+
+export PATH=opt/local/ghc/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/$JRUBY_HOME/bin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
 
 # 履歴の設定
@@ -36,3 +38,4 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
+
