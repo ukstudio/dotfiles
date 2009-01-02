@@ -118,6 +118,7 @@ autocmd! FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~
 
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
+autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
 " outputz
 let g:outputz_secret_key = 'D05fvoJPQiLV'
@@ -153,6 +154,7 @@ autocmd BufnewFile,BufRead *.php nnoremap ,r :<C-u>!php %<CR>
 autocmd BufNewFile,BufRead *.hs nnoremap ,r :<C-u>!runghc %<CR>
 autocmd BufnewFile,BufRead *.hs inoremap <expr> - smartchr#one_of('->', '-')
 autocmd BufnewFile,BufRead *.hs inoremap <expr> $ smartchr#one_of(' $ ', '$')
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
