@@ -82,14 +82,6 @@ nnoremap <Space>ftr :<C-u>set filetype=ruby<Cr>
 nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 
 "Plugin " {{{1
-" rails.vim
-let g:rails_level=4
-let g:rails_default_file="app/controllers/application.rb"
-
-" rubycomplete.vim
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-let g:rubycomplete_classes_in_global = 1
 
 " autocomplpop.vim
 let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k'
@@ -107,53 +99,12 @@ let g:AutoComplPop_BehaviorCssOmniValueLength = 1
 " fuzzyfinder.vim
 nmap bg :FuzzyFinderBuffer<CR>
 
-" smartchr.vim
-inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
-inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
-inoremap <expr> ! smartchr#one_of('!',   ' != ')
-
-" dictionary
-autocmd! FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
-
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
 " outputz
 let g:outputz_secret_key = 'D05fvoJPQiLV'
-
-"Programming {{{1
-
-"Ruby
-autocmd! BufWritePost *.rb :!ruby -c %
-autocmd BufNewFile,BufRead *.rb nnoremap ,r :<C-u>!ruby %<CR>
-autocmd BufNewFile,BufRead *_spec.rb nnoremap ,sp :<C-u>!spec %<CR>
-
-autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> = =
-autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> + +
-autocmd BufnewFile,BufRead *.rhtml inoremap <buffer> - -
-
-autocmd BufnewFile,BufRead *.erb inoremap <buffer> = =
-autocmd BufnewFile,BufRead *.erb inoremap <buffer> + +
-autocmd BufnewFile,BufRead *.erb inoremap <buffer> - -
-
-"Scheme
-autocmd BufnewFile,BufRead *.scm nnoremap ,r :<C-u>!gosh -i < %<CR>
-autocmd BufnewFile,BufRead *.scm inoremap <buffer> = =
-autocmd BufnewFile,BufRead *.scm inoremap <buffer> + +
-autocmd BufnewFile,BufRead *.scm inoremap <buffer> - -
-
-autocmd FileType scheme :let is_gauche=1
-
-"PHP
-"autocmd! BufWritePost *.php :!php -l %
-autocmd BufnewFile,BufRead *.php nnoremap ,r :<C-u>!php %<CR>
-
-"Haskell
-autocmd BufNewFile,BufRead *.hs nnoremap ,r :<C-u>!runghc %<CR>
-autocmd BufnewFile,BufRead *.hs inoremap <expr> - smartchr#one_of('->', '-')
-autocmd BufnewFile,BufRead *.hs inoremap <expr> $ smartchr#one_of(' $ ', '$')
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
