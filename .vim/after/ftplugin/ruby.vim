@@ -14,5 +14,5 @@ inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
 inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
 autocmd! BufWritePost *.rb :!ruby -c %
-autocmd BufNewFile,BufRead *.rb nnoremap ,r :<C-u>!ruby %<CR>
+autocmd! BufNewFile,BufRead *.rb nnoremap ,r :<C-u>!ruby %<CR>
 autocmd BufNewFile,BufRead *_spec.rb nnoremap ,sp :<C-u>!spec %<CR>
