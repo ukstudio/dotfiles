@@ -97,7 +97,9 @@ let g:AutoComplPop_BehaviorCssOmniPropertyLength = 1
 let g:AutoComplPop_BehaviorCssOmniValueLength = 1
 
 " fuzzyfinder.vim
-nmap bg :FuzzyFinderBuffer<CR>
+nmap fb :FuzzyFinderBuffer<CR>
+nmap ff :FuzzyFinderFile<CR>
+nmap fm :FuzzyFinderMruFile<CR>
 
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
