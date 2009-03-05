@@ -16,3 +16,9 @@ inoremap <expr> ! smartchr#one_of('!',   ' != ')
 autocmd! BufWritePost *.rb :!ruby -c %
 autocmd! BufNewFile,BufRead *.rb nnoremap ,r :<C-u>!ruby %<CR>
 autocmd BufNewFile,BufRead *_spec.rb nnoremap ,sp :<C-u>!spec %<CR>
+
+" xmpfilter
+noremap <silent> <Space>xa :!xmpfilter -a<CR>
+nmap    <silent> <Space>xa V<Space>xa
+noremap <silent> <Space>xm :!xmpfilter -m<CR>
+nmap    <silent> <Space>xm V<space>xm

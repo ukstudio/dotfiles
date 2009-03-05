@@ -105,9 +105,6 @@ nmap fm :FuzzyFinderMruFile<CR>
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
-" outputz
-let g:outputz_secret_key = 'D05fvoJPQiLV'
-
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
