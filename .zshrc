@@ -1,6 +1,6 @@
 export TERM=xterm-256color
 export LSCOLORS=cxfxcxdxbxegedabagacad
-
+export SVN_EDITOR=vim
 
 #alias gosh='rlwrap gosh'
 alias ls="ls -G"
