@@ -16,8 +16,8 @@ export MANPATH=/opt/local/man:$MANPATH
 
 # 履歴の設定
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
@@ -43,3 +43,7 @@ bindkey "^N" history-beginning-search-forward-end
 preexec () {
   [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
 }
+
+#コマンドラインバッファスタックをvimモードで
+setopt noflowcontrol
+bindkey '^Q' push-line-or-edit
