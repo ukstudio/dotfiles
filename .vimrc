@@ -76,6 +76,12 @@ nnoremap th :<C-u>tabprev<Cr>
 nnoremap tl :<C-u>tabnext<Cr>
 nnoremap tc :<C-u>tabclose<Cr>
 
+"Windowサイズ
+nnoremap + 2<C-w>+
+nnoremap - 2<C-w>-
+nnoremap { 2<C-w><
+nnoremap } 2<C-w>>
+
 "set FileType
 nnoremap <Space>ftp :<C-u>set filetype=php<Cr>
 nnoremap <Space>ftr :<C-u>set filetype=ruby<Cr>
