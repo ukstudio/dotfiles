@@ -47,6 +47,12 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
+"カレント行の文字数
+function CurrentLineLength()
+	let len = strlen(getline("."))
+	return len
+endfunction
+
 "changelog
 autocmd BufNewFile,BufRead *.changelog set filetype=changelog
 let g:changelog_timeformat = "%Y-%m-%d"
@@ -57,6 +63,8 @@ let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
 "Key Mapping " {{{1
+
+" write/quit
 nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
 
@@ -77,15 +85,19 @@ nnoremap tl :<C-u>tabnext<Cr>
 nnoremap tc :<C-u>tabclose<Cr>
 
 "Windowサイズ
-nnoremap + 2<C-w>+
-nnoremap - 2<C-w>-
-nnoremap { 2<C-w><
-nnoremap } 2<C-w>>
+nnoremap + 4<C-w>+
+nnoremap - 4<C-w>-
+nnoremap { 4<C-w><
+nnoremap } 4<C-w>>
 
 "set FileType
+"phpとhtmlのsyntax color切り替え用
 nnoremap <Space>ftp :<C-u>set filetype=php<Cr>
 nnoremap <Space>ftr :<C-u>set filetype=ruby<Cr>
 nnoremap <Space>fth :<C-u>set filetype=html<Cr>
+
+"行頭からの補完
+inoremap <C-l> <C-x><C-l>
 
 "Plugin " {{{1
 
