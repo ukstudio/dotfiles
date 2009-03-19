@@ -31,6 +31,7 @@ set noswapfile
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
+
 "<TAB>でOmni補完
 function! InsertTabWrapper()
   if pumvisible()
@@ -99,6 +100,7 @@ nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 "行頭からの補完
 inoremap <C-l> <C-x><C-l>
 
+
 "Plugin " {{{1
 
 " autocomplpop.vim
@@ -122,6 +124,9 @@ nmap fm :FuzzyFinderMruFile<CR>
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
+
+" snippetsEmu
+let g:snippetsEmu_key = "<C-B>"
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
