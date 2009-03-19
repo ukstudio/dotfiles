@@ -46,7 +46,7 @@ function! InsertTabWrapper()
     return "\<c-x>\<c-o>"
   endif
 endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <c-o> <c-r>=InsertTabWrapper()<cr>
 
 "カレント行の文字数
 function CurrentLineLength()
@@ -124,9 +124,6 @@ nmap fm :FuzzyFinderMruFile<CR>
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
-
-" snippetsEmu
-let g:snippetsEmu_key = "<C-B>"
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>

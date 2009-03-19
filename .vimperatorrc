@@ -102,3 +102,10 @@ map ,tw :<C-u>twitter<Space>
 map ,tl :<C-u>twitter!<CR>
 map ,T :<C-u>twitter!<Space>
 map ,@ :<C-u>twitter!@<CR>
+
+http://vimperator.g.hatena.ne.jp/retlet/20090223/1235415599
+style -name tab-text-shadow-fix chrome://* <<EOM
+.tab-text-shadow {
+  display: none !important;
+}
+EOM
