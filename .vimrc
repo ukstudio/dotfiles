@@ -49,7 +49,7 @@ endfunction
 inoremap <c-o> <c-r>=InsertTabWrapper()<cr>
 
 "カレント行の文字数
-function CurrentLineLength()
+function! CurrentLineLength()
 	let len = strlen(getline("."))
 	return len
 endfunction
@@ -121,10 +121,18 @@ nmap fb :FuzzyFinderBuffer<CR>
 nmap ff :FuzzyFinderFile<CR>
 nmap fm :FuzzyFinderMruFile<CR>
 
+" neocomplcache.vim
+let g:NeoComplCache_EnableAtStartup = 1
+" Don't use autocomplpop.
+let g:AutoComplPop_NotEnableAtStartup = 1
+" Use neocomplcache.
+let g:NeoComplCache_EnableAtStartup = 1 
+
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
 "editing .vimrc " {{{1
+"
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
