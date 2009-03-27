@@ -31,23 +31,6 @@ set noswapfile
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
-
-"<TAB>でOmni補完
-function! InsertTabWrapper()
-  if pumvisible()
-    return "\<c-n>"
-  endif
-  let col = col('.') - 1
-  if !col || getline('.')[col -1] !~ '\k\|<\|/'
-    return "\<tab>"
-  elseif exists('&omnifunc') && &omnifunc == ''
-    return "\<c-n>"
-  else
-    return "\<c-x>\<c-o>"
-  endif
-endfunction
-inoremap <c-o> <c-r>=InsertTabWrapper()<cr>
-
 "カレント行の文字数
 function! CurrentLineLength()
 	let len = strlen(getline("."))
@@ -122,11 +105,13 @@ nmap ff :FuzzyFinderFile<CR>
 nmap fm :FuzzyFinderMruFile<CR>
 
 " neocomplcache.vim
-let g:NeoComplCache_EnableAtStartup = 1
 " Don't use autocomplpop.
 let g:AutoComplPop_NotEnableAtStartup = 1
 " Use neocomplcache.
 let g:NeoComplCache_EnableAtStartup = 1 
+
+" <TAB> completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
