@@ -9,6 +9,7 @@ alias spec="spec -fs -c"
 alias v='vim'
 alias mysql='mysql5'
 #alias ruby='ruby1.9'
+alias :q='exit'
 
 export JRUBY_HOME=/usr/local/bin/jruby-1.1.5 #jruby
 
