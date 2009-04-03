@@ -37,11 +37,6 @@ function! CurrentLineLength()
 	return len
 endfunction
 
-"changelog
-autocmd BufNewFile,BufRead *.changelog set filetype=changelog
-let g:changelog_timeformat = "%Y-%m-%d"
-let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
-
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
@@ -83,6 +78,46 @@ nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 "行頭からの補完
 inoremap <C-l> <C-x><C-l>
 
+" autocmd "{{{1
+augroup MyAutoCmd
+  autocmd!
+augroup end
+
+autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
+autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
+autocmd MyAutoCmd FileType php  call s:set_filetype_php()
+autocmd MyAutoCmd FileType changelog call s:set_filetype_changelog()
+
+autocmd BufNewFile,BufRead *.changelog set filetype=changelog
+
+function! s:set_filetype_ruby()
+  " rails.vim
+  let g:rails_level=4
+  let g:rails_default_file="app/controllers/application.rb"
+
+  " rubycomplete.vim
+  let g:rubycomplete_buffer_loading = 1
+  let g:rubycomplete_rails = 1
+  let g:rubycomplete_classes_in_global = 1
+
+  " smartchr.vim
+  inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+  inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
+  inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
+  inoremap <expr> ! smartchr#one_of('!',   ' != ')
+
+  autocmd! BufWritePost *.rb :!ruby -c %
+  nmap ,r :<C-u>!ruby %<CR>
+endfunction
+
+function! s:set_filetype_php()
+  nmap ,r :<C-u>!php %<CR>
+endfunction
+
+function! s:set_filetype_changelog()
+  let g:changelog_timeformat = "%Y-%m-%d"
+  let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
+endfunction
 
 "Plugin " {{{1
 
@@ -105,11 +140,11 @@ nmap ff :FuzzyFinderFile<CR>
 nmap fm :FuzzyFinderMruFile<CR>
 
 " neocomplcache.vim
+let g:NeoComplCache_KeywordCompletionStartLength = 4 
 " Don't use autocomplpop.
 let g:AutoComplPop_NotEnableAtStartup = 1
 " Use neocomplcache.
 let g:NeoComplCache_EnableAtStartup = 1 
-
 " <TAB> completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
