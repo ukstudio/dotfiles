@@ -10,11 +10,6 @@ filetype on
 filetype indent on
 filetype plugin on
 
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
 set nu
 set cursorline
 set ruler
@@ -83,12 +78,17 @@ augroup MyAutoCmd
   autocmd!
 augroup end
 
+autocmd MyAutoCmd FileType * call s:set_short_indent()
 autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
 autocmd MyAutoCmd FileType php  call s:set_filetype_php()
 autocmd MyAutoCmd FileType changelog call s:set_filetype_changelog()
 
 autocmd BufNewFile,BufRead *.changelog set filetype=changelog
+
+function! s:set_short_indent()
+  setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+endfunction
 
 function! s:set_filetype_ruby()
   " rails.vim
@@ -106,7 +106,7 @@ function! s:set_filetype_ruby()
   inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
   inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
-  autocmd! BufWritePost *.rb :!ruby -c %
+  autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
   nmap ,r :<C-u>!ruby %<CR>
 endfunction
 
