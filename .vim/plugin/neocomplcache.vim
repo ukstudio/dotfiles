@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplcache.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Mar 2009
+" Last Modified: 07 Apr 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,12 +23,65 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 2.10, for Vim 7.0
+" Version: 2.20, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+" ChangeLog NeoCompleCache2: "{{{
+"   2.20:
+"     - Improved dictionary check.
+"     - Fixed manual complete wildcard bug.
+"     - Fixed assuming filetype bug.
+"     - Implemented camel case completion.
+"     - Improved filetype and filename check.
+"   2.19:
+"     - Plugin interface changed.
+"     - Patterns use very magic.
+"     - Fixed syntax_complete.
+"   2.18:
+"     - Implemented tags_complete plugin.
+"     - Fixed default completion bug.
+"     - Extend complete length when consecutive skipped.
+"     - Auto complete on CursorMovedI.
+"     - Deleted similar match.
+"   2.17:
+"     - Loadable autoload/neocomplcache/*.vim plugin.
+"     - Implemented syntax_complete plugin.
+"   2.16:
+"     - Fixed caching initialize bug.
+"     - Supported vim help file.
+"     - Created manual.
+"     - Fixed variables name.
+"     - Deleted g:NeoComplCache_CalcRankMaxLists option.
+"   2.15:
+"     - Improved C syntax.
+"     - Added g:NeoComplCache_MaxTryKeywordLength option.
+"     - Improved prev rank.
+"     - Optimized if keyword is empty.
+"   2.14:
+"     - Optimized calc rank.
+"   2.13:
+"     - Optimized caching.
+"     - Optimized calc rank.
+"     - Fixed calc rank bugs.
+"     - Optimized similar match.
+"     - Fixed dictionary bug.
+"   2.12:
+"     - Added g:NeoComplCache_CachingRandomize option.
+"     - Changed g:NeoComplCache_CacheLineCount default value.
+"     - Optimized caching.
+"     - Caching current cache line on idle.
+"     - Fixed key not present error.
+"     - Fixed caching bug.
+"   2.11:
+"     - Implemented prev_rank.
+"     - Fixed disable auto complete bug.
+"     - Changed g:NeoComplCache_MinKeywordLength default value.
+"     - Changed g:NeoComplCache_CacheLineCount default value.
+"     - Fixed MFU.
+"     - Optimized calc rank.
+"     - Fixed freeze bug when InsertEnter and InsertLeave.
 "   2.10:
 "     - Divided as plugin.
-"     - Fixed disable auto complete bug.
 "     - NeoCompleCacheToggle uses lock() and unlock()
 "     - Abbreviation indication of the end.
 "     - Don't load MFU when MFU is empty.
@@ -54,6 +107,8 @@
 "     - Fixed skipped bug.
 "     - Improved commands.
 "     - Deleted g:NeoComplCache_DrawWordsRank option.
+"     "}}}
+" ChangeLog NeoCompleCache: "{{{
 "   1.60:
 "     - Improved calc similar algorithm.
 "   1.59:
@@ -220,6 +275,7 @@
 "   1.00:
 "     - Renamed.
 "     - Initial version.
+"     "}}}
 " ChangeLog AltAutoComplPop: "{{{
 "   2.62:
 "     - Set lazyredraw at auto complete.
@@ -289,11 +345,10 @@
 "   1.0:
 "     - Initial version.
 ""}}}
-"
 " }}}
 "-----------------------------------------------------------------------------
 " TODO: "{{{
-"     - Load plugin.
+"     - Nothing.
 ""}}}
 " Bugs"{{{
 "     - Nothing.
@@ -321,23 +376,14 @@ endif
 if !exists('g:NeoComplCache_PartialMatch')
     let g:NeoComplCache_PartialMatch = 1
 endif
-if !exists('g:NeoComplCache_SimilarMatch')
-    let g:NeoComplCache_SimilarMatch = 0
-endif
 if !exists('g:NeoComplCache_KeywordCompletionStartLength')
     let g:NeoComplCache_KeywordCompletionStartLength = 2
 endif
 if !exists('g:NeoComplCache_PartialCompletionStartLength')
     let g:NeoComplCache_PartialCompletionStartLength = 3
 endif
-if !exists('g:NeoComplCache_SimilarCompletionStartLength')
-    let g:NeoComplCache_SimilarCompletionStartLength = 4
-endif
 if !exists('g:NeoComplCache_MinKeywordLength')
-    let g:NeoComplCache_MinKeywordLength = 3
-endif
-if !exists('g:NeoComplCache_FilenameCompletionStartLength')
-    let g:NeoComplCache_FilenameCompletionStartLength = 0
+    let g:NeoComplCache_MinKeywordLength = 4
 endif
 if !exists('g:NeoComplCache_IgnoreCase')
     let g:NeoComplCache_IgnoreCase = 1
@@ -349,7 +395,7 @@ if !exists('g:NeoComplCache_AlphabeticalOrder')
     let g:NeoComplCache_AlphabeticalOrder = 0
 endif
 if !exists('g:NeoComplCache_CacheLineCount')
-    let g:NeoComplCache_CacheLineCount = 20
+    let g:NeoComplCache_CacheLineCount = 70
 endif
 if !exists('g:NeoComplCache_DeleteRank0')
     let g:NeoComplCache_DeleteRank0 = 0
@@ -360,14 +406,11 @@ endif
 if !exists('g:NeoComplCache_EnableWildCard')
     let g:NeoComplCache_EnableWildCard = 1
 endif
-if !exists('g:NeoComplCache_QuickMatchEnable')
-    let g:NeoComplCache_QuickMatchEnable = 1
+if !exists('g:NeoComplCache_EnableQuickMatch')
+    let g:NeoComplCache_EnableQuickMatch = 1
 endif
 if !exists('g:NeoComplCache_CalcRankRandomize')
     let g:NeoComplCache_CalcRankRandomize = has('reltime')
-endif
-if !exists('g:NeoComplCache_CalcRankMaxLists')
-    let g:NeoComplCache_CalcRankMaxLists = 40
 endif
 if !exists('g:NeoComplCache_QuickMatchMaxLists')
     let g:NeoComplCache_QuickMatchMaxLists = 100
@@ -384,11 +427,23 @@ endif
 if !exists('g:NeoComplCache_TryKeywordCompletion')
     let g:NeoComplCache_TryKeywordCompletion = 0
 endif
+if !exists('g:NeoComplCache_TryDefaultCompletion')
+    let g:NeoComplCache_TryDefaultCompletion = 0
+endif
+if !exists('g:NeoComplCache_MaxTryKeywordLength')
+    let g:NeoComplCache_MaxTryKeywordLength = 5
+endif
 if !exists('g:NeoComplCache_EnableInfo')
     let g:NeoComplCache_EnableInfo = 0
 endif
 if !exists('g:NeoComplCache_MaxInfoList')
     let g:NeoComplCache_MaxInfoList = 3
+endif
+if !exists('g:NeoComplCache_CachingRandomize')
+    let g:NeoComplCache_CachingRandomize = has('reltime')
+endif
+if !exists('g:NeoComplCache_EnableCamelCaseCompletion')
+    let g:NeoComplCache_EnableCamelCaseCompletion = 1
 endif
 if !exists('g:NeoComplCache_EnableMFU')
     let g:NeoComplCache_EnableMFU = 0

@@ -140,13 +140,40 @@ nmap ff :FuzzyFinderFile<CR>
 nmap fm :FuzzyFinderMruFile<CR>
 
 " neocomplcache.vim
-let g:NeoComplCache_KeywordCompletionStartLength = 4 
 " Don't use autocomplpop.
 let g:AutoComplPop_NotEnableAtStartup = 1
 " Use neocomplcache.
-let g:NeoComplCache_EnableAtStartup = 1 
+let g:NeoComplCache_EnableAtStartup = 1
+" Use smartcase.
+let g:NeoComplCache_SmartCase = 1
+" Use mfu.
+let g:NeoComplCache_EnableMFU = 1
+" Use previous keyword completion.
+let g:NeoComplCache_PreviousKeywordCompletion = 1
+" Use similar match.
+let g:NeoComplCache_SimilarMatch = 1
+" Try keyword completion.
+let g:NeoComplCache_TryKeywordCompletion = 1
+" Use preview window.
+let g:NeoComplCache_EnableInfo = 1
+" Delete keyword when rank is 0.
+let g:NeoComplCache_DeleteRank0 = 0
+
+let g:NeoComplCache_KeywordCompletionStartLength = 4 
+let g:NeoComplCache_EnableCamelCaseCompletion = 1 
+
 " <TAB> completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" C-jでオムニ補完
+inoremap <expr> <C-j>  &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
+" C-kを押すと行末まで削除
+inoremap <C-k>  <C-o>D
+" C-hで補完を続行しない
+inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+" C-nでneocomplcache補完
+inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+" C-pでkeyword補完
+inoremap <expr><C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
 
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
