@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntax_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 07 Apr 2009
+" Last Modified: 15 Apr 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,9 +23,19 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.03, for Vim 7.0
+" Version: 1.13, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   1.13:
+"    - Delete nextgroup.
+"   1.12:
+"    - Optimized caching.
+"    - Caching event changed.
+"   1.11:
+"    - Optimized.
+"   1.10:
+"    - Caching when set filetype.
+"    - Analyze match.
 "   1.03:
 "    - Not complete 'Syntax items' message.
 "   1.02:
@@ -45,12 +55,8 @@
 "=============================================================================
 
 function! neocomplcache#syntax_complete#get_keyword_list(cur_keyword_str)"{{{
-    if empty(&filetype)
+    if empty(&filetype) || !has_key(s:syntax_list, &filetype)
         return []
-    endif
-
-    if !has_key(s:syntax_list, &filetype)
-        let s:syntax_list[&filetype] = s:initialize_syntax()
     endif
 
     return s:syntax_list[&filetype]
@@ -69,42 +75,94 @@ function! s:initialize_syntax()
     let l:group_name = ''
     let l:keyword_list = []
     let l:abbr_pattern = printf('%%.%ds..%%s', g:NeoComplCache_MaxKeywordWidth-10)
+    if has_key(g:NeoComplCache_KeywordPatterns, &filetype)
+        let l:keyword_pattern = g:NeoComplCache_KeywordPatterns[&filetype]
+    else
+        let l:keyword_pattern = g:NeoComplCache_KeywordPatterns['default']
+    endif
+    let l:dup_check = {}
     for l:line in split(l:syntax_list, '\n')
         if l:line =~ '^\h\w\+'
             " Change syntax group name.
             let l:group_name = printf('[S] %.'. g:NeoComplCache_MaxFilenameWidth.'s', matchstr(l:line, '^\h\w\+'))
-            let l:keywords = split(l:line)[2:]
-        else
-            let l:keywords = split(l:line)
+            let l:line = substitute(l:line, '^\h\w\+\s*xxx', '', '')
         endif
 
-        if l:line =~ 'Syntax items' || empty(l:keywords) || l:keywords[0] == 'match' || l:keywords[0] == 'links' ||
-                    \l:keywords[0] =~ '^\h\w*='
+        if l:line =~ 'Syntax items' || l:line =~ '^\s*links to' ||
+                    \l:line =~ '^\s*nextgroup='
             " Next line.
             continue
         endif
 
-        if l:keywords[0] == 'contained'
-            let l:keywords = l:keywords[1:]
+        let l:line = substitute(l:line, 'contained\|skipwhite\|skipnl\|oneline', '', 'g')
+        let l:line = substitute(l:line, '^\s*nextgroup=.*\ze\s', '', '')
+
+        if l:line =~ '^\s*match'
+            let l:line = s:substitute_candidate(matchstr(l:line, '/\zs[^/]\+\ze/'))
+            "echomsg l:line
+        elseif l:line =~ '^\s*start='
+            let l:line = 
+                        \s:substitute_candidate(matchstr(l:line, 'start=/\zs[^/]\+\ze/')) . ' ' .
+                        \s:substitute_candidate(matchstr(l:line, 'end=/zs[^/]\+\ze/'))
         endif
 
         " Add keywords.
-        for l:word in l:keywords
-            if len(l:word) >= g:NeoComplCache_MinKeywordLength
+        let l:match_num = 0
+        let l:line_max = len(l:line) - g:NeoComplCache_MinKeywordLength
+        while 1
+            let l:match_str = matchstr(l:line, l:keyword_pattern, l:match_num)
+            if empty(l:match_str)
+                break
+            endif
+
+            " Ignore too short keyword.
+            if len(l:match_str) >= g:NeoComplCache_MinKeywordLength && !has_key(l:dup_check, l:match_str)
                 let l:keyword = {
-                            \ 'word' : l:word, 'menu' : l:group_name, 'dup' : 0,
+                            \ 'word' : l:match_str, 'menu' : l:group_name,
                             \ 'rank' : 1, 'prev_rank' : 0, 'prepre_rank' : 0
                             \}
                 let l:keyword.abbr = 
-                            \ (len(l:word) > g:NeoComplCache_MaxKeywordWidth)? 
-                            \ printf(l:abbr_pattern, l:word, l:word[-8:]) : l:word
+                            \ (len(l:match_str) > g:NeoComplCache_MaxKeywordWidth)? 
+                            \ printf(l:abbr_pattern, l:match_str, l:match_str[-8:]) : l:match_str
                 call add(l:keyword_list, l:keyword)
             endif
-        endfor
+
+            let l:match_num += len(l:match_str)
+            if l:match_num > l:line_max
+                break
+            endif
+        endwhile
     endfor
 
     return sort(l:keyword_list, 'neocomplcache#compare_words')
 endfunction
+
+function! s:substitute_candidate(candidate)"{{{
+    let l:candidate = a:candidate
+
+    " Collection.
+    let l:candidate = substitute(l:candidate,
+                \'\%(\\\\\|[^\\]\)\zs\[.*\]', ' ', 'g')
+    if l:candidate =~ '\\v'
+        " Delete.
+        let l:candidate = substitute(l:candidate,
+                    \'\%(\\\\\|[^\\]\)\zs\%([=?+*]\|%[\|\\s\*\)', '', 'g')
+        " Space.
+        let l:candidate = substitute(l:candidate,
+                    \'\%(\\\\\|[^\\]\)\zs\%([<>{()|$^]\|\\z\?\a\)', ' ', 'g')
+    else
+        " Delete.
+        let l:candidate = substitute(l:candidate,
+                    \'\%(\\\\\|[^\\]\)\zs\%(\\[=?+]\|\\%[\|\\s\*\|\*\)', '', 'g')
+        " Space.
+        let l:candidate = substitute(l:candidate,
+                    \'\%(\\\\\|[^\\]\)\zs\%(\\[<>{()|]\|[$^]\|\\z\?\a\)', ' ', 'g')
+    endif
+
+    " \
+    let l:candidate = substitute(l:candidate, '\\\\', '\\', 'g')
+    return l:candidate
+endfunction"}}}
 
 " Dummy function.
 function! neocomplcache#syntax_complete#calc_rank(cache_keyword_buffer_list)"{{{
@@ -120,8 +178,16 @@ function! neocomplcache#syntax_complete#initialize()"{{{
     " Initialize
     let s:syntax_list = {}
 
+    augroup neocomplecache"{{{
+        " Caching events
+        autocmd CursorHold * call s:caching_event() 
+    augroup END"}}}
+
+endfunction"}}}
+
+function! s:caching_event()"{{{
     " Caching.
-    if !empty(&filetype)
+    if !empty(&filetype) && !has_key(s:syntax_list, &filetype)
         let s:syntax_list[&filetype] = s:initialize_syntax()
     endif
 endfunction"}}}

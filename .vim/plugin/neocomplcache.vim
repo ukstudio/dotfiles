@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplcache.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Apr 2009
+" Last Modified: 15 Apr 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,12 +23,36 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 2.21, for Vim 7.0
+" Version: 2.26, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
 " ChangeLog NeoCompleCache2: "{{{
+"   2.26:
+"     - Improved ruby and vim and html syntax.
+"     - Fixed escape.
+"     - Supported erlang and eruby and etc.
+"     - Refactoring autocmd.
+"   2.25:
+"     - Optimized syntax caching.
+"     - Fixed ruby and ocaml syntax.
+"     - Fixed error when g:NeoComplCache_AlphabeticalOrder is set.
+"     - Improved syntax_complete caching event.
+"   2.24:
+"     - Optimized calc rank.
+"     - Optimized keyword pattern.
+"     - Implemented operator completion.
+"     - Don't use include completion.
+"     - Fixed next keyword bug.
+"   2.23:
+"     - Fixed compound keyword pattern.
+"     - Optimized keyword pattern.
+"     - Fixed can't quick match bug on g:NeoComplCache_EnableCamelCaseCompletion is 1.
+"   2.22:
+"     - Improved tex syntax.
+"     - Improved keyword completion.
+"     - Fixed sequential caching bug.
 "   2.21:
-"     - Fixed haskell and ocaml syntax.
+"     - Fixed haskell and ocaml and perl syntax.
 "     - Fixed g:NeoComplCache_EnableCamelCaseCompletion default value.
 "     - Extend skip time.
 "     - Added NeoCompleCacheAutoCompletionLength and NeoCompleCachePartialCompletionLength command.
