@@ -57,16 +57,6 @@ cmap <Up> <S-Tab>
 " ! でページのCSSをon/off
 map ! :set invum<CR>
 
-" hatenabookmark_show.js
-" はてなブックマークのコメントを表示
-map b :hbinfo<CR>
-
-" direct_bookmark.js
-" はてなブックマークにポスト
-let g:direct_sbm_use_services_by_tag = "h"
-let g:direct_sbm_use_services_by_post = "h"
-map A :sbm<space>
-
 " ステータスバーにfeedボタンを表示
 " http://d.hatena.ne.jp/teramako/20071205/p1
 :javascript <<EOM
@@ -103,9 +93,11 @@ map ,tl :<C-u>twitter!<CR>
 map ,T :<C-u>twitter!<Space>
 map ,@ :<C-u>twitter!@<CR>
 
-http://vimperator.g.hatena.ne.jp/retlet/20090223/1235415599
+"http://vimperator.g.hatena.ne.jp/retlet/20090223/1235415599
 style -name tab-text-shadow-fix chrome://* <<EOM
 .tab-text-shadow {
   display: none !important;
 }
 EOM
+
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
