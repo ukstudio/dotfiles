@@ -127,27 +127,12 @@ endfunction
 
 "Plugin " {{{1
 
-" autocomplpop.vim
-let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k'
-let g:AutoComplPop_IgnoreCaseOption = 1
-
-let g:AutoComplPop_BehaviorKeywordLength = 6
-let g:AutoComplPop_BehaviorFileLength = 1
-let g:AutoComplPop_BehaviorRubyOmniMethodLength = 6
-let g:AutoComplPop_BehaviorRubyOmniSymbolLength = 6
-let g:AutoComplPop_BehaviorPythonOmniLength = 4
-let g:AutoComplPop_BehaviorHTMLOmniLength = 1
-let g:AutoComplPop_BehaviorCssOmniPropertyLength = 1
-let g:AutoComplPop_BehaviorCssOmniValueLength = 1
-
 " fuzzyfinder.vim
 nmap fb :FuzzyFinderBuffer<CR>
 nmap ff :FuzzyFinderFile<CR>
 nmap fm :FuzzyFinderMruFile<CR>
 
 " neocomplcache.vim
-" Don't use autocomplpop.
-let g:AutoComplPop_NotEnableAtStartup = 1
 " Use neocomplcache.
 let g:NeoComplCache_EnableAtStartup = 1
 " Use smartcase.
