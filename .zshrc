@@ -24,6 +24,7 @@ setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
 export RSPEC=true
+export AUTOFEATURE=true
 
 bindkey -v
 
