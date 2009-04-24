@@ -21,6 +21,7 @@ set laststatus=2
 
 set noswapfile
 
+set ambiwidth=double
 "オートインデントの空白文字を<BS>で削除
 "前の行の改行文字を<BS>で削除し連結
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
@@ -32,6 +33,8 @@ function! CurrentLineLength()
 	return len
 endfunction
 
+
+let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocomplcache#keyword_complete#caching_percent("")."%]"} %3l,%3c %3p%%' 
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
@@ -83,6 +86,8 @@ autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
 autocmd MyAutoCmd FileType php  call s:set_filetype_php()
 autocmd MyAutoCmd FileType changelog call s:set_filetype_changelog()
+autocmd MyAutoCmd Filetype eruby set nowrap
+autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 
 autocmd BufNewFile,BufRead *.changelog set filetype=changelog
 
@@ -106,8 +111,9 @@ function! s:set_filetype_ruby()
   inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
   inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
-  autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
+  "autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
   nmap ,r :<C-u>!ruby %<CR>
+  nmap ,t :<C-u>!spec %<CR>
 endfunction
 
 function! s:set_filetype_php()
