@@ -1,7 +1,5 @@
 "Basic " {{{1
 set foldmethod=marker
-
-set background=dark"
 colorscheme xoria256
 
 set nocompatible
@@ -20,6 +18,7 @@ set hlsearch
 set laststatus=2 
 
 set noswapfile
+set nobackup
 
 set ambiwidth=double
 "オートインデントの空白文字を<BS>で削除
@@ -33,8 +32,11 @@ function! CurrentLineLength()
 	return len
 endfunction
 
-
 let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocomplcache#keyword_complete#caching_percent("")."%]"} %3l,%3c %3p%%' 
+
+":TOhtml
+let g:use_xhtml = 1
+let g:html_use_css = 1
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
@@ -75,6 +77,10 @@ nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 
 "行頭からの補完
 inoremap <C-l> <C-x><C-l>
+
+"cd
+nnoremap <silent> cd :<C-u>cd %:h<Cr>
+
 
 " autocmd "{{{1
 augroup MyAutoCmd
