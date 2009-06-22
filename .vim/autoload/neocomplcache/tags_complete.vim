@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: tags_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Apr 2009
+" Last Modified: 14 May 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,9 +23,17 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.05, for Vim 7.0
+" Version: 1.08, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   1.08:
+"    - Improved popup menu.
+"    - Ignore case.
+"   1.07:
+"    - Fixed for neocomplcache 2.43.
+"   1.06:
+"    - Improved abbr.
+"    - Refactoring.
 "   1.05:
 "    - Improved filtering.
 "   1.04:
@@ -50,71 +58,76 @@
 ""}}}
 "=============================================================================
 
+function! neocomplcache#tags_complete#initialize()"{{{
+    " Initialize
+endfunction"}}}
+
+function! neocomplcache#tags_complete#finalize()"{{{
+endfunction"}}}
+
 function! neocomplcache#tags_complete#get_keyword_list(cur_keyword_str)"{{{
     if &l:completefunc == 'neocomplcache#auto_complete' ||
                 \len(a:cur_keyword_str) < g:NeoComplCache_TagsCompletionStartLength
         return []
     endif
 
-    " Escape."{{{
-    let l:keyword_escape = substitute(escape(a:cur_keyword_str, '" \.^$*'), "'", "''", 'g')
-    if g:NeoComplCache_EnableWildCard
-        if l:keyword_escape =~ '^\\\*'
-            let l:head = l:keyword_escape[:1]
-            let l:keyword_escape = l:keyword_escape[2:]
-        elseif l:keyword_escape =~ '^-'
-            let l:head = l:keyword_escape[0]
-            let l:keyword_escape = l:keyword_escape[1:]
-        else
-            let l:head = ''
-        endif
-        let l:keyword_escape = l:head . substitute(substitute(l:keyword_escape, '\\\*', '.*', 'g'), '-', '.\\+', 'g')
-        unlet l:head
-    endif"}}}
+    let l:keyword_escape = neocomplcache#keyword_escape(a:cur_keyword_str)
 
-    " Camel case completion."{{{
-    if g:NeoComplCache_EnableCamelCaseCompletion
-        let l:keyword_escape = substitute(l:keyword_escape, '\v\u?\zs\U*', '\\%(\0\\l*\\|\U\0\E\\u*_\\?\\)', 'g')
-    endif
-    "}}}
-
-    if !g:NeoComplCache_PartialMatch || len(a:cur_keyword_str) < g:NeoComplCache_PartialCompletionStartLength
+    if !g:NeoComplCache_PartialMatch || neocomplcache#skipped() || len(a:cur_keyword_str) < g:NeoComplCache_PartialCompletionStartLength
         " Head match.
         let l:keyword_escape = '^'.l:keyword_escape
     endif
     return neocomplcache#keyword_filter(s:initialize_tags(l:keyword_escape), a:cur_keyword_str)
 endfunction"}}}
 
-function! s:initialize_tags(cur_keyword_str)
+" Dummy function.
+function! neocomplcache#tags_complete#calc_rank(cache_keyword_buffer_list)"{{{
+endfunction"}}}
+
+" Dummy function.
+function! neocomplcache#tags_complete#calc_prev_rank(cache_keyword_buffer_list, prev_word, prepre_word)"{{{
+endfunction"}}}
+
+function! s:initialize_tags(cur_keyword_str)"{{{
     " Get current tags list.
 
     let l:keyword_list = []
     let l:abbr_pattern = printf('%%.%ds..%%s', g:NeoComplCache_MaxKeywordWidth-10)
-    let l:manu_pattern = '[T] %s %.'. g:NeoComplCache_MaxFilenameWidth . 's'
+    let l:menu_pattern = '[T] %s %.'. g:NeoComplCache_MaxFilenameWidth . 's'
     let l:dup_check = {}
     for l:tag in taglist(a:cur_keyword_str)
         " Add keywords.
         if len(l:tag.name) >= g:NeoComplCache_MinKeywordLength
                     \&& !has_key(l:dup_check, l:tag.cmd) && !l:tag.static
+                    \&& (!has_key(l:tag, 'access') || l:tag.access == 'public')
             let l:dup_check[l:tag.cmd] = 1
+            let l:name = substitute(l:tag.name, '\h\w*::', '', 'g')
+            let l:abbr = (l:tag.kind == 'd')? l:name :
+                        \ substitute(substitute(substitute(l:tag.cmd, '^/\^\=\s*\|\s*\$\=/$', '', 'g'),
+                        \           '\s\+', ' ', 'g'), '\\/', '/', 'g')
             let l:keyword = {
-                        \ 'word' : l:tag.name, 'menu' : printf(l:manu_pattern, l:tag.kind, fnamemodify(l:tag.filename, ':t')),
-                        \ 'rank' : 1, 'prev_rank' : 0, 'prepre_rank' : 0
+                        \ 'word' : l:name, 'rank' : 1, 'prev_rank' : 0, 'prepre_rank' : 0, 'icase' : 1,
+                        \ 'abbr' : (len(l:abbr) > g:NeoComplCache_MaxKeywordWidth)? 
+                        \   printf(l:abbr_pattern, l:abbr, l:abbr[-8:]) : l:abbr
                         \}
-            let l:keyword.abbr = 
-                        \ (len(l:tag.name) > g:NeoComplCache_MaxKeywordWidth)? 
-                        \ printf(l:abbr_pattern, l:tag.name, l:tag.name[-8:]) : l:tag.name
+            if has_key(l:tag, 'struct')
+                let keyword.menu = printf(l:menu_pattern, l:tag.kind, l:tag.struct)
+            elseif has_key(l:tag, 'class')
+                let keyword.menu = printf(l:menu_pattern, l:tag.kind, l:tag.class)
+            elseif has_key(l:tag, 'enum')
+                let keyword.menu = printf(l:menu_pattern, l:tag.kind, l:tag.enum)
+            else
+                let keyword.menu = '[T] '. l:tag.kind
+            endif
 
             if g:NeoComplCache_EnableInfo
                 " Create info.
-                let keyword.info = substitute(l:tag.cmd, '^/\^\=\|\$\=/$', '', 'g')
+                let keyword.info = l:abbr
                 if has_key(l:tag, 'struct')
                     let keyword.info .= "\nstruct: " . l:tag.struct 
-                endif
-                if has_key(l:tag, 'class')
+                elseif has_key(l:tag, 'class')
                     let keyword.info .= "\nclass: " . l:tag.class 
-                endif
-                if has_key(l:tag, 'enum')
+                elseif has_key(l:tag, 'enum')
                     let keyword.info .= "\nenum: " . l:tag.enum
                 endif
                 if has_key(l:tag, 'namespace')
@@ -133,21 +146,6 @@ function! s:initialize_tags(cur_keyword_str)
     endfor
 
     return sort(l:keyword_list, 'neocomplcache#compare_words')
-endfunction
-
-" Dummy function.
-function! neocomplcache#tags_complete#calc_rank(cache_keyword_buffer_list)"{{{
-endfunction"}}}
-
-" Dummy function.
-function! neocomplcache#tags_complete#calc_prev_rank(cache_keyword_buffer_list, prev_word, prepre_word)"{{{
-endfunction"}}}
-
-function! neocomplcache#tags_complete#initialize()"{{{
-    " Initialize
-endfunction"}}}
-
-function! neocomplcache#tags_complete#finalize()"{{{
 endfunction"}}}
 
 " Global options definition."{{{
