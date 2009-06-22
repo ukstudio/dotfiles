@@ -3,8 +3,9 @@ export LSCOLORS=cxfxcxdxbxegedabagacad
 export SVN_EDITOR=vim
 export EDITOR=vim
 
+export LANG=ja_JP.UTF-8
 #alias gosh='rlwrap gosh'
-alias ls="ls -G"
+alias ls="ls -G -v"
 alias spec="spec -fs -c"
 alias v='vim'
 alias mysql='mysql5'

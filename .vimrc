@@ -38,6 +38,12 @@ let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocom
 let g:use_xhtml = 1
 let g:html_use_css = 1
 
+" smartchr.vim
+inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
+inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
+inoremap <expr> ! smartchr#one_of('!',   ' != ')
+
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
@@ -83,6 +89,7 @@ nnoremap <silent> cd :<C-u>cd %:h<Cr>
 
 
 " autocmd "{{{1
+
 augroup MyAutoCmd
   autocmd!
 augroup end
@@ -94,8 +101,8 @@ autocmd MyAutoCmd FileType php  call s:set_filetype_php()
 autocmd MyAutoCmd FileType changelog call s:set_filetype_changelog()
 autocmd MyAutoCmd Filetype eruby set nowrap
 autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
-
-autocmd BufNewFile,BufRead *.changelog set filetype=changelog
+autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
+autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
 
 function! s:set_short_indent()
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -111,13 +118,6 @@ function! s:set_filetype_ruby()
   let g:rubycomplete_rails = 1
   let g:rubycomplete_classes_in_global = 1
 
-  " smartchr.vim
-  inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-  inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
-  inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
-  inoremap <expr> ! smartchr#one_of('!',   ' != ')
-
-  "autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
   nmap ,r :<C-u>!ruby %<CR>
   nmap ,t :<C-u>!spec %<CR>
 endfunction
