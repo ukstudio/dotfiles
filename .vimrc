@@ -44,6 +44,15 @@ inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
 inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
 inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
+"文字コード
+command! -bang -nargs=? Utf8
+      \ edit<bang> ++enc=utf-8 <args>
+
+command! -bang -nargs=? Euc
+      \ edit<bang> ++enc=euc-jp <args>
+
+command! -bang -nargs=? Sjis
+      \ edit<bang> ++enc=Shift-jis <args>
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
