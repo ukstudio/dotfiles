@@ -38,12 +38,6 @@ let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocom
 let g:use_xhtml = 1
 let g:html_use_css = 1
 
-" smartchr.vim
-inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
-inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
-inoremap <expr> ! smartchr#one_of('!',   ' != ')
-
 "文字コード
 command! -bang -nargs=? Utf8
       \ edit<bang> ++enc=utf-8 <args>
@@ -184,6 +178,12 @@ inoremap <expr><C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
+
+" smartchr.vim
+inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
+inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
+inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
 "editing .vimrc " {{{1
 "
