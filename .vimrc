@@ -166,8 +166,6 @@ let g:NeoComplCache_EnableCamelCaseCompletion = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " C-jでオムニ補完
 inoremap <expr> <C-j>  &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
-" C-kを押すと行末まで削除
-inoremap <C-k>  <C-o>D
 " C-hで補完を続行しない
 inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
 " C-nでneocomplcache補完
