@@ -26,12 +26,6 @@ set ambiwidth=double
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
-"カレント行の文字数
-function! CurrentLineLength()
-	let len = strlen(getline("."))
-	return len
-endfunction
-
 let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocomplcache#keyword_complete#caching_percent("")."%]"} %3l,%3c %3p%%' 
 
 ":TOhtml
