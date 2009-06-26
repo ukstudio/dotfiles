@@ -41,6 +41,12 @@ command! -bang -nargs=? Euc
 
 command! -bang -nargs=? Sjis
       \ edit<bang> ++enc=Shift-jis <args>
+
+"自動保存
+autocmd CursorHold * silent! wall
+autocmd CursorHoldI * silent! wall
+
+
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
