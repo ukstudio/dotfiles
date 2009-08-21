@@ -92,7 +92,6 @@ nnoremap <silent> cd :<C-u>cd %:h<Cr>
 
 
 " autocmd "{{{1
-
 augroup MyAutoCmd
   autocmd!
 augroup end
@@ -187,3 +186,12 @@ inoremap <expr> ! smartchr#one_of('!',   ' != ')
 "
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
+
+"MacVim {{{1
+if has('gui_macvim')
+  set guioptions-=T
+  set background=dark
+  set transparency=5
+  set gfn=AnonymousPro:h13
+  set gfw=Osaka-Mono:h13
+endif
