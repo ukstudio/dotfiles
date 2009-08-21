@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: view.vim
-" AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Jun 2009
+" FILE: interactive.vim
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" Last Modified: 03 Jul 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,61 +23,15 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.4, for Vim 7.0
-"-----------------------------------------------------------------------------
-" ChangeLog: "{{{
-"   1.4:
-"     - Extend current directory.
-"
-"   1.3:
-"     - Ignore directory.
-"
-"   1.2:
-"     - Improved error.
-"
-"   1.1:
-"     - Split nicely.
-"
-"   1.0:
-"     - Initial version.
-""}}}
-"-----------------------------------------------------------------------------
-" TODO: "{{{
-"     - Nothing.
-""}}}
-" Bugs"{{{
-"     -
-""}}}
 "=============================================================================
 
-function! vimshell#internal#view#execute(program, args, fd, other_info)
-    " View file.
+command! -nargs=+ -complete=shellcmd InteractiveRead call interactive#read(split(<q-args>))
 
-    " Filename escape
-    let l:arguments = join(a:args, ' ')
-
-    if isdirectory(l:arguments)
-        " Ignore.
-        return 0
-    endif
-
-    call vimshell#print_prompt()
-
-    if empty(l:arguments)
-        vimshell#error_line(a:fd, 'Filename required.')
-    else
-        " Save current directiory.
-        let l:cwd = getcwd()
-
-        " Split nicely.
-        if winheight(0) > &winheight
-            split
-        else
-            vsplit
-        endif
-
-        edit `=l:arguments`
-        lcd `=l:cwd`
-        setlocal nomodifiable
-    endif
-endfunction
+" Global options definition."{{{
+if !exists('g:Interactive_EscapeColors')
+    let g:Interactive_EscapeColors = [
+                \'#3c3c3c', '#ff6666', '#66ff66', '#ffd30a', '#1e95fd', '#ff13ff', '#1bc8c8', '#C0C0C0', 
+                \'#686868', '#ff6666', '#66ff66', '#ffd30a', '#6699ff', '#f820ff', '#4ae2e2', '#ffffff'
+                \]
+endif
+"}}}

@@ -2,7 +2,7 @@
 " FILE: vimshell.vim
 " AUTHOR: Janakiraman .S <prince@india.ti.com>(Original)
 "         Shougo Matsushita <Shougo.Matsu@gmail.com>(Modified)
-" Last Modified: 21 Jun 2009
+" Last Modified: 08 Aug 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -24,8 +24,14 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 5.16, for Vim 7.0
+" Version: 5.29, for Vim 7.0
 "=============================================================================
+
+if !exists('g:VimShell_UserPrompt')
+    let s:user_prompt = ''
+else
+    let s:user_prompt = g:VimShell_UserPrompt
+endif
 
 " Helper functions.
 function! vimshell#set_execute_file(exts, program)"{{{
@@ -116,43 +122,59 @@ function! vimshell#execute_command(program, args, fd, other_info)"{{{
     endif
     let l:program = a:program
     let l:arguments = a:args
-
-    " Check alias."{{{
-    if has_key(b:vimshell_alias_table, l:program) && !empty(b:vimshell_alias_table[l:program])
-        let l:alias = split(b:vimshell_alias_table[l:program])
-        if l:alias[0] == l:program
-            call vimshell#error_line('', printf('Recursive alias "%s" detected.', l:program))
-            return 0
-        endif
-
-        let l:program = l:alias[0]
-        let l:arguments = l:alias[1:]
-        let l:line = l:program . ' ' . join(l:arguments)
-    endif"}}}
+    let l:dir = substitute(substitute(l:line, '^\~\ze[/\\]', substitute($HOME, '\\', '/', 'g'), ''), '\\\(.\)', '\1', 'g')
 
     " Special commands.
-    if l:program =~ '^\w*=' "{{{
-        " Variables substitution.
-        execute 'silent let $' . l:program
-        "}}}
-    elseif l:line =~ '&\s*$'"{{{
+    if l:line =~ '&\s*$'"{{{
         " Background execution.
         return vimshell#internal#bg#execute('bg', split(substitute(l:line, '&\s*$', '', '')), a:fd, a:other_info)
         "}}}
-    elseif has_key(s:special_func_table, l:program)"{{{
+    elseif has_key(g:vimshell#special_func_table, l:program)"{{{
         " Other special commands.
-        return call(s:special_func_table[l:program], [l:program, l:arguments, a:fd, a:other_info])
+        return call(g:vimshell#special_func_table[l:program], [l:program, l:arguments, a:fd, a:other_info])
         "}}}
     elseif has_key(s:internal_func_table, l:program)"{{{
         " Internal commands.
-        return call(s:internal_func_table[l:program], [l:program, l:arguments, a:fd, a:other_info])
+
+        " Search pipe.
+        let l:args = []
+        let l:i = 0
+        let l:fd = copy(a:fd)
+        for arg in l:arguments
+            if arg == '|'
+                if l:i+1 == len(l:arguments) 
+                    call vimshell#error_line(a:fd, 'Wrong pipe used.')
+                    return 0
+                endif
+
+                " Create temporary file.
+                let l:temp = tempname()
+                let l:fd.stdout = l:temp
+                call writefile([], l:temp)
+                break
+            endif
+            call add(l:args, arg)
+            let l:i += 1
+        endfor
+        let l:ret = call(s:internal_func_table[l:program], [l:program, l:args, l:fd, a:other_info])
+
+        if l:i < len(l:arguments)
+            " Process pipe.
+            let l:prog = l:arguments[l:i + 1]
+            let l:fd = copy(a:fd)
+            let l:fd.stdin = temp
+            let l:ret = vimshell#execute_command(l:prog, l:arguments[l:i+2 :], l:fd, a:other_info)
+            call delete(l:temp)
+        endif
+
+        return l:ret
         "}}}
-    elseif isdirectory(substitute(l:line, '^\~\ze[/\\]', substitute($HOME, '\\', '/', 'g'), ''))"{{{
+    elseif isdirectory(l:dir)"{{{
         " Directory.
         " Change the working directory like zsh.
 
         " Call internal cd command.
-        call vimshell#internal#cd#execute('cd', split(l:line), a:fd, a:other_info)
+        call vimshell#internal#cd#execute('cd', [l:dir], a:fd, a:other_info)
         "}}}
     else"{{{
         let l:ext = fnamemodify(l:program, ':e')
@@ -163,7 +185,42 @@ function! vimshell#execute_command(program, args, fd, other_info)"{{{
             return vimshell#execute_command(l:execute, l:arguments, a:fd, a:other_info)
         else
             " External commands.
-            call vimshell#internal#exe#execute('exe', insert(l:arguments, l:program), a:fd, a:other_info)
+
+            " Search pipe.
+            let l:args = []
+            let l:i = 0
+            let l:fd = copy(a:fd)
+            for arg in l:arguments
+                if arg == '|'
+                    if l:i+1 == len(l:arguments) 
+                        call vimshell#error_line(a:fd, 'Wrong pipe used.')
+                        return 0
+                    endif
+
+                    " Check internal command.
+                    let l:prog = l:arguments[l:i + 1]
+                    if !has_key(g:vimshell#special_func_table, l:prog) && !has_key(s:internal_func_table, l:prog)
+                        " Create temporary file.
+                        let l:temp = tempname()
+                        let l:fd.stdout = l:temp
+                        call writefile([], l:temp)
+                        break
+                    endif
+                endif
+                call add(l:args, arg)
+                let l:i += 1
+            endfor
+            let l:ret = vimshell#internal#exe#execute('exe', insert(l:args, l:program), l:fd, a:other_info)
+
+            if l:i < len(l:arguments)
+                " Process pipe.
+                let l:fd = copy(a:fd)
+                let l:fd.stdin = temp
+                let l:ret = vimshell#execute_command(l:prog, l:arguments[l:i+2 :], l:fd, a:other_info)
+                call delete(l:temp)
+            endif
+
+            return l:ret
         endif
     endif
     "}}}
@@ -201,87 +258,56 @@ function! vimshell#process_enter()"{{{
     " Check current directory.
     if !exists('w:vimshell_directory_stack')
         let w:vimshell_directory_stack = []
-        let w:vimshell_directory_stack[0] = getcwd()
-    endif
-    if empty(w:vimshell_directory_stack) || getcwd() != w:vimshell_directory_stack[0]
-        " Push current directory.
-        call insert(w:vimshell_directory_stack, getcwd())
     endif
 
     " Delete prompt string.
     let l:line = substitute(getline('.'), g:VimShell_Prompt, '', '')
 
-    " Ignore empty command line."{{{
-    if l:line =~ '^\s*$'
-        call setline(line('.'), g:VimShell_Prompt)
-
-        call vimshell#start_insert()
-        return
-    endif
-    "}}}
-
     " Delete comment.
     let l:line = substitute(l:line, '#.*$', '', '')
 
+    if getfsize(g:VimShell_HistoryPath) != s:hist_size
+        " Reload.
+        let g:vimshell#hist_buffer = readfile(g:VimShell_HistoryPath)
+    endif
     " Not append history if starts spaces or dups.
-    if l:line !~ '^\s' && (empty(g:vimshell#hist_buffer) || l:line !=# g:vimshell#hist_buffer[0])
-        let l:now_hist_size = getfsize(g:VimShell_HistoryPath)
-        if l:now_hist_size != s:hist_size
-            " Reload.
-            let g:vimshell#hist_buffer = readfile(g:VimShell_HistoryPath)
-        endif
-
-        " Append history.
-        call insert(g:vimshell#hist_buffer, l:line)
-
-        " Trunk.
-        let g:vimshell#hist_buffer = g:vimshell#hist_buffer[:g:VimShell_HistoryMaxSize-1]
-
-        call writefile(g:vimshell#hist_buffer, g:VimShell_HistoryPath)
-
-        let s:hist_size = getfsize(g:VimShell_HistoryPath)
+    if l:line !~ '^\s'
+        call vimshell#append_history(l:line)
     endif
 
     " Delete head spaces.
     let l:line = substitute(l:line, '^\s\+', '', '')
-    let l:program = (empty(l:line))? '' : split(l:line)[0]
+    if l:line =~ '^\s*$'
+        if g:VimShell_EnableAutoLs
+            call setline(line('.'), g:VimShell_Prompt . 'ls')
+            call vimshell#internal#ls#execute('ls', [], 
+                        \{ 'stdin' : '', 'stdout' : '', 'stderr' : '' },
+                        \{ 'has_head_spaces' : 0, 'is_interactive' : 1, 'is_background' : 0 })
 
-    try
-        let l:string = substitute(l:line, '^'.l:program, '', '')
-        if has_key(s:special_func_table, l:program)
-            " Special commands.
-            let l:fd = { 'stdin' : '', 'stdout' : '', 'stderr' : '' }
-            let l:args = split(l:string)
+            call vimshell#print_prompt()
+            call interactive#highlight_escape_sequence()
+
+            call vimshell#start_insert()
         else
-            if l:line =~ '[<>]'
-                let [l:fd, l:string] = s:get_redirection(l:string)
-            else
-                let l:fd = { 'stdin' : '', 'stdout' : '', 'stderr' : '' }
-            endif
-            let l:args = s:get_args(l:string)
+            " Ignore empty command line.
+            call setline(line('.'), g:VimShell_Prompt)
+
+            call vimshell#start_insert()
         endif
-    catch /^Quote/
-        call vimshell#error_line('', 'Quote error.')
+        return
+    endif
+
+    let l:other_info = { 'has_head_spaces' : l:line =~ '^\s\+', 'is_interactive' : 1, 'is_background' : 0 }
+    try
+        let l:skip_prompt = vimshell#parser#eval_script(l:line, l:other_info)
+    catch /.*/
+        call vimshell#error_line({}, v:exception)
         call vimshell#print_prompt()
-        call s:highlight_escape_sequence()
+        call interactive#highlight_escape_sequence()
 
         call vimshell#start_insert()
         return
     endtry
-
-    if l:fd.stdout != ''
-        if l:fd.stdout =~ '^>'
-            let l:fd.stdout = l:fd.stdout[1:]
-        elseif l:fd.stdout != '/dev/null'
-            " Open file.
-            call writefile([], l:fd.stdout)
-        endif
-    endif
-
-    let l:other_info = { 'has_head_spaces' : l:line =~ '^\s\+', 'is_interactive' : 1, 'is_background' : 0 }
-
-    " Interactive execute.
-    let l:skip_prompt = vimshell#execute_command(l:program, l:args, l:fd, l:other_info)
 
     if l:skip_prompt
         " Skip prompt.
@@ -289,151 +315,7 @@ function! vimshell#process_enter()"{{{
     endif
 
     call vimshell#print_prompt()
-    call s:highlight_escape_sequence()
-
     call vimshell#start_insert()
-endfunction"}}}
-
-function! s:get_redirection(string)"{{{
-    let l:i = 0
-    let l:string = a:string
-    let l:max = len(l:string)
-    let l:fd = { 'stdin' : '', 'stdout' : '', 'stderr' : '' }
-    while l:i <= l:max
-        if l:string[l:i] == "'"
-            let l:end = matchend(l:string, "'\\zs[^']*'", l:i)
-            if l:end == -1
-                throw 'Quote error.'
-            endif
-            let l:i = l:end
-        elseif l:string[l:i] == '"'
-            let l:end = matchend(l:string, '"\zs[^"]*"', l:i)
-            if l:end == -1
-                throw 'Quote error.'
-            endif
-            let l:i = l:end
-        elseif l:string[l:i] == '<'
-            let l:fd.stdin = matchstr(l:string, '<\s*\zs\f*', l:i)
-            let l:end = matchend(l:string, '<\s*\zs\f*', l:i)
-
-            let l:string = l:string[: l:i-1] . l:string[l:end :]
-            let l:i = l:end
-        elseif l:string[l:i] == '>'
-            if l:string[l:i :] =~ '^>&'
-                let l:fd.stderr = matchstr(l:string, '>&\s*\zs\f*', l:i)
-                let l:end = matchend(l:string, '>&\s*\zs\f*', l:i)
-            elseif l:string[l:i :] =~ '^>>'
-                let l:fd.stdout = '>' . matchstr(l:string, '>>\s*\zs\f*', l:i)
-                let l:end = matchend(l:string, '>>\s*\zs\f*', l:i)
-            else
-                let l:fd.stdout = matchstr(l:string, '>\s*\zs\f*', l:i)
-                let l:end = matchend(l:string, '>\s*\zs\f*', l:i)
-            endif
-            let l:string = l:string[: l:i-1] . l:string[l:end :]
-            let l:i = l:end
-        else
-            let l:i += 1
-        endif
-    endwhile
-
-    return [l:fd, l:string]
-endfunction"}}}
-
-function! s:get_args(string)"{{{
-    let l:i = 0
-    let l:max = len(a:string)
-    let l:list = []
-    let l:arg = ''
-    let l:text = ''
-    while l:i <= l:max
-        if a:string[l:i] == "'"
-            " Single quote.
-            let l:end = matchend(a:string, "'\\zs[^']*'", l:i)
-            if l:end == -1
-                throw 'Quote error.'
-            endif
-            let l:arg .= a:string[l:i+1 : l:end-2]
-            let l:i = l:end
-        elseif a:string[l:i] == '"'
-            " Double quote.
-            let l:end = matchend(a:string, '"\zs\%([^"]\|\"\)*"', l:i)
-            if l:end == -1
-                throw 'Quote error.'
-            endif
-            let l:arg .= substitute(a:string[l:i+1 : l:end-2], '\\"', '"', 'g')
-            let l:i = l:end
-        elseif a:string[l:i] == '`'
-            " Back quote.
-            if a:string[l:i :] =~ '`='
-                let l:quote = matchstr(a:string, '^`=\zs[^`]*\ze`', l:i)
-                let l:end = matchend(a:string, '^`=[^`]*`', l:i)
-                let l:arg .= string(eval(l:quote))
-            else
-                let l:quote = matchstr(a:string, '^`\zs[^`]*\ze`', l:i)
-                let l:end = matchend(a:string, '^`[^`]*`', l:i)
-                let l:arg .= substitute(system(l:quote), '\n', ' ', 'g')
-            endif
-            let l:i = l:end
-        elseif a:string[l:i] != ' '
-            let l:text .= a:string[l:i]
-            let l:i += 1
-        else
-            let l:arg .= s:eval_text(l:text)
-            if l:arg != ''
-                call add(l:list, l:arg)
-                let l:arg = ''
-                let l:text = ''
-            endif
-
-            let l:i += 1
-        endif
-    endwhile
-
-    let l:arg .= s:eval_text(l:text)
-    if l:arg != ''
-        call add(l:list, l:arg)
-    endif
-
-    return l:list
-endfunction"}}}
-
-function! s:eval_text(text)"{{{
-    let l:i = 0
-    let l:string = ''
-    let l:max = len(a:text)
-    while l:i <= l:max
-        if a:text[i] == '*' || a:text[i] == '?'
-            let l:string .= join(split(escape(glob(l:string), ' '), '\n'))
-            break
-        elseif a:text[i] == '~' && i == 0
-            " Expand home directory.
-            let l:string .= $HOME
-            let l:i += 1
-        elseif a:text[i] == '$'
-            " Eval variables.
-            if a:text =~ '^$\l'
-                let l:string .= string(eval(printf("b:vimshell_variables['%s']", matchstr(a:text, '^$\zs\l\w*', l:i))))
-            elseif a:text =~ '^$$\h'
-                let l:string .= string(eval(printf("b:vimshell_system_variables['%s']", matchstr(a:text, '^$$\zs\h\w*', l:i))))
-            else
-                let l:string .= string(eval(matchstr(a:text, '^$\u\w*', l:i)))
-            endif
-            let l:i = matchend(a:text, '^$$\?\h\w*', l:i)
-        elseif a:text[i] == '\'
-            " Escape.
-            let l:i += 1
-
-            if l:i <= l:max
-                let l:string .= a:text[i]
-                let l:i += 1
-            endif
-        else
-            let l:string .= a:text[i]
-            let l:i += 1
-        endif
-    endwhile
-
-    return l:string
 endfunction"}}}
 
 function! vimshell#read(fd)"{{{
@@ -443,14 +325,14 @@ function! vimshell#read(fd)"{{{
         let l:ff = "\<LF>"
     endif
 
-    return join(readfile(a:fd.stdin), l:ff)
+    return join(readfile(a:fd.stdin), l:ff) . l:ff
 endfunction"}}}
 function! vimshell#print(fd, string)"{{{
     if a:string == ''
         return
     endif
 
-    if a:fd.stdout != ''
+    if !empty(a:fd) && a:fd.stdout != ''
         if a:fd.stdout != '/dev/null'
             " Write file.
             let l:file = extend(readfile(a:fd.stdout), split(a:string, '\r\n\|\n'))
@@ -467,27 +349,23 @@ function! vimshell#print(fd, string)"{{{
         let l:string = iconv(a:string, 'utf-8', &encoding) 
     endif
 
-    if l:string =~ '\r[[:print:]]'
-        " Set line.
-        for line in split(l:string, '\r\n\|\n')
-            call append(line('$'), '')
-
-            for l in split(line, '\r')
-                call setline(line('$'), l)
-                redraw
-            endfor
-        endfor
-    else
-        for line in split(l:string, '\r\n\|\r\|\n')
-            call append(line('$'), line)
-        endfor
+    " Strip <CR>.
+    let l:string = substitute(substitute(l:string, '\r', '', 'g'), '\n$', '', '')
+    let l:lines = split(l:string, '\n', 1)
+    if line('$') == 1 && empty(getline('$'))
+        call setline(line('$'), l:lines[0])
+        let l:lines = l:lines[1:]
     endif
+
+    for l:line in l:lines
+        call append(line('$'), l:line)
+    endfor
 
     " Set cursor.
     normal! G
 endfunction"}}}
 function! vimshell#print_line(fd, string)"{{{
-    if a:fd.stdout != ''
+    if !empty(a:fd) && a:fd.stdout != ''
         if a:fd.stdout != '/dev/null'
             " Write file.
             let l:file = add(readfile(a:fd.stdout), a:string)
@@ -495,13 +373,16 @@ function! vimshell#print_line(fd, string)"{{{
         endif
 
         return
+    elseif line('$') == 1 && empty(getline('$'))
+        call setline(line('$'), a:string)
+        normal! j
     else
         call append(line('$'), a:string)
         normal! j
     endif
 endfunction"}}}
 function! vimshell#error_line(fd, string)"{{{
-    if a:fd.stderr != ''
+    if !empty(a:fd) && a:fd.stderr != ''
         if a:fd.stdout != '/dev/null'
             " Write file.
             let l:file = extend(readfile(a:fd.stderr), split(a:string, '\r\n\|\n'))
@@ -509,8 +390,15 @@ function! vimshell#error_line(fd, string)"{{{
         endif
 
         return
+    endif
+
+    let l:string = '!!! ' . a:string . ' !!!'
+
+    if line('$') == 1 && empty(getline('$'))
+        call setline(line('$'), l:string)
+        normal! j
     else
-        call append(line('$'), '!!! '.a:string.' !!!')
+        call append(line('$'), l:string)
         normal! j
     endif
 endfunction"}}}
@@ -526,23 +414,47 @@ function! vimshell#print_prompt()"{{{
         let l:new_prompt = b:vimshell_commandline_stack[-1]
         call remove(b:vimshell_commandline_stack, -1)
     endif
-    if match(l:escaped, g:VimShell_Prompt) < 0
-        " Prompt not found
-        if !empty(l:escaped)
-            " Insert prompt line.
-            call append(line('$'), l:new_prompt)
-            normal! j
+
+    if s:user_prompt != ''
+        " Insert user prompt line.
+        let l:secondary = '[%] ' . eval(s:user_prompt)
+        if line('$') == 1 && getline('.') == ''
+            call setline(line('$'), l:secondary)
         else
-            " Set prompt line.
-            call setline(line('$'), l:new_prompt)
+            call append(line('$'), l:secondary)
+            normal! j$
         endif
-        normal! $
+    endif
+
+    " Insert prompt line.
+    if line('$') == 1 && getline('.') == ''
+        call setline(line('$'), l:new_prompt)
     else
-        " Insert prompt line.
         call append(line('$'), l:new_prompt)
         normal! j$
     endif
     let &modified = 0
+endfunction"}}}
+function! vimshell#append_history(command)"{{{
+    " Reduce blanks.
+    let l:command = substitute(a:command, '\s\+', ' ', 'g')
+    " Filtering.
+    call insert(filter(g:vimshell#hist_buffer, printf("v:val != '%s'", substitute(l:command, "'", "''", 'g'))), l:command)
+
+    " Trunk.
+    let g:vimshell#hist_buffer = g:vimshell#hist_buffer[:g:VimShell_HistoryMaxSize-1]
+
+    call writefile(g:vimshell#hist_buffer, g:VimShell_HistoryPath)
+
+    let s:hist_size = getfsize(g:VimShell_HistoryPath)
+endfunction"}}}
+function! vimshell#remove_history(command)"{{{
+    " Filtering.
+    call filter(g:vimshell#hist_buffer, printf("v:val !~ '^%s\s*'", a:command))
+
+    call writefile(g:vimshell#hist_buffer, g:VimShell_HistoryPath)
+
+    let s:hist_size = getfsize(g:VimShell_HistoryPath)
 endfunction"}}}
 
 function! vimshell#start_insert()"{{{
@@ -552,7 +464,7 @@ function! vimshell#start_insert()"{{{
 endfunction"}}}
 "}}}
 
-" VimShell key-mappings function."{{{
+" VimShell key-mappings functions."{{{
 function! vimshell#insert_command_completion()"{{{
     " Set function.
     let &l:omnifunc = 'vimshell#smart_omni_completion'
@@ -562,7 +474,7 @@ function! vimshell#smart_omni_completion(findstart, base)"{{{
         " Get cursor word.
         let l:cur_text = strpart(getline('.'), 0, col('.') - 1) 
 
-        return match(l:cur_text, '\h\w*$')
+        return match(l:cur_text, '\f\+$')
     endif
 
     " Save option.
@@ -596,6 +508,8 @@ function! vimshell#push_current_line()"{{{
 
     " Set prompt line.
     call setline(line('.'), g:VimShell_Prompt)
+
+    startinsert!
 endfunction"}}}
 
 function! vimshell#previous_prompt()"{{{
@@ -680,6 +594,64 @@ function! vimshell#delete_previous_prompt()"{{{
     endif
     normal! $
 endfunction"}}}
+function! vimshell#insert_last_word()"{{{
+    let l:word = ''
+    if !empty(g:vimshell#hist_buffer)
+        for w in reverse(split(g:vimshell#hist_buffer[0], '[^\\]\zs\s'))
+            if w =~ '[[:alpha:]_/\\]\{2,}'
+                let l:word = w
+                break
+            endif
+        endfor
+    endif
+    call setline(line('.'), getline('.') . l:word)
+    startinsert!
+endfunction"}}}
+function! vimshell#run_help()"{{{
+    if match(getline('.'), g:VimShell_Prompt) < 0
+        startinsert!
+        return
+    endif
+
+    " Delete prompt string.
+    let l:line = substitute(getline('.'), g:VimShell_Prompt, '', '')
+    if l:line =~ '^\s*$'
+        startinsert!
+        return
+    endif
+
+    let l:program = split(l:line)[0]
+    if l:program !~ '\h\w*'
+        startinsert!
+        return
+    elseif has_key(b:vimshell_alias_table, l:program)
+        let l:program = b:vimshell_alias_table[l:program]
+    elseif has_key(b:vimshell_galias_table, l:program)
+        let l:program = b:vimshell_galias_table[l:program]
+    endif
+
+    let l:nr = winnr()
+    call vimshell#internal#bg#execute('bg', ['man', '-P', 'cat', l:program], 
+                \{'stdin' : '', 'stdout' : '', 'stderr' : ''}, {'is_interactive' : 0, 'is_background' : 1})
+
+    normal! gg
+    execute l:nr.'wincmd w'
+    startinsert!
+endfunction"}}}
+function! vimshell#paste_prompt()"{{{
+    if match(getline('.'), g:VimShell_Prompt) < 0
+        return
+    endif
+
+    if match(getline('$'), g:VimShell_Prompt) < 0
+        " Insert prompt line.
+        call append(line('$'), getline('.'))
+    else
+        " Set prompt line.
+        call setline(line('$'), getline('.'))
+    endif
+    normal! G
+endfunction"}}}
 
 function! vimshell#create_shell(split_flag)"{{{
     let l:bufname = 'vimshell'
@@ -720,6 +692,9 @@ function! vimshell#create_shell(split_flag)"{{{
     if !exists('b:vimshell_alias_table')
         let b:vimshell_alias_table = {}
     endif
+    if !exists('b:vimshell_galias_table')
+        let b:vimshell_galias_table = {}
+    endif
     if !exists('s:internal_func_table')
         let s:internal_func_table = {}
 
@@ -729,9 +704,9 @@ function! vimshell#create_shell(split_flag)"{{{
             let s:internal_func_table[l:func_name] = 'vimshell#internal#' . l:func_name . '#execute'
         endfor
     endif
-    if !exists('s:special_func_table')
+    if !exists('g:vimshell#special_func_table')
         " Initialize table.
-        let s:special_func_table = {
+        let g:vimshell#special_func_table = {
                     \ 'command' : 's:special_command',
                     \ 'internal' : 's:special_internal',
                     \}
@@ -739,7 +714,7 @@ function! vimshell#create_shell(split_flag)"{{{
         " Search autoload.
         for list in split(globpath(&runtimepath, 'autoload/vimshell/special/*.vim'), '\n')
             let l:func_name = fnamemodify(list, ':t:r')
-            let s:special_func_table[l:func_name] = 'vimshell#special#' . l:func_name . '#execute'
+            let g:vimshell#special_func_table[l:func_name] = 'vimshell#special#' . l:func_name . '#execute'
         endfor
     endif
     if !exists('w:vimshell_directory_stack')
@@ -748,8 +723,8 @@ function! vimshell#create_shell(split_flag)"{{{
     endif
     " Load rc file.
     if filereadable(g:VimShell_VimshrcPath) && !exists('b:vimshell_loaded_vimshrc')
-        let l:fd = {}
-        let l:other_info = { 'has_head_spaces' : 0, 'is_interactive' : 0 }
+        let l:fd = { 'stdin' : '', 'stdout' : '', 'stderr' : '' }
+        let l:other_info = { 'has_head_spaces' : 0, 'is_interactive' : 0, 'is_background' : 0 }
         call vimshell#internal#vimsh#execute('vimsh', [g:VimShell_VimshrcPath], l:fd, l:other_info)
         let b:vimshell_loaded_vimshrc = 1
     endif
@@ -767,6 +742,8 @@ function! vimshell#create_shell(split_flag)"{{{
     let $TERM = "dumb"
     let $TERMCAP = "COLUMNS=" . winwidth(0)
     let $VIMSHELL = 1
+    let $COLUMNS = winwidth(0) * 8 / 10
+    let $LINES = winheight(0) * 8 / 10
 
     call vimshell#print_prompt()
 
@@ -788,65 +765,31 @@ function! s:restore_current_dir()"{{{
     endif
 endfunction"}}}
 
-function! s:highlight_escape_sequence()"{{{
-    let register_save = @"
-    while search("\<ESC>\\[[0-9;]*m", 'c')
-        normal! dfm
-
-        let [lnum, col] = getpos('.')[1:2]
-        if len(getline('.')) == col
-            let col += 1
-        endif
-        let syntax_name = 'EscapeSequenceAt_' . bufnr('%') . '_' . lnum . '_' . col
-        execute 'syntax region' syntax_name 'start=+\%' . lnum . 'l\%' . col . 'c+ end=+\%$+' 'contains=ALL'
-
-        let highlight = ''
-        for color_code in split(matchstr(@", '[0-9;]\+'), ';')
-            if color_code == 0
-                let highlight .= ' ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE'
-            elseif color_code == 1
-                let highlight .= ' cterm=bold gui=bold'
-            elseif 30 <= color_code && color_code <= 37
-                let highlight .= ' ctermfg=' . (color_code - 30)
-            elseif color_code == 38
-                " TODO
-            elseif color_code == 39
-                " TODO
-            elseif 40 <= color_code && color_code <= 47
-                let highlight .= ' ctermbg=' . (color_code - 40)
-            elseif color_code == 48
-                " TODO
-            elseif color_code == 49
-                " TODO
-            endif
-        endfor
-        if len(highlight)
-            execute 'highlight' syntax_name highlight
-        endif
-    endwhile
-    let @" = register_save
-endfunction"}}}
-
 function! s:get_complete_words(cur_keyword_str)"{{{
     let l:ret = []
     let l:pattern = printf('v:val =~ "^%s"', a:cur_keyword_str)
 
-    for keyword in filter(keys(b:vimshell_alias_table), l:pattern)
-        let l:dict = { 'word' : keyword, 'abbr' : keyword, 'menu' : '[Alias]', 'icase' : 1 }
+    for keyword in filter(split(glob(a:cur_keyword_str . '*'), '\n'), 'isdirectory(v:val)')
+        let l:dict = { 'word' : keyword, 'abbr' : keyword . '/', 'menu' : '[Dir]', 'icase' : 1 }
         call add(l:ret, l:dict)
     endfor 
 
-    for keyword in filter(keys(s:special_func_table), l:pattern)
-        let l:dict = { 'word' : keyword, 'abbr' : keyword, 'menu' : '[Special]', 'icase' : 1 }
+    for keyword in filter(keys(b:vimshell_alias_table), l:pattern)
+        let l:dict = { 'word' : keyword . ' ', 'abbr' : keyword, 'menu' : '[Alias]', 'icase' : 1 }
+        call add(l:ret, l:dict)
+    endfor 
+
+    for keyword in filter(keys(g:vimshell#special_func_table), l:pattern)
+        let l:dict = { 'word' : keyword . ' ', 'abbr' : keyword, 'menu' : '[Special]', 'icase' : 1 }
         call add(l:ret, l:dict)
     endfor 
 
     for keyword in filter(keys(s:internal_func_table), l:pattern)
-        let l:dict = { 'word' : keyword, 'abbr' : keyword, 'menu' : '[Internal]', 'icase' : 1 }
+        let l:dict = { 'word' : keyword . ' ', 'abbr' : keyword, 'menu' : '[Internal]', 'icase' : 1 }
         call add(l:ret, l:dict)
     endfor 
 
-    if len(a:cur_keyword_str) > 1
+    if a:cur_keyword_str =~ '\h\w\+$'
         " External commands.
         if has('win32') || has('win64')
             let l:path = substitute($PATH, '\\\?;', ',', 'g')
@@ -856,7 +799,7 @@ function! s:get_complete_words(cur_keyword_str)"{{{
 
         for keyword in map(filter(split(globpath(l:path, a:cur_keyword_str . '*'), '\n'),
                     \'executable(v:val)'), 'fnamemodify(v:val, ":t")')
-            let l:dict = { 'word' : keyword, 'abbr' : keyword, 'menu' : '[Command]', 'icase' : 1 }
+            let l:dict = { 'word' : keyword . ' ', 'abbr' : keyword, 'menu' : '[Command]', 'icase' : 1 }
             call add(l:ret, l:dict)
         endfor 
     endif

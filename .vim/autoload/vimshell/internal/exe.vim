@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: exe.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Jun 2009
+" Last Modified: 08 Aug 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,9 +23,22 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.2, for Vim 7.0
+" Version: 1.6, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   1.6:
+"     - Improved error message.
+"
+"   1.5:
+"     - Fixed stdin bug when g:VimShell_EnableInteractive is 0.
+"
+"   1.4:
+"     - Kill zombee process.
+"
+"   1.3:
+"     - Supported pipe.
+"     - Improved in console.
+"
 "   1.2: Improved error catch.
 "     - Get status. 
 "
@@ -45,17 +58,13 @@
 function! vimshell#internal#exe#execute(program, args, fd, other_info)"{{{
     " Execute command.
     if g:VimShell_EnableInteractive
-        call s:init_process(a:fd, a:args, a:other_info.is_interactive)
-
-        if has('win32') || has('win64')
-            while exists('b:vimproc_sub')
-                call interactive#execute_out()
-            endwhile
-        else
-            while exists('b:vimproc_sub')
-                call interactive#execute_pipe_out()
-            endwhile
+        if s:init_process(a:fd, a:args)
+            return 0
         endif
+
+        while exists('b:vimproc_sub')
+            call interactive#execute_pipe_out()
+        endwhile
         let b:vimshell_system_variables['status'] = b:vimproc_status
     else
         let l:cmdline = ''
@@ -73,11 +82,7 @@ function! vimshell#internal#exe#execute(program, args, fd, other_info)"{{{
             let l:stdin = '<' . l:null
         endif
 
-        if a:fd.stdout != ''
-            silent execute printf('!%s %s %s', l:cmdline, l:stdin, '>' . a:fd.stdout)
-        else
-            silent execute printf('read! %s %s', l:cmdline, l:stdin)
-        endif
+        call vimshell#print(a:fd, system(printf('%s %s', l:cmdline, l:stdin)))
 
         if a:fd.stdin == ''
             call delete(l:null)
@@ -89,25 +94,44 @@ function! vimshell#internal#exe#execute(program, args, fd, other_info)"{{{
     return 0
 endfunction"}}}
 
-function! s:init_process(fd, args, is_interactive)
+function! s:init_process(fd, args)
     if exists('b:vimproc_sub')
         " Delete zombee process.
-        call interactive#exit()
+        call interactive#force_exit()
     endif
 
     let l:proc = proc#import()
+    let l:sub = []
 
-    try
-        let l:sub = l:proc.popen3(a:args)
-    catch 'list index out of range'
-        if a:is_interactive
-            call vimshell#error_line(a:fd, printf('File: "%s" is not found.', a:args[0]))
+    " Search pipe.
+    let l:commands = [[]]
+    for arg in a:args
+        if arg == '|'
+            call add(l:commands, [])
         else
-            echohl WarningMsg | echo printf('File: "%s" is not found.', a:args[0]) | echohl None
+            call add(l:commands[-1], arg)
         endif
+    endfor
 
-        return
-    endtry
+    for command in l:commands
+        try
+            if g:VimShell_UsePopen2
+                call add(l:sub, l:proc.popen2(command))
+            else
+                call add(l:sub, l:proc.popen3(command))
+            endif
+        catch 'list index out of range'
+            if empty(command)
+                let l:error = 'Wrong pipe used.'
+            else
+                let l:error = printf('File: "%s" is not found.', command[0])
+            endif
+
+            call vimshell#error_line(a:fd, l:error)
+
+            return 1
+        endtry
+    endfor
 
     " Set variables.
     let b:vimproc = l:proc
@@ -116,7 +140,9 @@ function! s:init_process(fd, args, is_interactive)
 
     " Input from stdin.
     if b:vimproc_fd.stdin != ''
-        call b:vimproc_sub.stdin.write(vimshell#read(a:fd))
+        call b:vimproc_sub[0].stdin.write(vimshell#read(a:fd))
     endif
-    call b:vimproc_sub.stdin.close()
+    call b:vimproc_sub[0].stdin.close()
+
+    return 0
 endfunction

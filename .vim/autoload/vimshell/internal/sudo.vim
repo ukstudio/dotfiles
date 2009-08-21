@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: view.vim
+" FILE: sudo.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Jun 2009
+" Last Modified: 09 Jul 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,20 +23,15 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.4, for Vim 7.0
+" Version: 1.2, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
-"   1.4:
-"     - Extend current directory.
-"
-"   1.3:
-"     - Ignore directory.
-"
 "   1.2:
-"     - Improved error.
+"     - Implemented sudo vim.
+"     - Supported Mac OS X.
 "
 "   1.1:
-"     - Split nicely.
+"     - Improved in console.
 "
 "   1.0:
 "     - Initial version.
@@ -50,34 +45,25 @@
 ""}}}
 "=============================================================================
 
-function! vimshell#internal#view#execute(program, args, fd, other_info)
-    " View file.
-
-    " Filename escape
-    let l:arguments = join(a:args, ' ')
-
-    if isdirectory(l:arguments)
-        " Ignore.
+function! vimshell#internal#sudo#execute(program, args, fd, other_info)
+    " Execute GUI program.
+    if has('win32') || has('win64')
+        call vimshell#error_line(a:fd, 'This platform is not supported.')
         return 0
-    endif
-
-    call vimshell#print_prompt()
-
-    if empty(l:arguments)
-        vimshell#error_line(a:fd, 'Filename required.')
+    elseif empty(a:args)
+        call vimshell#error_line(a:fd, 'Arguments required.')
+        return 0
+    elseif a:args[0] == 'vim'
+        let l:args = a:args[1:]
+        let l:args[0] = 'sudo:' . l:args[0]
+        return vimshell#internal#vim#execute('vim', l:args, a:fd, a:other_info)
+    elseif has('gui_running')
+        return vimshell#internal#iexe#execute('iexe', insert(a:args, 'sudo'), a:fd, a:other_info)
     else
-        " Save current directiory.
-        let l:cwd = getcwd()
-
-        " Split nicely.
-        if winheight(0) > &winheight
-            split
-        else
-            vsplit
-        endif
-
-        edit `=l:arguments`
-        lcd `=l:cwd`
-        setlocal nomodifiable
+        " Console.
+        let l:interactive_save = g:VimShell_EnableInteractive
+        let g:VimShell_EnableInteractive = 0
+        call vimshell#internal#iexe#execute('iexe', insert(a:args, 'sudo'), a:fd, a:other_info)
+        let g:VimShell_EnableInteractive = l:interactive_save
     endif
 endfunction

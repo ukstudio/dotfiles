@@ -2,7 +2,7 @@
 " FILE: vimshell.vim
 " AUTHOR: Janakiraman .S <prince@india.ti.com>(Original)
 "         Shougo Matsushita <Shougo.Matsu@gmail.com>(Modified)
-" Last Modified: 21 Jun 2009
+" Last Modified: 15 Aug 2009
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -23,9 +23,124 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 5.16, for Vim 7.0
+" Version: 5.29, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   5.29 :
+"     - Implemented filename expantion.
+"     - Supported neocomplcache omni completion.
+"     - Improved block expantion.
+"     - Improved highlight of escape sequence.
+"     - Create g:VimShell_HistoryPath directory if not exists.
+"
+"   5.28 :
+"     - Fixed tail space bug(Thanks Nico).
+"     - Fixed prompt history bug(Thanks Nico).
+"     - Supported escape sequence in cd.
+"     - Print all error.
+"     - Improved error print format.
+"     - Optimized print.
+"     - Implemented user prompt.
+"     - Implemented exclude wildcard.
+"     - Implemented global alias.
+"
+"   5.27 :
+"     - Fixed parse error.
+"     - Optimized output.
+"     - Deleted long lines error.
+"     - Implemented paste prompt.
+"     - Extend current directory.
+"     - Applyed backspace patch(Thanks Nico!).
+"     - Added g:VimShell_PromptPrevKey, g:VimShell_PromptNextKey, g:VimShell_PastePromptKey options.
+"     - Improved run_help and push_current_line.
+"
+"   5.26 :
+"     - Implemented iexe completion.
+"     - Implemented iexe prompt.
+"     - <C-c> as <C-v><C-d>.
+"     - Added g:VimShell_HistoryPrevKey, g:VimShell_HistoryNextKey, g:VimShell_TabCompletionKey options.
+"     - Improved pty response.
+"     - Set filetype.
+"     - Improved initialize on pty.
+"     - Improved syntax highlight.
+"     - Improved run_help.
+"
+"   5.25 :
+"     - Catch kill error.
+"     - Improved prompt in background pty(Thanks Nico!).
+"     - Supported input empty.
+"     - Supported completion on pty.
+"     - Improved output in dirs command.
+"     - Implemented command history on pty(Thanks Nico!).
+"     - "." and ".." were excluded from a wildcard expand result.
+"
+"   5.24 :
+"     - Improved parser.
+"     - Fixed append_history() bug.
+"     - Implemented block.
+"     - Supported multiple statements.
+"     - Fixed alias parse bug.
+"     - Implemented repeat.
+"     - Improved pushd timing.
+"
+"   5.23 :
+"     - Improved completion.
+"     - Added g:VimShell_EnableAutoLs option.
+"     - Move to parent directory if argument isn't directory in cd command.
+"     - Implemented force kill processes.
+"
+"   5.22 :
+"     - Improved share history.
+"     - Improved run_help.
+"     - Improved alias.
+"     - Fixed parse bug.
+"     - Changed run_help key mappings.
+"     - Implemented sudo vim.
+"     - Improved iexe and bg(Tanks Nico!).
+"
+"   5.21 :
+"     - Improved error highlight.
+"     - Implemented password input.
+"     - Implemented sudo internal command.
+"     - Added g:VimShell_SecondaryPrompt option.
+"     - Set COLUMNS and LINES environment variables.
+"     - Remove dup history.
+"     - Improved history commands.
+"     - Splitted parser.
+"     - Reduce blanks when append history.
+"     - Implemented insert last word keymapping.
+"     - Improved iexe.
+"     - Implemented run_help.
+"
+"   5.20 :
+"     - Added g:VimShell_UsePopen2 option.
+"     - Openable directory in vim command.
+"     - Improved bg command.
+"     - Fixed escape sequence.
+"     - Improved highlight timing.
+"     - Implemented error highlight.
+"     - Refactoringed interactive.vim.
+"
+"   5.19 :
+"     - Improved variables path.
+"     - Implemented "h string".
+"     - Added space when command completed.
+"     - Improved escape sequence support.
+"
+"   5.18 :
+"     - Improved command completion.
+"     - Changed alias syntax.
+"     - Improved stdin read.
+"     - Improved pipe in external command.
+"
+"   5.17 :
+"     - Fixed error when bg or iexe terminated.
+"     - Implemented gexe command.
+"     - Implemented pipe.
+"     - Check pipe in ls command.
+"     - Improved wildcard.
+"     - Fully pipe implemented.
+"
 "   5.16 :
 "     - Implemented back quote and vim quote.
 "     - Implemented double quote escape.
@@ -271,9 +386,12 @@ nnoremap <silent> <Plug>(vimshell_create)  :<C-u>call vimshell#create_shell(0)<C
 nnoremap <silent> <Plug>(vimshell_enter)  :<C-u>call vimshell#process_enter()<CR>
 inoremap <silent> <Plug>(vimshell_insert_command_completion)  <ESC>:<C-u>call vimshell#insert_command_completion()<CR>a<C-x><C-o>
 inoremap <silent> <Plug>(vimshell_push_current_line)  <ESC>:<C-u>call vimshell#push_current_line()<CR>
+inoremap <silent> <Plug>(vimshell_insert_last_word)  <ESC>:<C-u>call vimshell#insert_last_word()<CR>
+inoremap <silent> <Plug>(vimshell_run_help)  <ESC>:<C-u>call vimshell#run_help()<CR>
 nnoremap <silent> <Plug>(vimshell_previous_prompt)  :<C-u>call vimshell#previous_prompt()<CR>
 nnoremap <silent> <Plug>(vimshell_next_prompt)  :<C-u>call vimshell#next_prompt()<CR>
 nnoremap <silent> <Plug>(vimshell_delete_previous_prompt)  :<C-u>call vimshell#delete_previous_prompt()<CR>
+nnoremap <silent> <Plug>(vimshell_paste_prompt)  :<C-u>call vimshell#paste_prompt()<CR>
 nmap <silent> <Leader>sp     <Plug>(vimshell_split_switch)
 nmap <silent> <Leader>sn     <Plug>(vimshell_split_create)
 nmap <silent> <Leader>sh     <Plug>(vimshell_switch)
@@ -284,14 +402,33 @@ nmap <silent> <Leader>sc     <Plug>(vimshell_create)
 if !exists('g:VimShell_Prompt')
     let g:VimShell_Prompt = 'VimShell% '
 endif
+if !exists('g:VimShell_SecondaryPrompt')
+    let g:VimShell_SecondaryPrompt = '%% '
+endif
 if !exists('g:VimShell_HistoryPath')
-    let g:VimShell_HistoryPath = $HOME.'/.vimshell_hist'
+    if has('win32') || has('win64')
+        let g:VimShell_HistoryPath = $HOME.'\.vimshell_hist'
+    else
+        let g:VimShell_HistoryPath = $HOME.'/.vimshell_hist'
+    endif
+
+    if !isdirectory(fnamemodify(g:VimShell_HistoryPath, ':p:h'))
+        call mkdir(fnamemodify(g:VimShell_HistoryPath, ':p:h'), 'p')
+    endif
 endif
 if !exists('g:VimShell_HistoryMaxSize')
     let g:VimShell_HistoryMaxSize = 1000
 endif
 if !exists('g:VimShell_VimshrcPath')
-    let g:VimShell_VimshrcPath = $HOME.'/.vimshrc'
+    if has('win32') || has('win64')
+        let g:VimShell_VimshrcPath = $HOME.'\.vimshrc'
+    else
+        let g:VimShell_VimshrcPath = $HOME.'/.vimshrc'
+    endif
+
+    if !isdirectory(fnamemodify(g:VimShell_VimshrcPath, ':p:h'))
+        call mkdir(fnamemodify(g:VimShell_VimshrcPath, ':p:h'), 'p')
+    endif
 endif
 if !exists('g:VimShell_IgnoreCase')
     let g:VimShell_IgnoreCase = 1
@@ -313,6 +450,31 @@ if !exists('g:VimShell_EnableInteractive')
 endif
 if !exists('g:VimShell_SplitHeight')
     let g:VimShell_SplitHeight = 30
+endif
+if !exists('g:VimShell_UsePopen2')
+    let g:VimShell_UsePopen2 = 0
+endif
+if !exists('g:VimShell_EnableAutoLs')
+    let g:VimShell_EnableAutoLs = 0
+endif
+" Key-mappings.
+if !exists('g:VimShell_HistoryPrevKey')
+    let g:VimShell_HistoryPrevKey = '<C-p>'
+endif
+if !exists('g:VimShell_HistoryNextKey')
+    let g:VimShell_HistoryNextKey = '<C-n>'
+endif
+if !exists('g:VimShell_TabCompletionKey')
+    let g:VimShell_TabCompletionKey = '<C-t>'
+endif
+if !exists('g:VimShell_PromptPrevKey')
+    let g:VimShell_PromptPrevKey = '<C-p>'
+endif
+if !exists('g:VimShell_PromptNextKey')
+    let g:VimShell_PromptNextKey = '<C-n>'
+endif
+if !exists('g:VimShell_PastePromptKey')
+    let g:VimShell_PastePromptKey = '<C-y>'
 endif
 "}}}
 
