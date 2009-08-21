@@ -192,6 +192,8 @@ inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
 inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
 inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
+" man.vim
+runtime ftplugin/man.vim
 "editing .vimrc " {{{1
 "
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
