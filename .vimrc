@@ -105,6 +105,7 @@ autocmd MyAutoCmd Filetype eruby set nowrap
 autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
+autocmd MyAutoCmd BufNewFile * call s:create_missing_directory()
 
 function! s:set_short_indent()
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -131,6 +132,15 @@ endfunction
 function! s:set_filetype_changelog()
   let g:changelog_timeformat = "%Y-%m-%d"
   let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
+endfunction
+
+function! s:create_missing_directory()
+  let dir = expand("<afile>:p:h")
+  if !isdirectory(dir) && confirm("Create a new directory [".dir."]?", "&Yes\n&No") == 1
+    call mkdir(dir, "p")
+    " Reset fullpath of the buffer in order to avoid problems when using autochdir.
+    file %
+  endif
 endfunction
 
 "Plugin " {{{1
