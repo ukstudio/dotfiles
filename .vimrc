@@ -190,12 +190,11 @@ autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
 inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
-inoremap <expr> ! smartchr#one_of('!',   ' != ')
 
 " man.vim
 runtime ftplugin/man.vim
+
 "editing .vimrc " {{{1
-"
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
 
