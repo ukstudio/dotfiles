@@ -46,6 +46,8 @@ command! -bang -nargs=? Sjis
 autocmd CursorHold * silent! wall
 autocmd CursorHoldI * silent! wall
 
+"helpの言語の優先順位
+set helplang=ja,en
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
@@ -90,6 +92,8 @@ inoremap <C-l> <C-x><C-l>
 "cd
 nnoremap <silent> cd :<C-u>cd %:h<Cr>
 
+"ファイルを行ったりきたり
+nnoremap <Space>b <C-^>
 
 " autocmd "{{{1
 augroup MyAutoCmd
