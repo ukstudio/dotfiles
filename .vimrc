@@ -49,6 +49,7 @@ autocmd CursorHoldI * silent! wall
 "helpの言語の優先順位
 set helplang=ja,en
 
+set gfn=AnonymousPro:h13
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
@@ -95,6 +96,8 @@ nnoremap <silent> cd :<C-u>cd %:h<Cr>
 "ファイルを行ったりきたり
 nnoremap <Space>b <C-^>
 
+" 検索結果のハイライトを消す
+noremap <silent> <C-l> :nohl<CR><C-l>
 " autocmd "{{{1
 augroup MyAutoCmd
   autocmd!
@@ -207,6 +210,4 @@ if has('gui_macvim')
   set guioptions-=T
   set background=dark
   set transparency=5
-  set gfn=AnonymousPro:h13
-  set gfw=Osaka-Mono:h13
 endif
