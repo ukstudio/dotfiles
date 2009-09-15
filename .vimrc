@@ -50,6 +50,11 @@ autocmd CursorHoldI * silent! wall
 set helplang=ja,en
 
 set gfn=AnonymousPro:h13
+
+" 戦闘力
+function! VimPower()
+  echo len(filter(extend(readfile($MYVIMRC), readfile($MYGVIMRC)),'v:val !~ "^\\s*$\\|^\\s*\""'))
+endfunction
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
