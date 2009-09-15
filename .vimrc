@@ -55,6 +55,8 @@ set gfn=AnonymousPro:h13
 function! VimPower()
   echo len(filter(extend(readfile($MYVIMRC), readfile($MYGVIMRC)),'v:val !~ "^\\s*$\\|^\\s*\""'))
 endfunction
+
+set autoread
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
