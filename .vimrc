@@ -16,6 +16,7 @@ set wildmenu    "補完候補の一覧を表示
 set smartindent
 set hlsearch
 set laststatus=2 
+set tw=0
 
 set noswapfile
 set nobackup
