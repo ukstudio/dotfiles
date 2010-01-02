@@ -95,9 +95,6 @@ nnoremap <Space>ftp :<C-u>set filetype=php<Cr>
 nnoremap <Space>ftr :<C-u>set filetype=ruby<Cr>
 nnoremap <Space>fth :<C-u>set filetype=html<Cr>
 
-"行頭からの補完
-inoremap <C-l> <C-x><C-l>
-
 "cd
 nnoremap <silent> cd :<C-u>cd %:h<Cr>
 
@@ -223,10 +220,3 @@ runtime ftplugin/man.vim
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
-
-"MacVim {{{1
-if has('gui_macvim')
-  set guioptions-=T
-  set background=dark
-  set transparency=5
-endif
