@@ -7,6 +7,7 @@ set verbose=9
 " 新規タブを開いた際にアクティブにする機能
 set activate=homepage,quickmark,tabopen,paste
 
+set showstatuslinks=2
 "補完
 set wildoptions=auto
 set complete=l
@@ -90,3 +91,5 @@ style -name tab-text-shadow-fix chrome://* <<EOM
   display: none !important;
 }
 EOM
+
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
