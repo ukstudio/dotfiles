@@ -53,3 +53,4 @@ bindkey '^Q' push-line-or-edit
 
 #rvm
 if [[ -s /Users/akamatsu/.rvm/scripts/rvm ]] ; then source /Users/akamatsu/.rvm/scripts/rvm ; fi
+rvm use 1.8.7
