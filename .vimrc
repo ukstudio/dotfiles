@@ -11,6 +11,7 @@ filetype plugin on
 set nu
 set ruler
 
+set cursorline
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 
