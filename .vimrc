@@ -9,14 +9,16 @@ filetype indent on
 filetype plugin on
 
 set nu
-set cursorline
 set ruler
+
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 
 set wildmenu    "補完候補の一覧を表示
 set smartindent
 set hlsearch
 set laststatus=2 
-set tw=0
+set textwidth=0
 
 set noswapfile
 set nobackup
