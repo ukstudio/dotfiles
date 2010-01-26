@@ -4,7 +4,6 @@ export SVN_EDITOR=vim
 export EDITOR=vim
 
 export LANG=ja_JP.UTF-8
-#alias gosh='rlwrap gosh'
 alias ls="ls -G -v"
 alias spec="spec -fs -c"
 alias v='vim'
@@ -33,7 +32,7 @@ colors
 PROMPT="%{${fg[white]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT2="%{${fg[white]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[white]}%}[%~]%{${reset_color}%}"
+RPROMPT="%{${fg[white]}%}[%~]%{${reset_color}%}%F{red}[${rvm_ruby_string:-system}]%f"
 
 function chpwd() { ls }
 
@@ -53,4 +52,3 @@ bindkey '^Q' push-line-or-edit
 
 #rvm
 if [[ -s /Users/akamatsu/.rvm/scripts/rvm ]] ; then source /Users/akamatsu/.rvm/scripts/rvm ; fi
-rvm use 1.8.7
