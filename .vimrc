@@ -52,8 +52,6 @@ autocmd CursorHoldI * silent! wall
 "helpの言語の優先順位
 set helplang=ja,en
 
-set gfn=AnonymousPro:h13
-
 " 戦闘力
 function! VimPower()
   echo len(filter(extend(readfile($MYVIMRC), readfile($MYGVIMRC)),'v:val !~ "^\\s*$\\|^\\s*\""'))
@@ -222,3 +220,11 @@ runtime ftplugin/man.vim
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
+
+"vimrc自動読み込み
+if !has('gui_running')
+  autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC
+else
+  autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC |if has('gui_running') | source $MYGVIMRC
+  autocmd MyAutoCmd BufWritePost $MYGVIMRC nested source $MYGVIMRC
+end
