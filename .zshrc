@@ -51,4 +51,4 @@ setopt noflowcontrol
 bindkey '^Q' push-line-or-edit
 
 #rvm
-if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
+if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
