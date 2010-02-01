@@ -1,3 +1,4 @@
+source ~/.zshrc.local
 export TERM=xterm-256color
 export LSCOLORS=cxfxcxdxbxegedabagacad
 export SVN_EDITOR=vim
@@ -7,13 +8,8 @@ export LANG=ja_JP.UTF-8
 alias ls="ls -G -v"
 alias spec="spec -fs -c"
 alias v='vim'
-alias mysql='mysql5'
 alias :q='exit'
-alias gvim='env LANG=ja_JP.UTF-8 open -a /Applications/MacVim.app "$@"'
 
-export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
-export MANPATH=/opt/local/man:$MANPATH
-export GISTY_DIR=$HOME/gists
 
 # 履歴の設定
 HISTFILE=~/.zsh_history
