@@ -1,3 +1,4 @@
+set editor='/usr/local/bin/mvim -f'
 " テキストボックスにフォーカスしない
 set focuscontent
 
