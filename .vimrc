@@ -192,7 +192,7 @@ let g:NeoComplCache_EnableInfo = 1
 " Delete keyword when rank is 0.
 let g:NeoComplCache_DeleteRank0 = 0
 
-let g:NeoComplCache_KeywordCompletionStartLength = 4 
+let g:NeoComplCache_KeywordCompletionStartLength = 3 
 let g:NeoComplCache_EnableCamelCaseCompletion = 1 
 
 " <TAB> completion.
@@ -218,6 +218,12 @@ inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
 " man.vim
 runtime ftplugin/man.vim
 
+" vimclojure
+let clj_highlight_builtins = 1
+let clj_highlight_contrib = 1
+let clj_paren_rainbow = 1
+let clj_want_gorilla = 1
+let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
