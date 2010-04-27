@@ -119,6 +119,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
 autocmd MyAutoCmd BufNewFile * call s:create_missing_directory()
+autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 
 function! s:set_short_indent()
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
