@@ -23,6 +23,9 @@ export AUTOFEATURE=true
 
 bindkey -v
 
+#rvm
+if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+
 autoload colors
 colors
 PROMPT="%{${fg[white]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
@@ -46,5 +49,3 @@ preexec () {
 setopt noflowcontrol
 bindkey '^Q' push-line-or-edit
 
-#rvm
-if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
