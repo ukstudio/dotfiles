@@ -170,11 +170,6 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "Plugin " {{{1
 
-" fuzzyfinder.vim
-nmap fb :FuzzyFinderBuffer<CR>
-nmap ff :FuzzyFinderFile<CR>
-nmap fm :FuzzyFinderMruFile<CR>
-
 " neocomplcache.vim
 " Use neocomplcache.
 let g:NeoComplCache_EnableAtStartup = 1
