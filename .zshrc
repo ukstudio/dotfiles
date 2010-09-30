@@ -1,4 +1,3 @@
-source ~/.zshrc.local
 export TERM=xterm-256color
 export LSCOLORS=cxfxcxdxbxegedabagacad
 export SVN_EDITOR=vim
@@ -49,3 +48,4 @@ preexec () {
 setopt noflowcontrol
 bindkey '^Q' push-line-or-edit
 
+source ~/.zshrc.local
