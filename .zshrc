@@ -5,9 +5,10 @@ export EDITOR=vim
 
 export LANG=ja_JP.UTF-8
 alias ls="ls -G -v"
-alias spec="spec -fs -c"
 alias v='vim'
 alias :q='exit'
+alias g='git'
+alias r='rails'
 
 
 # 履歴の設定
