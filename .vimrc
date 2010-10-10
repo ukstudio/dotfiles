@@ -2,6 +2,10 @@
 set foldmethod=marker
 colorscheme xoria256
 
+set gfn=Inconsolata:h13
+set gfw=TakaoExGothic:h11
+set background=light
+
 set nocompatible
 syntax on
 filetype on
