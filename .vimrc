@@ -224,6 +224,12 @@ let clj_highlight_contrib = 1
 let clj_paren_rainbow = 1
 let clj_want_gorilla = 1
 let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
+
+" unite.vim
+let g:unite_enable_start_insert = 1
+nmap <C-k>b :<C-u>Unite buffer<CR>
+nmap <C-k>m :<C-u>Unite file_mru<CR>
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
