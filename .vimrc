@@ -1,9 +1,9 @@
 "Basic " {{{1
+"
 set foldmethod=marker
 colorscheme xoria256
-
-set gfn=Inconsolata:h13
-set gfw=TakaoExGothic:h11
+"set gfn=Inconsolata:h13
+"set gfw=TakaoExGothic:h11
 set background=light
 
 set nocompatible
@@ -49,6 +49,9 @@ command! -bang -nargs=? Euc
 
 command! -bang -nargs=? Sjis
       \ edit<bang> ++enc=Shift-jis <args>
+
+command! -bang -nargs=? Cp932
+      \ edit<bang> ++enc=Cp932<args>
 
 "自動保存
 autocmd CursorHold * silent! wall
@@ -175,25 +178,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "Plugin " {{{1
 
 " neocomplcache.vim
-" Use neocomplcache.
-let g:NeoComplCache_EnableAtStartup = 1
-" Use smartcase.
-let g:NeoComplCache_SmartCase = 1
-" Use mfu.
-let g:NeoComplCache_EnableMFU = 1
-" Use previous keyword completion.
-let g:NeoComplCache_PreviousKeywordCompletion = 1
-" Use similar match.
-let g:NeoComplCache_SimilarMatch = 1
-" Try keyword completion.
-let g:NeoComplCache_TryKeywordCompletion = 1
-" Use preview window.
-let g:NeoComplCache_EnableInfo = 1
-" Delete keyword when rank is 0.
-let g:NeoComplCache_DeleteRank0 = 0
-
-let g:NeoComplCache_KeywordCompletionStartLength = 3 
-let g:NeoComplCache_EnableCamelCaseCompletion = 1 
+let g:neocomplcache_enable_at_startup = 1
 
 " <TAB> completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -229,6 +214,7 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 let g:unite_enable_start_insert = 1
 nmap <C-k>b :<C-u>Unite buffer<CR>
 nmap <C-k>m :<C-u>Unite file_mru<CR>
+nmap <C-k>f :<C-u>Unite file<CR>
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
