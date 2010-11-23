@@ -7,7 +7,7 @@ export LANG=ja_JP.UTF-8
 alias ls="ls -G -v"
 alias v='vim'
 alias :q='exit'
-alias g='git'
+alias g='noglob git'
 alias r='rails'
 
 
@@ -17,9 +17,6 @@ HISTSIZE=100000
 SAVEHIST=100000
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
-
-export RSPEC=true
-export AUTOFEATURE=true
 
 bindkey -v
 
@@ -40,6 +37,9 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
+
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
 
 preexec () {
   [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
