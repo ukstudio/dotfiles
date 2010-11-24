@@ -1,5 +1,8 @@
 "Basic " {{{1
-"
+
+" pathogen.vim
+call pathogen#runtime_append_all_bundles()
+
 set foldmethod=marker
 colorscheme xoria256
 "set gfn=Inconsolata:h13
@@ -34,7 +37,7 @@ set ambiwidth=double
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
-let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocomplcache#keyword_complete#caching_percent("")."%]"} %3l,%3c %3p%%' 
+let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"} %3l,%3c %3p%%' 
 
 ":TOhtml
 let g:use_xhtml = 1
@@ -184,6 +187,7 @@ let g:neocomplcache_enable_camel_case_completion = 1
 let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+"let g:neocomplcache_enable_auto_select = 1
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -208,11 +212,8 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
