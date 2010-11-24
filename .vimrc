@@ -258,6 +258,11 @@ nmap <C-k>b :<C-u>Unite buffer<CR>
 nmap <C-k>m :<C-u>Unite file_mru<CR>
 nmap <C-k>f :<C-u>Unite file<CR>
 
+" quickrun.vimneocomplcache#smart_close_popup() . "\
+autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+let g:quickrun_config = {}
+let g:quickrun_config['ruby.rspec'] = {'command': "rspec -l {line('.')}"}
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
