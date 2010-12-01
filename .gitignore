@@ -2,6 +2,5 @@
 .vimperator/info/
 .vim/tmp
 .vim/.netrwhist
-.vim/doc/tags
 .vim/simplenoterc
-
+.vim/doc/tags
