@@ -25,10 +25,10 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 autoload colors
 colors
-PROMPT="%{${fg[white]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
-PROMPT2="%{${fg[white]}%}%_> %{${reset_color}%}"
+PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
+PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[white]}%}[%~]%{${reset_color}%}%F{red}[${rvm_ruby_string:-system}]%f"
+RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}[${rvm_ruby_string:-system}]%f"
 
 function chpwd() { ls }
 

@@ -4,9 +4,7 @@
 call pathogen#runtime_append_all_bundles()
 
 set foldmethod=marker
-colorscheme xoria256
-"set gfn=Inconsolata:h13
-"set gfw=TakaoExGothic:h11
+colorscheme newspaper
 set background=light
 
 set nocompatible
