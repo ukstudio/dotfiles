@@ -9,6 +9,7 @@ alias v='vim'
 alias :q='exit'
 alias g='noglob git'
 alias r='rails'
+alias o='gnome-open'
 
 
 # 履歴の設定
