@@ -66,6 +66,11 @@ function! VimPower()
   echo len(filter(extend(readfile($MYVIMRC), readfile($MYGVIMRC)),'v:val !~ "^\\s*$\\|^\\s*\""'))
 endfunction
 
+function! Outline()
+  vimgrep /^=/ % | cw
+endfunction
+nmap <C-o> :<C-u>call Outline()<CR>
+
 set autoread
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
