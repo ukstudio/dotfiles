@@ -10,3 +10,9 @@
 [submodule ".vim/bundle/vim-smartchr"]
 	path = .vim/bundle/vim-smartchr
 	url = git://github.com/kana/vim-smartchr.git
+[submodule ".vim/bundle/vimshell"]
+	path = .vim/bundle/vimshell
+	url = git://github.com/Shougo/vimshell.git
+[submodule ".vim/bundle/vimprc"]
+	path = .vim/bundle/vimprc
+	url = git://github.com/Shougo/vimproc.git
