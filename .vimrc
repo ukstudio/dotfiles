@@ -242,11 +242,6 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
-" smartchr.vim
-inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-inoremap <expr> + smartchr#one_of(' + ', ' += ', '+')
-inoremap <expr> - smartchr#one_of(' - ', ' -= ', '-')
-
 " man.vim
 runtime ftplugin/man.vim
 
