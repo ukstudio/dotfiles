@@ -4,7 +4,7 @@
 call pathogen#runtime_append_all_bundles()
 
 set foldmethod=marker
-colorscheme newspaper
+colorscheme chela_light
 set background=light
 
 set nocompatible
