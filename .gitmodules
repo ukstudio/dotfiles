@@ -16,3 +16,6 @@
 [submodule ".vim/bundle/vimprc"]
 	path = .vim/bundle/vimprc
 	url = git://github.com/Shougo/vimproc.git
+[submodule ".vim/bundle/neco-look"]
+	path = .vim/bundle/neco-look
+	url = git://github.com/ujihisa/neco-look.git
