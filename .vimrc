@@ -4,7 +4,7 @@
 call pathogen#runtime_append_all_bundles()
 
 set foldmethod=marker
-colorscheme chela_light
+colorscheme solarized
 set background=light
 
 set nocompatible
@@ -180,6 +180,7 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType haskell setlocal omnifunc=syntaxcomplete#Complete
 
 "Plugin " {{{1
 "
