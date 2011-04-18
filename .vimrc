@@ -9,9 +9,8 @@ set background=light
 
 set nocompatible
 syntax on
-filetype on
-filetype indent on
-filetype plugin on
+filetype off
+filetype plugin indent on
 
 set nu
 set ruler
