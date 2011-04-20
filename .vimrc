@@ -254,9 +254,8 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
 " unite.vim
 let g:unite_enable_start_insert = 1
-nmap <C-k>b :<C-u>Unite buffer<CR>
-nmap <C-k>m :<C-u>Unite file_mru<CR>
-nmap <C-k>f :<C-u>Unite file<CR>
+nmap <C-k>b :<C-u>Unite buffer -buffer-name=files -default-action=split<CR>
+nmap <C-k>f :<C-u>Unite file file_rec file_mru -buffer-name=files -default-action=split<CR>
 
 " quickrun.vimneocomplcache#smart_close_popup() . "\
 autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
