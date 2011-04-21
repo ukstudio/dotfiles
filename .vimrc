@@ -5,7 +5,7 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 set foldmethod=marker
-colorscheme solarized
+colorscheme wombat
 set background=light
 
 set nocompatible
