@@ -2,6 +2,7 @@
 
 " pathogen.vim
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 set foldmethod=marker
 colorscheme solarized
@@ -140,7 +141,7 @@ endfunction
 function! s:set_filetype_ruby()
   " rails.vim
   let g:rails_level=4
-  let g:rails_default_file="app/controllers/application.rb"
+  let g:rails_default_file="app/controllers/application_controller.rb"
 
   " rubycomplete.vim
   let g:rubycomplete_buffer_loading = 1
@@ -180,6 +181,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType haskell setlocal omnifunc=syntaxcomplete#Complete
+set completefunc=syntaxcomplete#Complete
 
 "Plugin " {{{1
 "
