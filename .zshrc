@@ -11,6 +11,8 @@ alias g='noglob git'
 alias r='rails'
 alias o='gnome-open'
 
+alias tmux-changekey='tmux set-option -ag prefix C-t'
+alias tmux-revertkey='tmux set-option -ag prefix C-a'
 
 # 履歴の設定
 HISTFILE=~/.zsh_history
