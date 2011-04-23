@@ -3,5 +3,5 @@
 .vim/tmp
 .vim/.netrwhist
 .vim/simplenoterc
-.vim/doc/tags
+.vim/doc/tags*
 *~
