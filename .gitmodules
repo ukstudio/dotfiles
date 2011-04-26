@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/vim-review"]
 	path = .vim/bundle/vim-review
 	url = git://github.com/ukstudio/vim-review.git
+[submodule ".vim/bundle/vim-ref"]
+	path = .vim/bundle/vim-ref
+	url = git://github.com/thinca/vim-ref.git
