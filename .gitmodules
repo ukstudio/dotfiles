@@ -31,3 +31,6 @@
 [submodule ".vim/bundle/vim-ref"]
 	path = .vim/bundle/vim-ref
 	url = git://github.com/thinca/vim-ref.git
+[submodule ".vim/bundle/vim-fugitive"]
+	path = .vim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive.git
