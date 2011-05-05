@@ -1,12 +1,12 @@
-snippet     desc
+snippet     describe
 abbr        describe
-  describe ${1:class_name} do
+  describe ${1:describe} do
     ${2}
   end
 
 snippet     context 
 abbr        context
-  context ${1:class_name} do
+  context ${1:context} do
     ${2}
   end
 
@@ -15,3 +15,37 @@ abbr        before
   before do
     ${1}
   end
+
+snippet it
+abbr it
+  it { ${1} }
+
+snippet its
+abbr its
+  its(${1}) { ${2} }
+
+snippet RS::M
+abbr RSpec::Matcher.define
+  Rspec::Matcher.define :${1:name} do |expected|
+    match do |actual|
+      ${2}
+    end
+  end
+
+snippet RS::Ml
+abbr RSpec::Matcher.define
+  Rspec::Matcher.define :${1:name} do |expected|
+    match do |actual|
+      ${2}
+    end
+
+    description do
+    end
+
+    failure_message_for_should do |actual|
+    end
+
+    failure_message_for_should_not do |actual|
+    end
+  end
+
