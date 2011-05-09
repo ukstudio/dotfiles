@@ -52,4 +52,4 @@ preexec () {
 setopt noflowcontrol
 bindkey '^Q' push-line-or-edit
 
-source ~/.zshrc.local
+[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
