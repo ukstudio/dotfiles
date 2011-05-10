@@ -135,6 +135,8 @@ autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 
+autocmd MyAutoCmd FileType javascript call s:set_short_indent()
+
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
 autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
@@ -232,7 +234,7 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 let g:unite_enable_start_insert = 1
 nmap <C-k>b :<C-u>Unite buffer -buffer-name=files -default-action=split<CR>
 nmap <C-k>f :<C-u>Unite file_rec -buffer-name=files -default-action=split<CR>
-nmap <C-k>o :<C-u>Unite outline<CR>
+nmap <C-k>o :<C-u>Unite outline -auto-preview<CR>
 
 " quickrun " {{{2
 autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
