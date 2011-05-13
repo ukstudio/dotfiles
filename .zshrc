@@ -26,12 +26,21 @@ bindkey -v
 #rvm
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
-autoload colors
-colors
+autoload colors; colors
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '[%b]'
+
+precmd () {
+  psvar=()
+  LANG=en_US.UTF-8 vcs_info
+  [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+  [[ -n "$rvm_ruby_string" ]] && psvar[2]="${rvm_ruby_string:-system}"
+}
+
 PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}[${rvm_ruby_string:-system}]%f"
+RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}%2v%1v%f"
 
 function chpwd() { ls }
 

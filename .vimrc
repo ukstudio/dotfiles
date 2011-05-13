@@ -135,8 +135,8 @@ autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 
-autocmd MyAutoCmd FileType javascript call s:set_short_indent()
-autocmd MyAutoCmd FileType haskell call s:set_short_indent()
+autocmd MyAutoCmd FileType * call s:set_short_indent()
+
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
