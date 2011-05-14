@@ -134,6 +134,7 @@ endfunction
 autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
+autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
 
 autocmd MyAutoCmd FileType * call s:set_short_indent()
 
