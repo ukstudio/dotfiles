@@ -13,6 +13,7 @@ alias o='gnome-open'
 
 alias tmux-changekey='tmux set-option -ag prefix C-t'
 alias tmux-revertkey='tmux set-option -ag prefix C-a'
+alias tchdir='tmux set-option default-path $PWD'
 
 # 履歴の設定
 HISTFILE=~/.zsh_history
