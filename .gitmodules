@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/zencoding-vim"]
 	path = .vim/bundle/zencoding-vim
 	url = git://github.com/mattn/zencoding-vim.git
+[submodule ".vim/snippets"]
+	path = .vim/snippets
+	url = git@github.com:ukstudio/neocon-snippets.git
