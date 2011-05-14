@@ -242,6 +242,7 @@ nmap <C-k>o :<C-u>Unite outline -auto-preview<CR>
 autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
 let g:quickrun_config = {}
 let g:quickrun_config['ruby.rspec'] = {'command': "rspec -l {line('.')}"}
+let g:quickrun_config['coffee'] = {'command': "coffee"}
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
