@@ -117,6 +117,10 @@ nnoremap <Space>b <C-^>
 " 検索結果のハイライトを消す
 noremap <silent> <C-l> :nohl<CR><C-l>
 
+" for vim-fugitive
+nnoremap <Space>ga :<C-u>Gwrite<Cr>
+nnoremap <Space>gc :<C-u>Gcommit -v<Cr>
+
 " autocmd "{{{1
 autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 
