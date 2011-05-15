@@ -46,3 +46,6 @@
 [submodule ".vim/snippets"]
 	path = .vim/snippets
 	url = git@github.com:ukstudio/neocon-snippets.git
+[submodule ".vim/bundle/unite-grep"]
+	path = .vim/bundle/unite-grep
+	url = git://github.com/Sixeight/unite-grep.git
