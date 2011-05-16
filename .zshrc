@@ -30,6 +30,7 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 autoload colors; colors
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 precmd () {
   psvar=()
