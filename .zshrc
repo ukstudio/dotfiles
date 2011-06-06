@@ -36,13 +36,13 @@ precmd () {
   psvar=()
   LANG=en_US.UTF-8 vcs_info
   [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-  [[ -n "$rvm_ruby_string" ]] && psvar[2]="[${rvm_ruby_string:-system}]"
+  [[ -n "`$HOME/.rvm/bin/rvm-prompt`" ]] && psvar[2]="[`$HOME/.rvm/bin/rvm-prompt`]"
 }
 
 PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}%2v%F{blue}%1v%f"
+RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}%2v%3v%F{blue}%1v%f"
 
 function chpwd() { ls }
 
