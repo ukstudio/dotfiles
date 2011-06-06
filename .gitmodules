@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/unite-grep"]
 	path = .vim/bundle/unite-grep
 	url = git://github.com/Sixeight/unite-grep.git
+[submodule ".vim/bundle/vim-qfreplace"]
+	path = .vim/bundle/vim-qfreplace
+	url = git://github.com/thinca/vim-qfreplace.git
