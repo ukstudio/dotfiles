@@ -27,7 +27,7 @@ autocmd WinLeave * setlocal nocursorline
 set wildmenu    "補完候補の一覧を表示
 set smartindent
 set hlsearch
-set laststatus=2 
+set laststatus=2
 set textwidth=0
 
 set noswapfile
@@ -39,7 +39,7 @@ set ambiwidth=double
 "最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
 set backspace=indent,eol,start
 
-let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"} %3l,%3c %3p%%' 
+let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"} %3l,%3c %3p%%'
 
 ":TOhtml
 let g:use_xhtml = 1
@@ -76,6 +76,10 @@ endfunction
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 
+" 末尾のスペースをハイライト
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
+autocmd WinEnter * match WhitespaceEOL /\s\+$/
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
@@ -126,13 +130,20 @@ autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 
 autocmd MyAutoCmd BufNewFile * call s:create_missing_directory()
 function! s:create_missing_directory()
-  let dir = expand("<afile>:p:h")
+ let dir = expand("<afile>:p:h")
   if !isdirectory(dir) && confirm("Create a new directory [".dir."]?", "&Yes\n&No") == 1
     call mkdir(dir, "p")
     " Reset fullpath of the buffer in order to avoid problems when using autochdir.
     file %
   endif
 endfunction
+
+function! s:delete_eol_spaces()
+  :%s/\s$//e
+endfunction
+" 末尾のスペース削除
+autocmd MyAutoCmd BufWrite * call s:delete_eol_spaces()
+
 
 " filetype "{{{2
 autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
@@ -216,6 +227,7 @@ autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType rspec setlocal omnifunc=rubycomplete#Complete
 autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
 
 
@@ -223,7 +235,7 @@ autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.ruby = '\h\w*'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " man.vim " {{{2
