@@ -9,7 +9,7 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 set foldmethod=marker
-colorscheme ir_black
+colorscheme ukstudio256
 set background=dark
 
 set nocompatible
