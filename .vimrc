@@ -72,6 +72,10 @@ function! s:set_short_indent()
   setlocal expandtab softtabstop=2 shiftwidth=2
 endfunction
 
+function! s:set_review_indent()
+  setlocal noexpandtab
+endfunction
+
 " template
 autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
 autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
@@ -150,9 +154,11 @@ autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
+autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
 
-autocmd MyAutoCmd FileType * call s:set_short_indent()
-
+autocmd MyAutoCmd FileType review call s:set_short_indent()
+autocmd MyAutoCmd FileType html call s:set_short_indent()
+autocmd MyAutoCmd FileType eruby call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
