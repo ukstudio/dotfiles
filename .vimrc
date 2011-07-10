@@ -159,6 +159,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
 autocmd MyAutoCmd FileType review call s:set_short_indent()
 autocmd MyAutoCmd FileType html call s:set_short_indent()
 autocmd MyAutoCmd FileType eruby call s:set_short_indent()
+autocmd MyAutoCmd FileType text call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
