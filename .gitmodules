@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/vim-ukstudio256"]
 	path = .vim/bundle/vim-ukstudio256
 	url = git://github.com/ukstudio/vim-ukstudio256.git
+[submodule ".vim/bundle/tagbar"]
+	path = .vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
