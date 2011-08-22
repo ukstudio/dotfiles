@@ -267,6 +267,10 @@ let g:quickrun_config = {}
 let g:quickrun_config['ruby.rspec'] = {'command': "rspec -l {line('.')}"}
 let g:quickrun_config['coffee'] = {'command': "coffee"}
 
+" tagbar " {{{2
+let g:tagbar_usearrows = 1
+nnoremap <Leader>l :TagbarToggle<CR>
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
