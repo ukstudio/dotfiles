@@ -7,22 +7,24 @@
 -- Normally, you'd only override those defaults you care about.
 --
 
-import Control.OldException
-import Control.Monad
-import DBus
-import DBus.Connection
-import DBus.Message
+--import Control.OldException
+--import Control.Monad
+--import DBus
+--import DBus.Connection
+--import DBus.Message
 
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
+import XMonad.Actions.GridSelect
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 
 import Data.Monoid
 import System.Exit
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -85,12 +87,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
@@ -150,9 +146,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    
-    -- run google-chrome
-    , ((modm              , xK_g     ), spawn "google-chrome")
+
+    -- run GridSelect
+    , ((modm              , xK_g     ), goToSelected defaultGSConfig)
+
+    -- run shell
+    , ((modm              , xK_p     ), shellPrompt defaultXPConfig)
     ]
     ++
 
@@ -275,57 +274,15 @@ myStartupHook = return ()
 --
 --main = xmonad defaults
 
-getWellKnownName :: Connection -> IO ()
-getWellKnownName dbus = tryGetName `catchDyn` (\ (DBus.Error _ _) -> getWellKnownName dbus)
- where
-  tryGetName = do
-    namereq <- newMethodCall serviceDBus pathDBus interfaceDBus "RequestName"
-    addArgs namereq [String "org.xmonad.Log", Word32 5]
-    sendWithReplyAndBlock dbus namereq 0
-    return ()
-
 main :: IO()
-main = withConnection Session $ \ dbus -> do
-  putStrLn "Getting well-known name."
-  getWellKnownName dbus
-  putStrLn "Got name, starting XMonad."
-  xmonad $ gnomeConfig
+main = xmonad $ gnomeConfig
     { manageHook = manageHook gnomeConfig
-    , logHook = do
-        logHook gnomeConfig
-        dynamicLogWithPP $ defaultPP {
-          ppOutput = \ str -> do
-            let str'  = "<span font=\"monospace\">" ++ str ++ "</span>"
-            msg <- newSignal "/org/xmonad/Log" "org.xmonad.Log" "Update"
-            addArgs msg [String str']
-            -- If the send fails, ignore it.
-            send dbus msg 0 `catchDyn` (\ (DBus.Error _name _msg) -> return 0)
-            return ()
-            , ppTitle    = pangoColor "#cccccc" . shorten 60 . escape
-            , ppCurrent  = pangoColor "#cccccc" . wrap "[" "]"
-            , ppVisible  = pangoColor "#cccccc" . wrap "_" ""
-            , ppHidden   = pangoColor "#666666" . wrap "" ""
-            , ppUrgent   = pangoColor "red"
-         }
+    , logHook = myLogHook
     , modMask = mod1Mask
     , keys = myKeys
     , terminal = myTerminal
     }
 
-pangoColor :: String -> String -> String
-pangoColor fg = wrap left right
- where
-  left  = "<span foreground=\"" ++ fg ++ "\">"
-  right = "</span>"
-
-escape :: String -> String
-escape = concatMap escapeChar
-escapeChar :: Char -> String
-escapeChar '<' = "&lt;"
-escapeChar '>' = "&gt;"
-escapeChar '&' = "&amp;"
-escapeChar '"' = "&quot;"
-escapeChar c = [c]
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
