@@ -14,7 +14,8 @@
 --import DBus.Message
 
 import XMonad
-import XMonad.Config.Gnome
+import XMonad.Config.Xfce
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Actions.GridSelect
 import XMonad.Prompt
@@ -167,9 +168,8 @@ myLogHook = return ()
 myStartupHook = return ()
 
 main :: IO()
-main = xmonad $ gnomeConfig
-    { manageHook = manageHook gnomeConfig
-    , logHook = myLogHook
+main = xmonad $ xfceConfig
+    { logHook = myLogHook
     , modMask = mod1Mask
     , keys = myKeys
     , terminal = myTerminal
