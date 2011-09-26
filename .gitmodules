@@ -1,60 +1,6 @@
-[submodule ".vim/bundle/neocomplcache"]
-	path = .vim/bundle/neocomplcache
-	url = git://github.com/ukstudio/neocomplcache.git
-[submodule ".vim/bundle/vim-rails"]
-	path = .vim/bundle/vim-rails
-	url = git://github.com/tpope/vim-rails.git
-[submodule ".vim/bundle/unite"]
-	path = .vim/bundle/unite
-	url = git://github.com/Shougo/unite.vim.git
-[submodule ".vim/bundle/vim-smartchr"]
-	path = .vim/bundle/vim-smartchr
-	url = git://github.com/kana/vim-smartchr.git
-[submodule ".vim/bundle/vimshell"]
-	path = .vim/bundle/vimshell
-	url = git://github.com/Shougo/vimshell.git
-[submodule ".vim/bundle/vimprc"]
-	path = .vim/bundle/vimprc
-	url = git://github.com/Shougo/vimproc.git
-[submodule ".vim/bundle/neco-look"]
-	path = .vim/bundle/neco-look
-	url = git://github.com/ujihisa/neco-look.git
-[submodule ".vim/bundle/vim-coffee-script"]
-	path = .vim/bundle/vim-coffee-script
-	url = git://github.com/kchmck/vim-coffee-script.git
-[submodule ".vim/bundle/unite-outline"]
-	path = .vim/bundle/unite-outline
-	url = git://github.com/h1mesuke/unite-outline.git
-[submodule ".vim/bundle/vim-review"]
-	path = .vim/bundle/vim-review
-	url = git://github.com/ukstudio/vim-review.git
-[submodule ".vim/bundle/vim-ref"]
-	path = .vim/bundle/vim-ref
-	url = git://github.com/thinca/vim-ref.git
-[submodule ".vim/bundle/vim-fugitive"]
-	path = .vim/bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
-[submodule ".vim/bundle/quickrun"]
-	path = .vim/bundle/quickrun
-	url = git://github.com/ujihisa/quickrun.git
-[submodule ".vim/bundle/zencoding-vim"]
-	path = .vim/bundle/zencoding-vim
-	url = git://github.com/mattn/zencoding-vim.git
 [submodule ".vim/snippets"]
 	path = .vim/snippets
 	url = git@github.com:ukstudio/neocon-snippets.git
-[submodule ".vim/bundle/unite-grep"]
-	path = .vim/bundle/unite-grep
-	url = git://github.com/Sixeight/unite-grep.git
-[submodule ".vim/bundle/vim-qfreplace"]
-	path = .vim/bundle/vim-qfreplace
-	url = git://github.com/thinca/vim-qfreplace.git
-[submodule ".vim/bundle/vim-ukstudio256"]
-	path = .vim/bundle/vim-ukstudio256
-	url = git://github.com/ukstudio/vim-ukstudio256.git
-[submodule ".vim/bundle/tagbar"]
-	path = .vim/bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = git://github.com/scrooloose/nerdcommenter.git
+[submodule ".vim/vundle"]
+	path = .vim/vundle
+	url = http://github.com/gmarik/vundle.git

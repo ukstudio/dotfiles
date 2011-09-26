@@ -4,18 +4,38 @@ augroup MyAutoCmd
   autocmd!
 augroup end
 
-" pathogen.vim
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+set nocompatible
+syntax on
+filetype off
+
+set rtp+=~/.vim/vundle
+call vundle#rc()
+
+Bundle 'neocomplcache'
+Bundle 'tpope/vim-rails'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimshell'
+Bundle 'Shougo/vimproc'
+Bundle 'Shougo/vimfiler'
+Bundle 'ujihisa/neco-look'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'h1mesuke/unite-outline'
+Bundle 'ukstudio/vim-review'
+Bundle 'thinca/vim-ref'
+Bundle 'tpope/vim-fugitive'
+Bundle 'ujihisa/quickrun'
+Bundle 'mattn/zencoding-vim'
+Bundle 'thinca/vim-qfreplace'
+Bundle 'ukstudio/vim-ukstudio256'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/nerdcommenter'
+
+filetype plugin indent on
 
 set foldmethod=marker
 colorscheme ukstudio256
 set background=dark
 
-set nocompatible
-syntax on
-filetype off
-filetype plugin indent on
 
 set nu
 set ruler

@@ -1,6 +1,6 @@
-*vimfiler.txt*	Powerful filer implemented by VimScript
+*vimfiler.txt*	Powerful file explorer implemented by Vim script
 
-Version: 2.0
+Version: 3.0
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -25,25 +25,36 @@ License: MIT license  {{{
 CONTENTS					*vimfiler-contents*
 
 Introduction		|vimfiler-introduction|
-Install			|vimfiler-install|
 Interface		|vimfiler-interface|
   Commands		  |vimfiler-commands|
   Variables		  |vimfiler-variables|
+    Sources variables	    |vimfiler-sources-variables|
   Key mappings		  |vimfiler-key-mappings|
 Examples		|vimfiler-examples|
-Create scheme		|vimfiler-create-scheme|
-ToDo			|vimfiler-todo|
-Bugs			|vimfiler-bugs|
+Unite sources		|vimfiler-unite-sources|
 Changelog		|vimfiler-changelog|
 
 ==============================================================================
 INTRODUCTION					*vimfiler-introduction*
 
+*vimfiler* is a powerful file explorer(filer) written by Vim script.
+
 ==============================================================================
 USAGE						*vimfiler-usage*
 
-==============================================================================
-INSTALL						*vimfiler-install*
+	To run vimfiler, execute this command.
+>
+	:VimFiler
+<
+	If you set |g:vimfiler_as_default_explorer| to 1, vimfiler behaves
+	as default explorer like |netrw|.
+>
+	:let g:vimfiler_as_default_explorer = 1
+<
+vimfiler needs |unite|
+http://github.com/Shougo/unite.vim
+
+Please install unite.vim Ver.3.0(or later) before use vimfiler.
 
 ==============================================================================
 INTERFACE					*vimfiler-interface*
@@ -52,50 +63,53 @@ INTERFACE					*vimfiler-interface*
 COMMANDS 					*vimfiler-commands*
 
 :VimFiler					*:VimFiler*
-		Run vimfiler. This command reuse buffer if another vimfiler buffer
-		exists.
+		Run vimfiler. This command reuses a buffer if a vimfiler
+		buffer already exists.
 
 :VimFilerCreate					*:VimFilerCreate*
-		Create new vimfiler buffer.
+		Create a new vimfiler buffer.
 
 :VimFilerSimple					*:VimFilerSimple*
-		Create simple vimfiler buffer.
+		Create a simple vimfiler buffer.
 
 :VimFilerSplit					*:VimFilerSplit*
-		Create simple vimfiler buffer and split window.
+		Create a vimfiler buffer and split the window.
 
 :VimFilerTab					*:VimFilerTab*
-		Create vimfiler buffer and create tab.
+		Create a vimfiler buffer and create a tab.
 
 :VimFilerDouble					*:VimFilerDouble*
-		Create double vimfiler buffer.
+		Create double vimfiler buffers.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*vimfiler-variables*
 
 g:vimfiler_as_default_explorer			*g:vimfiler_as_default_explorer*
 		If this variable is true, Vim use vimfiler as file manager
-		instead of |netrw|. Note: This variable disables |netrw|.
+		instead of |netrw|. Note: This variable disables |netrw|
+		explorer function.
 		
 		Default value is 0.
 
 g:vimfiler_execute_file_list			*g:vimfiler_execute_file_list*
 		This variable controls vimfiler execute.
+		The key is extension. The value is command name or
+		command name list. If value is "vim", edit file.
 
-g:vimfiler_split_command			*g:vimfiler_split_command*
-		This variable controls vimfiler split command.
+g:vimfiler_split_action				*g:vimfiler_split_action*
+		This variable controls vimfiler split action in |unite|.
 		
-		Default value is 'split_nicely'.
+		Default value is "vsplit".
 
-g:vimfiler_edit_command				*g:vimfiler_edit_command*
-		This variable controls vimfiler edit command.
+g:vimfiler_edit_action				*g:vimfiler_edit_action*
+		This variable controls vimfiler edit action in |unite|.
 		
-		Default value is 'edit'.
+		Default value is "open".
 
-g:vimfiler_pedit_command			*g:vimfiler_pedit_command*
-		This variable controls vimfiler preview edit command.
+g:vimfiler_preview_action			*g:vimfiler_preview_action*
+		This variable controls vimfiler preview action in |unite|.
 		
-		Default value is 'pedit'.
+		Default value is "preview".
 
 g:vimfiler_min_filename_width			*g:vimfiler_min_filename_width*
 		This variable controls vimfiler displays min filename width.
@@ -105,39 +119,23 @@ g:vimfiler_min_filename_width			*g:vimfiler_min_filename_width*
 g:vimfiler_max_filename_width			*g:vimfiler_max_filename_width*
 		This variable controls vimfiler displays max filename width.
 		
-		Default value is 50.
+		Default value is 80.
 
 g:vimfiler_sort_type				*g:vimfiler_sort_type*
 		This variable controls default vimfiler sort type.
 		
-		Default value is 'none'.
+		Default value is "filename".
 
 g:vimfiler_directory_display_top		*g:vimfiler_directory_display_top*
 		This variable controls vimfiler sorts directories as top.
 		
 		Default value is 1.
 
-g:vimfiler_trashbox_directory			*g:vimfiler_trashbox_directory*
-		This variable controls vimfiler trashbox directory.
-		
-		Default value is '~/.vimfiler_trashbox'.
-
 g:vimfiler_detect_drives			*g:vimfiler_detect_drives*
 		 (Windows only) This variable controls vimfiler uses drives
 		 when |<Plug>(vimfiler_move_to_drive)|.
 		
 		Default value is refer to plugin/vimfiler.vim.
-
-g:vimfiler_enable_clipboard			*g:vimfiler_enable_clipboard*
-		This variable controls vimfiler use clipboard when other
-		vimfiler buffer is not found.
-		
-		Default value is 0.
-
-g:vimfiler_max_directory_histories		*g:vimfiler_max_directory_histories*
-		This variable controls vimfiler max directory history entries.
-		
-		Default value is 10.
 
 g:vimfiler_wildignore		*g:vimfiler_wildignore*
 		This variable influences file list.
@@ -157,38 +155,55 @@ g:vimfiler_time_format			*g:vimfiler_time_format*
 		
 		Default value is "%y/%m/%d %H:%M".
 
-g:vimfiler_cd_command			*g:vimfiler_cd_command*
-		This variable controls cd command when vimshell execute cd.
-		This command must interpret |`=|.
-		
-		Default value is "lcd".
+SOURCES VARIABLES 				*vimfiler-sources-variables*
 
-g:vimfiler_external_delete_command		*g:vimfiler_external_delete_command*
-		This variable controls vimfiler use delete command.
+g:unite_kind_file_delete_file_command		*g:unite_kind_file_delete_file_command*
+g:unite_kind_file_delete_directory_command	*g:unite_kind_file_delete_directory_command*
+		This variable controls vimfiler (and kind file) use delete
+		command.
 		
-		Default value is refer to autoload/vimfiler/schemes/file.vim.
+		This variable substitute special arguments:
+		$srcs : src files
+		$dest : destination directory
+		
+		Default value is refer to autoload/unite/kinds/file.vim.
 
-g:vimfiler_external_copy_file_command		*g:vimfiler_external_copy_file_command*
-		This variable controls vimfiler use copy files command.
+g:unite_kind_file_copy_file_command		*g:unite_kind_file_copy_file_command*
+		This variable controls vimfiler (and kind file) use copy
+		files command.
 		If variable is empty, this system can't support copy file.
 		
-		Default value is refer to autoload/vimfiler/schemes/file.vim.
+		This variable substitute special arguments:
+		$srcs : src files
+		$dest : destination directory
+		
+		Default value is refer to autoload/unite/kinds/file.vim.
 
-g:vimfiler_external_copy_directory_command	*g:vimfiler_external_copy_directory_command*
-		This variable controls vimfiler use copy directories command.
+g:unite_kind_file_copy_directory_command	*g:unite_kind_file_copy_directory_command*
+		This variable controls vimfiler (and kind file) use copy
+		directories command.
 		If variable is empty, this system can't support copy directories.
 		
-		Default value is refer to autoload/vimfiler/schemes/file.vim.
-
-g:vimfiler_external_move_command		*g:vimfiler_external_move_command*
-		This variable controls vimfiler use move files command.
+		This variable substitute special arguments:
+		$srcs : src files
+		$dest : destination directory
 		
-		Default value is refer to autoload/vimfiler/schemes/file.vim.
+		Default value is refer to autoload/unite/kinds/file.vim.
+
+g:unite_kind_file_move_command			*g:unite_kind_file_move_command*
+		This variable controls vimfiler (and kind file) use move
+		files command.
+		
+		This variable substitute special arguments:
+		$srcs : src files
+		$dest : destination directory
+		
+		Default value is refer to autoload/unite/kinds/file.vim.
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*vimfiler-key-mappings*
 
-Normal mode mappings.
+Normal mode key mappings.
 
 <Plug>(vimfiler_move_to_other_window)		*<Plug>(vimfiler_move_to_other_window)*
 		Move to other vimfiler window.
@@ -214,161 +229,133 @@ Normal mode mappings.
 <Plug>(vimfiler_copy_file)			*<Plug>(vimfiler_copy_file)*
 		Copy marked files to destination directory. If exists another
 		vimfiler buffer, destination directory is another vimfiler
-		directory. Else, depends |g:vimfiler_enable_clipboard|.
+		directory.
 		If no marked files, mark current file.
 
 <Plug>(vimfiler_move_file)			*<Plug>(vimfiler_move_file)*
 		Move marked files to destination directory. If exists another
 		vimfiler buffer, destination directory is another vimfiler
-		directory. Else, depends |g:vimfiler_enable_clipboard|.
+		directory.
 		If no marked files, mark current file.
 		This mappings is disabled in vimfiler safe mode.
 
 <Plug>(vimfiler_delete_file)			*<Plug>(vimfiler_delete_file)*
-		Delete marked files to |g:vimfiler_trashbox_directory|.
-		If no marked files, mark current file.
-		This mappings is disabled in vimfiler safe mode.
-
-<Plug>(vimfiler_force_delete_file)		*<Plug>(vimfiler_force_delete_file)*
 		Delete marked files completely.
 		If no marked files, mark current file.
 		This mappings is disabled in vimfiler safe mode.
 
-<Plug>(vimfiler_restore_from_trashbox)		*<Plug>(vimfiler_restore_from_trashbox)*
-		Restore marked files from |g:vimfiler_trashbox_directory|.
-		This command is valid in |g:vimfiler_trashbox_directory|.
-		This mappings is disabled in vimfiler safe mode.
-
 <Plug>(vimfiler_make_directory)			*<Plug>(vimfiler_make_directory)*
-		
+		Create new directory.
 		This mappings is disabled in vimfiler safe mode.
 
 <Plug>(vimfiler_new_file)			*<Plug>(vimfiler_new_file)*
-		
+		Create new files.
 		This mappings is disabled in vimfiler safe mode.
-		
+
+<Plug>(vimfiler_rename_file)			*<Plug>(vimfiler_rename_file)*
+		Rename cursor file or selected files.
+		If selected files, vimfiler will open exrename buffer.
+		In exrename buffer, you can rename with Vim features like
+		|renamer.vim|.
+		http://www.vim.org/scripts/script.php?script_id=1721
+		This mappings is disabled in vimfiler safe mode.
 
 <Plug>(vimfiler_execute)			*<Plug>(vimfiler_execute)*
-		
-		
+		Execute cursor file with |g:vimfiler_execute_file_list| command.
+		If cursor file is directory, change directory.
 
 <Plug>(vimfiler_execute_file)			*<Plug>(vimfiler_execute_file)*
-		
-		
+		Execute cursor file by system associated command.
 
 <Plug>(vimfiler_move_to_up_directory)		*<Plug>(vimfiler_move_to_up_directory)*
-		
-		
+		Move to up directory.
 
 <Plug>(vimfiler_move_to_drive)			*<Plug>(vimfiler_move_to_drive)*
-		
-		
+		Move to other drive(Windows) or mount point(Mac/Linux) by
+		|unite| interface.
 
 <Plug>(vimfiler_move_to_home_directory)		*<Plug>(vimfiler_move_to_home_directory)*
 		Move to home directory.
 
-<Plug>(vimfiler_move_to_trashbox_directory)	*<Plug>(vimfiler_move_to_trashbox_directory)*
-		Move to |g:vimfiler_trashbox_directory|.
-		
-
 <Plug>(vimfiler_move_to_root_directory)		*<Plug>(vimfiler_move_to_root_directory)*
-		
-		
+		Move to root directory.
 
-<Plug>(vimfiler_move_to_history_back)		*<Plug>(vimfiler_move_to_history_back)*
-		
-		
-
-<Plug>(vimfiler_move_to_history_forward)	*<Plug>(vimfiler_move_to_history_forward)*
-		
-		
-
-<Plug>(vimfiler_jump_to_directory)		*<Plug>(vimfiler_jump_to_directory)*
-		
-		
-
-<Plug>(vimfiler_jump_to_history_directory)	*<Plug>(vimfiler_jump_to_history_directory)*
-		
-		
-
-<Plug>(vimfiler_execute_new_gvim)		*<Plug>(vimfiler_execute_new_gvim)*
-		
-		
+<Plug>(vimfiler_move_to_history_directory)	*<Plug>(vimfiler_move_to_history_directory)*
+		Move to history directory by |unite| interface.
 
 <Plug>(vimfiler_toggle_visible_dot_files)	*<Plug>(vimfiler_toggle_visible_dot_files)*
-		
-		
+		Toggle visible dot files.
 
 <Plug>(vimfiler_popup_shell)			*<Plug>(vimfiler_popup_shell)*
 		Execute |:VimShellPop|or |:shell|.
-		
 
 <Plug>(vimfiler_edit_file)			*<Plug>(vimfiler_edit_file)*
-		Edit cursor file.
+		Edit cursor file. This mapping use |g:vimfiler_edit_action|.
 
 <Plug>(vimfiler_split_edit_file)		*<Plug>(vimfiler_split_edit_file)*
-		Split buffer and edit cursor file. |g:vimfiler_edit_command|is
-		ignored.
+		Split buffer and edit cursor file. This mapping use
+		|g:vimfiler_edit_action|.
 
 <Plug>(vimfiler_edit_binary_file)		*<Plug>(vimfiler_edit_binary_file)*
-		
+		Edit binary file by |vinarise|.
 
 <Plug>(vimfiler_execute_external_filer)		*<Plug>(vimfiler_execute_external_filer)*
-		
-
-<Plug>(vimfiler_execute_external_command)	*<Plug>(vimfiler_execute_external_command)*
-		
+		Open current directory by external filer(Explorer, Nautilus,
+		...).
 
 <Plug>(vimfiler_execute_shell_command)		*<Plug>(vimfiler_execute_shell_command)*
-		
+		Execute shell command by |vimshell|.
 
 <Plug>(vimfiler_exit)				*<Plug>(vimfiler_exit)*
-		
+		Exit current vimfiler.
 
 <Plug>(vimfiler_help)				*<Plug>(vimfiler_help)*
-		
-
-<Plug>(vimfiler_paste_from_clipboard)		*<Plug>(vimfiler_paste_from_clipboard)*
-		
+		Mappings help by |unite| interface.
 
 <Plug>(vimfiler_preview_file)			*<Plug>(vimfiler_preview_file)*
-		
+		Preview current file. This mapping use
+		|g:vimfiler_preview_action|.
 
 <Plug>(vimfiler_sync_with_current_vimfiler)	*<Plug>(vimfiler_sync_with_current_vimfiler)*
-		
+		Synchronize another vimfiler current directory with current
+		vimfiler.
 
 <Plug>(vimfiler_sync_with_another_vimfiler)	*<Plug>(vimfiler_sync_with_another_vimfiler)*
-		
+		Synchronize current directory with another vimfiler.
 
 <Plug>(vimfiler_print_filename)			*<Plug>(vimfiler_print_filename)*
-		
+		Print whole filename in echo area.
 
 <Plug>(vimfiler_set_current_mask)		*<Plug>(vimfiler_set_current_mask)*
-		
+		Set current file mask by |unite| interface.
 
 <Plug>(vimfiler_grep)				*<Plug>(vimfiler_grep)*
-		
+		Grep word in selected files or all current files by |unite|
+		interface.
 
 <Plug>(vimfiler_select_sort_type)		*<Plug>(vimfiler_select_sort_type)*
-		
+		Select current vimfiler sort type by |unite| interface.
 
 <Plug>(vimfiler_switch_vim_buffer_mode)		*<Plug>(vimfiler_switch_vim_buffer_mode)*
 		Switch to vimfiler buffer mode. All vimfiler mappings is
 		disabled. If press <ESC>, settings will be restored.
 
 <Plug>(vimfiler_cd)				*<Plug>(vimfiler_cd)*
-		
+		Change system current directory to vimfiler current directory.
+
+<Plug>(vimfiler_choose_action)			*<Plug>(vimfiler_choose_action)*
+		Choose |unite| action in selected files.
 
 <Plug>(vimfiler_smart_h)			*<Plug>(vimfiler_smart_h)*
-		
+		Move to updirectory or normal! "h".
 
 <Plug>(vimfiler_smart_l)			*<Plug>(vimfiler_smart_l)*
-		
+		Execute cursor file or normal! "l".
 
 <Plug>(vimfiler_toggle_safe_mode)		*<Plug>(vimfiler_toggle_safe_mode)*
 		Toggle safe mode. In safe mode, dangerous command is disabled.
 
-Visual mode mappings.
+Visual mode key mappings.
 
 <Plug>(vimfiler_toggle_mark_selected_lines)	*<Plug>(vimfiler_toggle_selected_lines)*
 		Toggle marks in selected lines.
@@ -376,7 +363,7 @@ Visual mode mappings.
 						*g:vimfiler_default_key_mappings*
 Following keymappings are default keymappings.
 
-Normal mode mappings.
+Normal mode default mappings.
 {lhs}			{rhs}
 --------		-----------------------------
 <TAB>			<Plug>(vimfiler_move_to_other_window)
@@ -389,8 +376,6 @@ U			<Plug>(vimfiler_clear_mark_all_lines)
 c			<Plug>(vimfiler_copy_file)
 m			<Plug>(vimfiler_move_file)
 d			<Plug>(vimfiler_delete_file)
-D			<Plug>(vimfiler_force_delete_file)
-u			<Plug>(vimfiler_restore_from_trashbox)
 r			<Plug>(vimfiler_rename_file)
 K			<Plug>(vimfiler_make_directory)
 N			<Plug>(vimfiler_new_file)
@@ -399,14 +384,9 @@ l			<Plug>(vimfiler_smart_l)
 x			<Plug>(vimfiler_execute_file)
 h			<Plug>(vimfiler_smart_h)
 L			<Plug>(vimfiler_move_to_drive)
-J			<Plug>(vimfiler_jump_to_directory)
 ~			<Plug>(vimfiler_move_to_home_directory)
-$			<Plug>(vimfiler_move_to_trashbox_directory)
 \			<Plug>(vimfiler_move_to_root_directory)
-<C-p>			<Plug>(vimfiler_move_to_history_back)
-<C-n>			<Plug>(vimfiler_move_to_history_forward)
-<C-j>			<Plug>(vimfiler_jump_to_history_directory)
-gv			<Plug>(vimfiler_execute_new_gvim)
+<C-j>			<Plug>(vimfiler_move_to_history_directory)
 .			<Plug>(vimfiler_toggle_visible_dot_files)
 H			<Plug>(vimfiler_popup_shell)
 e			<Plug>(vimfiler_edit_file)
@@ -417,7 +397,6 @@ t			<Plug>(vimfiler_execute_external_command)
 !			<Plug>(vimfiler_execute_shell_command)
 q			<Plug>(vimfiler_exit)
 ?			<Plug>(vimfiler_help)
-p			<Plug>(vimfiler_paste_from_clipboard)
 v			<Plug>(vimfiler_preview_file)
 o			<Plug>(vimfiler_sync_with_current_vimfiler)
 O			<Plug>(vimfiler_sync_with_another_vimfiler)
@@ -428,43 +407,188 @@ S			<Plug>(vimfiler_select_sort_type)
 <C-v>			<Plug>(vimfiler_switch_vim_buffer_mode)
 gc			<Plug>(vimfiler_cd)
 gs			<Plug>(vimfiler_toggle_safe_mode)
+a			<Plug>(vimfiler_choose_action)
 
 Visual mode mappings.
 {lhs}			{rhs}
 --------		-----------------------------
 <Space>			<Plug>(vimfiler_toggle_mark_selected_lines)
 
-	Please refer to vimfiler#mappings#define_default_mappings() in
-	autoload/vimfiler/mappings.vim.
-
 ==============================================================================
 EXAMPLES					*vimfiler-examples*
 >
 	call vimfiler#set_execute_file('vim', 'vim')
 	call vimfiler#set_execute_file('txt', 'notepad')
-	"let g:vimfiler_split_command = ''
 	
 	" Edit file by tabedit.
-	"let g:vimfiler_edit_command = 'tabedit'
+	"let g:vimfiler_edit_action = 'tabopen'
 	
-	"let g:vimfiler_pedit_command = 'vnew'
-	let g:vimfiler_external_copy_directory_command = 'cp -r $src $dest'
-	let g:vimfiler_external_copy_file_command = 'cp $src $dest'
-	let g:vimfiler_external_delete_command = 'rm -r $srcs'
-	let g:vimfiler_external_move_command = 'mv $srcs $dest'
 	let g:vimfiler_as_default_explorer = 1
 	
 	" Enable file operation commands.
 	"let g:vimfiler_safe_mode_by_default = 0
 >
 ==============================================================================
-TODO						*vimfiler-todo*
+UNITE SOURCES						*vimfiler-unite-sources*
 
-==============================================================================
-BUGS						*vimfiler-bugs*
+Here let me explain about a source for |unite| provided in vimfiler.
+
+							*vimfiler-unite-source-vimfiler-history*
+vimfiler/history
+		Candidates of vimfiler history.
+
+							*vimfiler-unite-source-vimfiler-drive*
+vimfiler/drive
+		Candidates of vimfiler drives.
+
+							*vimfiler-unite-source-vimfiler-sort*
+vimfiler/sort
+		Candidates of vimfiler sort method.
+
+							*vimfiler-unite-source-vimfiler-mask*
+vimfiler/mask
+		Change current vimfiler file mask.
+
+							*vimfiler-unite-source-vimfiler-mapping*
+vimfiler/mapping
+		Candidates of vimfiler mappings.
+
+							*vimfiler-unite-source-vimfiler-execute*
+vimfiler/execute
+		Candidates from |g:vimfiler_execute_file_list|.
+
+Actions of source original.
+
+vimfiler/history					*vimfiler-unite-action-vimfiler-history*
+	delete		Delete history
+
+vimfiler/sort						*vimfiler-unite-action-vimfiler-sort*
+	sort		Set sort type
+
+vimfiler/mask						*vimfiler-unite-action-vimfiler-mask*
+	change		Change vimfiler mask
 
 ==============================================================================
 CHANGELOG					*vimfiler-changelog*
+
+2011-09-24
+- Added README.
+
+2011-09-23
+- Improved documentation.
+- Changed <Plug>(vimfiler_cd) behavior.
+
+2011-09-22
+- Revised documentation.
+- Added vimfiler/drive source.
+
+2011-09-21
+- Added vimfiler#mappings#search_cursor() function.
+- Fixed vimfiler mappings.
+
+2011-09-19
+- Refactored local variable names.
+
+2011-09-17
+- Implemented context.
+
+2011-09-15
+- Fixed for netrw.
+
+2011-09-04
+- Fixed vimfiler create.
+- Improved buffer name.
+
+2011-09-03
+- Improved cd.
+- Improved expand directory.
+
+2011-09-01
+- Improved initialize vimfiler buffer.
+
+2011-08-31
+- Fixed new file action.
+
+2011-08-29
+- Fixed vimfiler buffer search.
+- Fixed preview error.
+- Fixed wrapper commands exists error.
+
+2011-08-26
+- Implemented event handler.
+- Improved redraw screen.
+- Improved event handler.
+- Implemented completion interface.
+- Parse cd path.
+- Fixed grep error.
+
+2011-08-25
+- Improved vimfiler file interface.
+- Fixed browse check.
+- Improved behavior.
+
+2011-08-24
+- Improved vimfiler actions.
+- Deleted g:vimfiler_cd_command option.
+- Deleted mappings_caller().
+- Improved exrename.
+
+2011-08-23
+- Improved switch vimfiler behavior.
+- Fixed browser check.
+- Fixed restore another vimfiler.
+- Improved cd.
+
+2011-08-17
+- Added vimfiler/mask source.
+- Added vimfiler/history source.
+- Added vimfiler/mapping source.
+- Changed g:vimfiler_sort_type default value.
+- Added vimfiler/mask matcher.
+- Added vimfiler/execute source.
+
+2011-08-16
+- Improved actions.
+- Added vimfiler sort source.
+- Deleted vimfiler clipboard.
+- Added is_listed attribute.
+
+2011-08-15
+- Fixed some errors.
+- Improved context.
+
+2011-08-14
+- Use unite.vim Ver.3(experimental).
+- Deleted scheme file.
+- Deleted vimfiler trash box routine.
+- Deleted obsolute mapping.
+- Improved action name.
+
+2011-08-13
+- Ver.3.0 development is started.
+
+------------------------------------------------------------------------------
+ChangeLog 2.0
+
+2011-08-13
+- Improved another vimfiler.
+- Released ver.2.0.
+
+2011-07-07
+- Set no-quit option in unite-grep.
+
+2011-07-01
+- Improved sync vimfiler.
+
+2011-06-26
+- Improved cd internal command.
+- Fixed exrename highlight.
+
+2011-06-15
+- Improved grep action.
+
+2011-06-08
+- Improved substitute path separator.
 
 2011-06-03
 - Improved grep action.
@@ -635,7 +759,7 @@ CHANGELOG					*vimfiler-changelog*
 - Improved move_to_drive().
 - Improved mask.
 - Fixed visible doted file bug.
-- Implemanted <Plug>(vimfiler_jump_to_history_directory).
+- Implemented <Plug>(vimfiler_jump_to_history_directory).
 - Revised documentation.
 
 2010-07-28
@@ -756,7 +880,7 @@ ChangeLog 1.50
 * popup shell clears markes.
 * Optimized display.
 * Added <Plug>(vimfiler_print_filename) keymapping.
-* Implemanted delete and force delete.
+* Implemented delete and force delete.
 * Implemented paste.
 * Implemented set mask patterns.
 
