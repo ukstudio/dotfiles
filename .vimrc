@@ -29,6 +29,7 @@ Bundle 'thinca/vim-qfreplace'
 Bundle 'ukstudio/vim-ukstudio256'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on
 
