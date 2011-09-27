@@ -96,6 +96,10 @@ function! s:set_short_indent()
   setlocal expandtab softtabstop=2 shiftwidth=2
 endfunction
 
+function! s:set_haskell_indent()
+  setlocal expandtab softtabstop=4 shiftwidth=4
+endfunction
+
 function! s:set_review_indent()
   setlocal noexpandtab
 endfunction
@@ -180,6 +184,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
 autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
 
+autocmd MyAutoCmd FileType haskell call s:set_haskell_indent()
 autocmd MyAutoCmd FileType review call s:set_short_indent()
 autocmd MyAutoCmd FileType html call s:set_short_indent()
 autocmd MyAutoCmd FileType eruby call s:set_short_indent()
