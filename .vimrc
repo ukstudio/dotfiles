@@ -30,6 +30,7 @@ Bundle 'ukstudio/vim-ukstudio256'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 filetype plugin indent on
 
@@ -291,6 +292,11 @@ let g:quickrun_config['coffee'] = {'command': "coffee"}
 " tagbar " {{{2
 let g:tagbar_usearrows = 1
 nnoremap <Leader>l :TagbarToggle<CR>
+
+" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_color_change_percent = 30
+let g:indent_guides_guide_size = 1
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
