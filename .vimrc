@@ -38,6 +38,8 @@ set foldmethod=marker
 colorscheme ukstudio256
 set background=dark
 
+set fileencodings=utf-8,euc-jp,cp932,default,latin
+
 
 set nu
 set ruler
