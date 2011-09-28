@@ -3,4 +3,4 @@
 	url = git@github.com:ukstudio/neocon-snippets.git
 [submodule ".vim/vundle"]
 	path = .vim/vundle
-	url = http://github.com/gmarik/vundle.git
+	url = git@github.com:gmarik/vundle.git
