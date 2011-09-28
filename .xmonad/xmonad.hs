@@ -20,6 +20,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Actions.GridSelect
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Layout.Grid
 
 import Data.Monoid
 import System.Exit
@@ -143,18 +144,11 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = Grid ||| tiled ||| Mirror tiled ||| Full
   where
-     -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
-
-     -- The default number of windows in the master pane
      nmaster = 1
-
-     -- Default proportion of screen occupied by master pane
      ratio   = 1/2
-
-     -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
 myManageHook = composeAll
@@ -173,6 +167,7 @@ main = xmonad $ xfceConfig
     , modMask = mod1Mask
     , keys = myKeys
     , terminal = myTerminal
+    , layoutHook = myLayout
     }
 
 defaults = defaultConfig {
