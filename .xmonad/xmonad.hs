@@ -1,18 +1,3 @@
---
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
-
---import Control.OldException
---import Control.Monad
---import DBus
---import DBus.Connection
---import DBus.Message
-
 import XMonad
 import XMonad.Config.Xfce
 import XMonad.Hooks.ManageDocks
@@ -155,23 +140,16 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore
+    ]
 
 myEventHook = mempty
 myLogHook = return ()
 myStartupHook = return ()
 
 main :: IO()
-main = xmonad $ xfceConfig
-    { logHook = myLogHook
-    , modMask = mod1Mask
-    , keys = myKeys
-    , terminal = myTerminal
-    , layoutHook = myLayout
-    }
-
-defaults = defaultConfig {
-      -- simple stuff
+main = xmonad xfceConfig
+    {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
@@ -181,13 +159,11 @@ defaults = defaultConfig {
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
-      -- key bindings
         keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
-      -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        -- layoutHook         = myLayout,
+        manageHook         = manageDocks <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
