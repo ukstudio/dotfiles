@@ -31,6 +31,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'tpope/vim-surround'
 
 filetype plugin indent on
 
