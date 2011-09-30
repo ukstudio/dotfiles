@@ -5,7 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Actions.GridSelect
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Layout.Grid
+import XMonad.Layout.HintedGrid
 
 import Data.Monoid
 import System.Exit
@@ -129,7 +129,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = Grid ||| tiled ||| Mirror tiled ||| Full
+myLayout = avoidStruts (Grid False ||| tiled ||| Mirror tiled ||| Full)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -162,7 +162,7 @@ main = xmonad xfceConfig
         keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
-        -- layoutHook         = myLayout,
+        layoutHook         = myLayout,
         manageHook         = manageDocks <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
