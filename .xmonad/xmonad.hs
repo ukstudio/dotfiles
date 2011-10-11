@@ -7,8 +7,12 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Layout.HintedGrid
 import XMonad.Layout.Magnifier
+import XMonad.Layout.IM
+import XMonad.Layout.Named
+import XMonad.Layout.PerWorkspace (onWorkspace)
 
 import Data.Monoid
+import Data.Ratio ((%))
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -22,7 +26,7 @@ myFocusFollowsMouse = True
 myBorderWidth   = 1
 myModMask       = mod1Mask
 myNumlockMask   = mod2Mask
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["terms","im","full","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
@@ -130,12 +134,20 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts ( magnifier(Grid False) ||| tiled ||| Mirror tiled ||| Full)
+basicLayout = Tall nmaster delta ratio
+    where
+        nmaster = 1
+        ratio   = 1/2
+        delta   = 3/100
+tailLayout = named "tail" $ avoidStruts $ basicLayout
+wideLayout = named "wide" $ avoidStruts $ Mirror basicLayout
+fullLayout = named "full" $ avoidStruts $ Full
+gridLayout = named "grid" $ avoidStruts $ magnifier (Grid False)
+imLayout   = avoidStruts $ withIM (1 / 10) (Role "im") (magnifier (Grid False))
+myLayout = fullscreen $ im $ tailLayout ||| wideLayout ||| gridLayout
   where
-     tiled   = Tall nmaster delta ratio
-     nmaster = 1
-     ratio   = 1/2
-     delta   = 3/100
+     fullscreen = onWorkspace "full" fullLayout
+     im         = onWorkspace "im" imLayout
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
