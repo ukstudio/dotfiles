@@ -6,6 +6,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Layout.HintedGrid
+import XMonad.Layout.Magnifier
 
 import Data.Monoid
 import System.Exit
@@ -129,7 +130,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts (Grid False ||| tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts ( magnifier(Grid False) ||| tiled ||| Mirror tiled ||| Full)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
