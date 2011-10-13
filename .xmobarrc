@@ -1,0 +1,13 @@
+Config { font = "xft:Sans-9:bold"
+       , bgColor = "#000000"
+       , fgColor = "grey"
+       , lowerOnStart = True
+       , position = Top
+       , commands = [  Run Cpu ["-L", "3", "-H", "50", "--normal", "green", "--high", "red"] 10
+                    ,  Run StdinReader
+		    ,  Run Date "%Y/%m/%d %a %k:%M" "date" 10
+		    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%cpu% %StdinReader% }{ %date%"
+}
