@@ -42,7 +42,7 @@ precmd () {
 PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}%2v%3v%F{blue}%1v%f"
+RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}%F{red}%2v%3v%F{cyan}%1v%f"
 
 function chpwd() { ls }
 
@@ -50,7 +50,7 @@ autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end 
+bindkey "^N" history-beginning-search-forward-end
 
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
@@ -59,8 +59,11 @@ preexec () {
   [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
 }
 
+
 #コマンドラインバッファスタックをvimモードで
 setopt noflowcontrol
 bindkey '^Q' push-line-or-edit
+
+unset RUBYOPT
 
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
