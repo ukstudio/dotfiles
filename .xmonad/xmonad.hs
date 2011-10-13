@@ -1,8 +1,8 @@
 import XMonad
-import XMonad.Config.Xfce
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Actions.GridSelect
+import XMonad.Util.Run(spawnPipe)
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Layout.HintedGrid
@@ -13,6 +13,7 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 
 import Data.Monoid
 import Data.Ratio ((%))
+import System.IO
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -87,7 +88,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "killall trayer; xmonad --recompile; xmonad --restart")
 
     -- run GridSelect
     , ((modm              , xK_g     ), goToSelected defaultGSConfig)
@@ -157,27 +158,33 @@ myManageHook = composeAll
     ]
 
 myEventHook = mempty
-myLogHook = return ()
+myLogHook proc = dynamicLogWithPP xmobarPP {
+    ppOutput = hPutStrLn proc ,
+    ppTitle  = xmobarColor "green" "" . shorten 50
+    }
 myStartupHook = return ()
 
 main :: IO()
-main = xmonad xfceConfig
-    {
-        terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        borderWidth        = myBorderWidth,
-        modMask            = myModMask,
-        numlockMask        = myNumlockMask,
-        workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
+main = do
+    spawn "trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x000000 --height 20"
+    xmproc <- spawnPipe "xmobar /home/ukstudio/.xmobarrc -x 1"
+    xmonad $ defaultConfig
+        {
+            terminal           = myTerminal,
+            focusFollowsMouse  = myFocusFollowsMouse,
+            borderWidth        = myBorderWidth,
+            modMask            = myModMask,
+            numlockMask        = myNumlockMask,
+            workspaces         = myWorkspaces,
+            normalBorderColor  = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
 
-        keys               = myKeys,
-        mouseBindings      = myMouseBindings,
+            keys               = myKeys,
+            mouseBindings      = myMouseBindings,
 
-        layoutHook         = myLayout,
-        manageHook         = manageDocks <+> myManageHook,
-        handleEventHook    = myEventHook,
-        logHook            = myLogHook,
-        startupHook        = myStartupHook
-    }
+            layoutHook         = myLayout,
+            manageHook         = manageDocks <+> myManageHook,
+            handleEventHook    = myEventHook,
+            logHook            = myLogHook xmproc,
+            startupHook        = myStartupHook
+        }
