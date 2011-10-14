@@ -27,6 +27,9 @@ bindkey -v
 #rvm
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
+autoload -U compinit
+compinit
+
 autoload colors; colors
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '[%b]'
