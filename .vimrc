@@ -124,8 +124,8 @@ nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
 
 "行移動
-nnoremap j gjzz
-nnoremap k gkzz
+nnoremap j gj
+nnoremap k gk
 
 "window操作
 nnoremap wh <C-w>h
@@ -203,7 +203,7 @@ let g:rails_default_file="app/controllers/application_controller.rb"
 
 " rubycomplete.vim
 let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
+let g:rubycomplete_rails = 0
 let g:rubycomplete_classes_in_global = 1
 
 function! s:set_filetype_ruby()
@@ -302,7 +302,7 @@ let g:tagbar_usearrows = 1
 nnoremap <Leader>l :TagbarToggle<CR>
 
 " vim-indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
