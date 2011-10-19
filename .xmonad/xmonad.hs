@@ -168,6 +168,7 @@ main :: IO()
 main = do
     spawn "trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x000000 --height 20"
     spawn "xmodmap /home/ukstudio/.Xmodmap"
+    spawn "uim-xim -d -x"
     spawn "xsetroot -cursor_name top_left_arrow"
     xmproc <- spawnPipe "xmobar /home/ukstudio/.xmobarrc -x 1"
     xmonad $ defaultConfig
