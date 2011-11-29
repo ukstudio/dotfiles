@@ -19,7 +19,7 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-myTerminal = "urxvt"
+myTerminal = "gnome-terminal --hide-menubar"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -88,7 +88,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "killall trayer; xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "killall trayer;killall xscreensaver; xmonad --recompile; xmonad --restart")
 
     -- run GridSelect
     , ((modm              , xK_g     ), goToSelected defaultGSConfig)
@@ -145,7 +145,7 @@ wideLayout = named "wide" $ avoidStruts $ Mirror basicLayout
 fullLayout = named "full" $ avoidStruts $ Full
 gridLayout = named "grid" $ avoidStruts $ magnifier (Grid False)
 imLayout   = avoidStruts $ withIM (1 / 10) (Role "im") (magnifier (Grid False))
-myLayout = fullscreen $ im $ tailLayout ||| wideLayout ||| gridLayout
+myLayout = fullscreen $ im $ tailLayout ||| wideLayout ||| gridLayout ||| fullLayout
   where
      fullscreen = onWorkspace "full" fullLayout
      im         = onWorkspace "im" imLayout
@@ -168,6 +168,7 @@ main :: IO()
 main = do
     spawn "trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x000000 --height 20"
     spawn "xmodmap /home/ukstudio/.Xmodmap"
+    spawn "xscreensaver"
     spawn "uim-xim -d -x"
     spawn "xsetroot -cursor_name top_left_arrow"
     xmproc <- spawnPipe "xmobar /home/ukstudio/.xmobarrc -x 1"
