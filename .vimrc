@@ -13,13 +13,8 @@ call vundle#rc()
 
 Bundle 'neocomplcache'
 Bundle 'tpope/vim-rails'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimshell'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/vimfiler'
 Bundle 'ujihisa/neco-look'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'h1mesuke/unite-outline'
 Bundle 'ukstudio/vim-review'
 Bundle 'thinca/vim-ref'
 Bundle 'tpope/vim-fugitive'
@@ -32,6 +27,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tpope/vim-surround'
+Bundle 'kien/ctrlp.vim'
 
 filetype plugin indent on
 
@@ -214,6 +210,37 @@ endfunction
 
 "Plugin " {{{1
 
+" ctrlp. " {{{2
+let g:ctrlp_prompt_mappings = {
+			\ 'PrtBS()':              ['<bs>'],
+			\ 'PrtDelete()':          ['<del>'],
+			\ 'PrtDeleteWord()':      ['<c-w>'],
+			\ 'PrtClear()':           ['<c-u>'],
+			\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+			\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+			\ 'PrtHistory(-1)':       [],
+			\ 'PrtHistory(1)':        [],
+			\ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+			\ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
+			\ 'AcceptSelection("t")': ['<c-t>', '<MiddleMouse>'],
+			\ 'AcceptSelection("v")': ['<c-v>', '<c-q>', '<RightMouse>'],
+			\ 'ToggleFocus()':        ['<tab>'],
+			\ 'ToggleRegex()':        ['<c-r>'],
+			\ 'ToggleByFname()':      ['<c-d>'],
+			\ 'ToggleType(1)':        ['<c-f>', '<c-up>'],
+			\ 'ToggleType(-1)':       ['<c-b>', '<c-down>'],
+			\ 'PrtCurStart()':        ['<c-a>'],
+			\ 'PrtCurEnd()':          ['<c-e>'],
+			\ 'PrtCurLeft()':         ['<c-h>', '<left>'],
+			\ 'PrtCurRight()':        ['<c-l>', '<right>'],
+			\ 'PrtClearCache()':      ['<F5>'],
+			\ 'PrtDeleteMRU()':       ['<F7>'],
+			\ 'CreateNewFile()':      ['<c-y>'],
+			\ 'MarkToOpen()':         ['<c-z>'],
+			\ 'OpenMulti()':          ['<c-o>'],
+			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
+			\ }
+
 " neocomplcache. " {{{2
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
@@ -284,12 +311,6 @@ let clj_highlight_contrib = 1
 let clj_paren_rainbow = 1
 let clj_want_gorilla = 1
 let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
-
-" unite.vim " {{{2
-let g:unite_enable_start_insert = 1
-nmap <C-k>b :<C-u>Unite buffer -buffer-name=files -default-action=split<CR>
-nmap <C-k>f :<C-u>Unite file_rec -buffer-name=files -default-action=split<CR>
-nmap <C-k>o :<C-u>Unite outline -auto-preview<CR>
 
 " quickrun " {{{2
 autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
