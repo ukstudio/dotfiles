@@ -240,6 +240,8 @@ let g:ctrlp_prompt_mappings = {
 			\ 'OpenMulti()':          ['<c-o>'],
 			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
 			\ }
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so
+let g:ctrlp_working_path_mode = 1
 
 " neocomplcache. " {{{2
 let g:neocomplcache_enable_at_startup = 1
