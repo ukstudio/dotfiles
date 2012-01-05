@@ -11,6 +11,7 @@ alias g='noglob git'
 alias r='rails'
 alias o='gnome-open'
 alias gs='gem search -r'
+alias be='bundle exec '
 
 alias tmux-changekey='tmux set-option -ag prefix C-t'
 alias tmux-revertkey='tmux set-option -ag prefix C-a'
