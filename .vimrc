@@ -28,6 +28,8 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tpope/vim-surround'
 Bundle 'kien/ctrlp.vim'
+Bundle 'yuroyoro/vim-scala'
+Bundle 'Lokaltog/vim-powerline'
 
 filetype plugin indent on
 
@@ -186,6 +188,7 @@ autocmd MyAutoCmd FileType review call s:set_short_indent()
 autocmd MyAutoCmd FileType html call s:set_short_indent()
 autocmd MyAutoCmd FileType eruby call s:set_short_indent()
 autocmd MyAutoCmd FileType text call s:set_short_indent()
+autocmd MyAutoCmd FileType scala call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
