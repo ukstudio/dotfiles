@@ -27,7 +27,7 @@ setopt share_history        # share command history data
 bindkey -v
 
 #rvm
-if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+#if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 autoload -U compinit
 compinit
@@ -41,7 +41,7 @@ precmd () {
   psvar=()
   LANG=en_US.UTF-8 vcs_info
   [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-  [[ -n "`$HOME/.rvm/bin/rvm-prompt`" ]] && psvar[2]="[`$HOME/.rvm/bin/rvm-prompt`]"
+  #[[ -n "`$HOME/.rvm/bin/rvm-prompt`" ]] && psvar[2]="[`$HOME/.rvm/bin/rvm-prompt`]"
 }
 
 PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
