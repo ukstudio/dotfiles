@@ -30,6 +30,8 @@ Bundle 'tpope/vim-surround'
 Bundle 'kien/ctrlp.vim'
 Bundle 'yuroyoro/vim-scala'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'tslime.vim'
+Bundle 'jgdavey/vim-turbux'
 
 filetype plugin indent on
 
