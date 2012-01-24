@@ -9,7 +9,7 @@ alias v='vim'
 alias :q='exit'
 alias g='noglob git'
 alias r='rails'
-alias o='gnome-open'
+alias o='xdg-open'
 alias gs='gem search -r'
 alias be='bundle exec '
 
