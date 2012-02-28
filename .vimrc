@@ -175,7 +175,7 @@ function! s:create_missing_directory()
 endfunction
 
 function! s:delete_eol_spaces()
-  :%s/\s$//e
+  :%s/\s\+$//e
 endfunction
 " 末尾のスペース削除
 autocmd MyAutoCmd BufWrite * call s:delete_eol_spaces()
