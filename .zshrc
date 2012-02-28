@@ -12,6 +12,7 @@ alias r='rails'
 alias o='xdg-open'
 alias gs='gem search -r'
 alias be='bundle exec '
+alias ro='grep -E "describe|context" '
 
 alias tmux-changekey='tmux set-option -ag prefix C-t'
 alias tmux-revertkey='tmux set-option -ag prefix C-a'
