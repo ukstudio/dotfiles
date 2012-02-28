@@ -41,7 +41,6 @@ set background=dark
 
 set fileencodings=utf-8,euc-jp,cp932,default,latin
 
-
 set nu
 set ruler
 set cursorline
@@ -158,6 +157,10 @@ noremap <silent> <C-l> :nohl<CR><C-l>
 nnoremap <Space>ga :<C-u>Gwrite<Cr>
 nnoremap <Space>gc :<C-u>Gcommit -v<Cr>
 
+" reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
 " autocmd "{{{1
 autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 
@@ -176,7 +179,6 @@ function! s:delete_eol_spaces()
 endfunction
 " 末尾のスペース削除
 autocmd MyAutoCmd BufWrite * call s:delete_eol_spaces()
-
 
 " filetype "{{{2
 autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
