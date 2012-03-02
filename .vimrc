@@ -193,6 +193,8 @@ autocmd MyAutoCmd FileType html call s:set_short_indent()
 autocmd MyAutoCmd FileType eruby call s:set_short_indent()
 autocmd MyAutoCmd FileType text call s:set_short_indent()
 autocmd MyAutoCmd FileType scala call s:set_short_indent()
+autocmd MyAutoCmd FileType css call s:set_short_indent()
+autocmd MyAutoCmd FileType coffee call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
@@ -323,7 +325,7 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
 " quickrun " {{{2
 autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
-let g:quickrun_config = {}
+let g:quickrun_config ={}
 let g:quickrun_config['ruby.rspec'] = {'command': "rspec -l {line('.')}"}
 let g:quickrun_config['coffee'] = {'command': "coffee"}
 
