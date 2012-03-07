@@ -18,7 +18,6 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'ukstudio/vim-review'
 Bundle 'thinca/vim-ref'
 Bundle 'tpope/vim-fugitive'
-Bundle 'ujihisa/quickrun'
 Bundle 'mattn/zencoding-vim'
 Bundle 'thinca/vim-qfreplace'
 Bundle 'ukstudio/vim-ukstudio256'
@@ -31,6 +30,8 @@ Bundle 'yuroyoro/vim-scala'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'tslime.vim'
 Bundle 'jgdavey/vim-turbux'
+Bundle 'ecomba/vim-ruby-refactoring'
+Bundle 'matchit.zip'
 Bundle 'altercation/vim-colors-solarized'
 
 filetype plugin indent on
@@ -120,9 +121,11 @@ autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
 
 "Key Mapping " {{{1
 
+let mapleader = " "
+
 " write/quit
-nnoremap <Space>w :<C-u>write<CR>
-nnoremap <Space>q :<C-u>quit<CR>
+nnoremap <Leader>w :<C-u>write<CR>
+nnoremap <Leader>q :<C-u>quit<CR>
 
 "行移動
 nnoremap j gj
@@ -150,14 +153,14 @@ nnoremap } 4<C-w>>
 nnoremap <silent> cd :<C-u>cd %:h<Cr>
 
 "ファイルを行ったりきたり
-nnoremap <Space>b <C-^>
+nnoremap <Leader>b <C-^>
 
 " 検索結果のハイライトを消す
-noremap <silent> <C-l> :nohl<CR><C-l>
+noremap <Leader> <C-l> :nohl<CR><C-l>
 
 " for vim-fugitive
-nnoremap <Space>ga :<C-u>Gwrite<Cr>
-nnoremap <Space>gc :<C-u>Gcommit -v<Cr>
+nnoremap <Leader>ga :<C-u>Gwrite<Cr>
+nnoremap <Leader>gc :<C-u>Gcommit -v<Cr>
 
 " reselect visual block after indent/outdent
 vnoremap < <gv
@@ -325,11 +328,6 @@ let clj_paren_rainbow = 1
 let clj_want_gorilla = 1
 let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
-" quickrun " {{{2
-autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
-let g:quickrun_config ={}
-let g:quickrun_config['ruby.rspec'] = {'command': "rspec -l {line('.')}"}
-let g:quickrun_config['coffee'] = {'command': "coffee"}
 
 " tagbar " {{{2
 let g:tagbar_usearrows = 1
