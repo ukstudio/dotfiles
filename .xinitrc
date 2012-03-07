@@ -8,4 +8,5 @@ nitrogen --restore &
 
 xcompmgr &
 
+xrdb -merge ~/.Xdefaults
 xmonad

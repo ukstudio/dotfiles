@@ -31,12 +31,15 @@ Bundle 'yuroyoro/vim-scala'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'tslime.vim'
 Bundle 'jgdavey/vim-turbux'
+Bundle 'altercation/vim-colors-solarized'
 
 filetype plugin indent on
 
 set foldmethod=marker
-colorscheme ukstudio256
+let g:solarized_termcolors=256
+colorscheme solarized
 set background=dark
+
 
 set fileencodings=utf-8,euc-jp,cp932,default,latin
 
