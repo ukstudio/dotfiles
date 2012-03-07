@@ -37,7 +37,8 @@ Bundle 'altercation/vim-colors-solarized'
 filetype plugin indent on
 
 set foldmethod=marker
-let g:solarized_termcolors=256
+set t_Co=256
+let g:solarized_termcolors=16
 colorscheme solarized
 set background=dark
 
