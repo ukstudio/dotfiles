@@ -8,6 +8,7 @@ alias ls="ls -G -v"
 alias v='vim'
 alias :q='exit'
 alias g='noglob git'
+alias gff='noglob git flow feature'
 alias r='rails'
 alias o='xdg-open'
 alias gs='gem search -r'
@@ -109,5 +110,7 @@ run-with-bundler()
 for CMD in $BUNDLED_COMMANDS; do
     alias $CMD="run-with-bundler $CMD"
 done
+
+[[ -s /home/ukstudio/.tmuxinator/scripts/tmuxinator ]] && source /home/ukstudio/.tmuxinator/scripts/tmuxinator
 
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
