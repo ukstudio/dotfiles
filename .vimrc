@@ -33,15 +33,19 @@ Bundle 'jgdavey/vim-turbux'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'matchit.zip'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'kana/vim-tabpagecd'
+Bundle 'croaker/mustang-vim'
 
 filetype plugin indent on
 
 set foldmethod=marker
 set t_Co=256
 let g:solarized_termcolors=16
-colorscheme solarized
+"colorscheme ukstudio256
+colorscheme mustang
 set background=dark
 
+set listchars=tab:>\
 
 set fileencodings=utf-8,euc-jp,cp932,default,latin
 
@@ -201,6 +205,7 @@ autocmd MyAutoCmd FileType text call s:set_short_indent()
 autocmd MyAutoCmd FileType scala call s:set_short_indent()
 autocmd MyAutoCmd FileType css call s:set_short_indent()
 autocmd MyAutoCmd FileType coffee call s:set_short_indent()
+autocmd MyAutoCmd FileType sh call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
@@ -350,3 +355,20 @@ else
   autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC |if has('gui_running') | source $MYGVIMRC
   autocmd MyAutoCmd BufWritePost $MYGVIMRC nested source $MYGVIMRC
 end
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+        \ 'ctagsbin' : 'coffeetags',
+        \ 'ctagsargs' : '',
+        \ 'kinds' : [
+        \ 'f:functions',
+        \ 'o:object',
+        \ ],
+        \ 'sro' : ".",
+        \ 'kind2scope' : {
+        \ 'f' : 'object',
+        \ 'o' : 'object',
+        \ }
+        \ }
+endif
+
+set tags=~/.tags,tags,coffee_tags
