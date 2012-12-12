@@ -26,8 +26,6 @@ SAVEHIST=100000
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
-bindkey -v
-
 autoload -U compinit
 compinit
 
@@ -67,6 +65,7 @@ antigen-lib
 antigen-bundle git
 antigen-bundle gem
 antigen-bundle bundler
+antigen-bundle vi-mode
 antigen-bundle zsh-users/zsh-syntax-highlighting
 
 antigen-theme af-magic
