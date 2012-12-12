@@ -35,6 +35,8 @@ Bundle 'matchit.zip'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'kana/vim-tabpagecd'
 Bundle 'croaker/mustang-vim'
+Bundle 'tomasr/molokai'
+Bundle 'tsaleh/vim-align'
 
 filetype plugin indent on
 
@@ -42,7 +44,8 @@ set foldmethod=marker
 set t_Co=256
 let g:solarized_termcolors=16
 "colorscheme ukstudio256
-colorscheme mustang
+"colorscheme mustang
+colorscheme molokai
 set background=dark
 
 set listchars=tab:>\
