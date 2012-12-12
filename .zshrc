@@ -58,11 +58,15 @@ unset RUBYOPT
 
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
+. /home/ukstudio/config/z.sh
+alias j=z
+
 # antigen
-source $HOME/.antigen.zsh
+. /home/ukstudio/config/.antigen.zsh
 antigen-lib
 
 antigen-bundle git
+antigen-bundle gitfast
 antigen-bundle gem
 antigen-bundle bundler
 antigen-bundle vi-mode
