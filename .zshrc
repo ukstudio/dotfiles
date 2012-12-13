@@ -72,7 +72,7 @@ antigen-bundle bundler
 antigen-bundle vi-mode
 antigen-bundle zsh-users/zsh-syntax-highlighting
 
-antigen-theme af-magic
+antigen-theme agnoster
 
 antigen-apply
 
