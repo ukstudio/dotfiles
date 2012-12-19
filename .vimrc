@@ -8,8 +8,10 @@ set nocompatible
 syntax on
 filetype off
 
-set rtp+=~/.vim/vundle
+set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
+
+Bundle 'gmarik/vundle'
 
 Bundle 'neocomplcache'
 Bundle 'tpope/vim-rails'
@@ -37,16 +39,16 @@ Bundle 'kana/vim-tabpagecd'
 Bundle 'croaker/mustang-vim'
 Bundle 'tomasr/molokai'
 Bundle 'tsaleh/vim-align'
+Bundle 'vim-scripts/CSApprox'
+Bundle 'vim-scripts/Colour-Sampler-Pack'
 
 filetype plugin indent on
 
 set foldmethod=marker
 set t_Co=256
 let g:solarized_termcolors=16
-"colorscheme ukstudio256
-"colorscheme mustang
-colorscheme molokai
-set background=dark
+colorscheme jellybeans
+set background=light
 
 set listchars=tab:>\
 
@@ -264,7 +266,7 @@ let g:ctrlp_prompt_mappings = {
 			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
 			\ }
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so
-let g:ctrlp_working_path_mode = 1
+let g:ctrlp_working_path_mode = 'ra'
 
 " neocomplcache. " {{{2
 let g:neocomplcache_enable_at_startup = 1
