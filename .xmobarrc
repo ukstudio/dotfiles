@@ -4,6 +4,7 @@ Config { font = "xft:Sans-9:bold"
        , lowerOnStart = True
        , position = TopW L 100
        , commands = [  Run Cpu ["-L", "3", "-H", "50", "--normal", "green", "--high", "red"] 10
+ 		    ,  Run CoreTemp [] 50
                     ,  Run Memory ["-t","Mem: <usedratio>%"] 10
                     ,  Run Swap [] 10
 		    ,  Run Battery [] 10
@@ -12,5 +13,5 @@ Config { font = "xft:Sans-9:bold"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %cpu% %memory% %swap% %battery% }%StdinReader%{ <fc=#ee9a00>%date%</fc>"
+       , template = " %cpu% %coretemp% %memory% %swap% %battery% }%StdinReader%{ <fc=#ee9a00>%date%</fc>"
 }
