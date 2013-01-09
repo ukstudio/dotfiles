@@ -36,7 +36,7 @@ mail_count+=(["separator"]="${separator_left_bold}")
 register_segment "mail_count"
 
 declare -A now_playing
-now_playing+=(["script"]="${segments_path}/np_mpd.sh")
+#now_playing+=(["script"]="${segments_path}/np_mpd.sh")
 #now_playing+=(["script"]="${segments_path}/np_itunes_mac.sh")
 #now_playing+=(["script"]="${segments_path}/np_mpd_simple.sh")
 #now_playing+=(["script"]="${segments_path}/np_mocp.sh")
@@ -48,7 +48,7 @@ now_playing+=(["script"]="${segments_path}/np_mpd.sh")
 #now_playing+=(["script"]="${segments_path}/np_audacious.sh")
 #now_playing+=(["script"]="${segments_path}/np_lastfm.sh")
 #now_playing+=(["script"]="${segments_path}/np_rdio_mac.sh")
-#now_playing+=(["script"]="${segments_path}/np_cmus.sh")
+now_playing+=(["script"]="${segments_path}/np_cmus.sh")
 if [[ ${now_playing["script"]} ]]; then
 	now_playing+=(["foreground"]="colour37")
 	now_playing+=(["background"]="colour234")
