@@ -19,6 +19,8 @@ alias tmux-changekey='tmux set-option -ag prefix C-t'
 alias tmux-revertkey='tmux set-option -ag prefix C-a'
 alias tchdir='tmux set-option default-path $PWD'
 
+export GREP_OPTIONS="--color=auto"
+
 # 履歴の設定
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
