@@ -13,40 +13,30 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-Bundle 'neocomplcache'
+Bundle 'Shougo/neocomplcache'
+Bundle 'taichouchou2/vim-rsense'
+Bundle 'Shougo/vimproc'
 Bundle 'tpope/vim-rails'
-Bundle 'ujihisa/neco-look'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'ukstudio/vim-review'
-Bundle 'thinca/vim-ref'
 Bundle 'tpope/vim-fugitive'
-Bundle 'mattn/zencoding-vim'
-Bundle 'thinca/vim-qfreplace'
 Bundle 'ukstudio/vim-ukstudio256'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tpope/vim-surround'
 Bundle 'kien/ctrlp.vim'
 Bundle 'yuroyoro/vim-scala'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'tslime.vim'
-Bundle 'jgdavey/vim-turbux'
-Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'matchit.zip'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'kana/vim-tabpagecd'
 Bundle 'croaker/mustang-vim'
-Bundle 'tomasr/molokai'
 Bundle 'tsaleh/vim-align'
-Bundle 'vim-scripts/CSApprox'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
+Bundle 'vim-scripts/bufexplorer.zip'
 
 filetype plugin indent on
 
 set foldmethod=marker
 set t_Co=256
-let g:solarized_termcolors=16
 colorscheme jellybeans
 set background=light
 
@@ -211,6 +201,7 @@ autocmd MyAutoCmd FileType scala call s:set_short_indent()
 autocmd MyAutoCmd FileType css call s:set_short_indent()
 autocmd MyAutoCmd FileType coffee call s:set_short_indent()
 autocmd MyAutoCmd FileType sh call s:set_short_indent()
+autocmd MyAutoCmd FileType javascript call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
@@ -218,14 +209,6 @@ autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
 autocmd MyAutoCmd Filetype eruby set nowrap
 autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
 
-" rails.vim
-let g:rails_level=4
-let g:rails_default_file="app/controllers/application_controller.rb"
-
-" rubycomplete.vim
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 0
-let g:rubycomplete_classes_in_global = 1
 
 function! s:set_filetype_ruby()
   nmap ,r :<C-u>!ruby %<CR>
@@ -344,11 +327,9 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 let g:tagbar_usearrows = 1
 nnoremap <Leader>l :TagbarToggle<CR>
 
-" vim-indent-guides
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_color_change_percent = 30
-let g:indent_guides_guide_size = 1
-
+" rsense" {{{2
+let g:rsenseUseOmniFunc = 1
+let g:rsenseHome = "/home/ukstudio/local/rsense-0.3"
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
