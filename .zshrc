@@ -79,3 +79,4 @@ antigen-theme gallois
 
 antigen-apply
 
+unsetopt correct_all
