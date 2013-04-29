@@ -75,7 +75,7 @@ antigen-bundle bundler
 antigen-bundle vi-mode
 antigen-bundle zsh-users/zsh-syntax-highlighting
 
-antigen-theme agnoster
+antigen-theme gallois
 
 antigen-apply
 
