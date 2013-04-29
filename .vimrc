@@ -46,10 +46,7 @@ set fileencodings=utf-8,euc-jp,cp932,default,latin
 
 set nu
 set ruler
-set cursorline
-
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
+set nocursorline
 
 set wildmenu    "補完候補の一覧を表示
 set smartindent
@@ -303,14 +300,6 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType rspec setlocal omnifunc=rubycomplete#Complete
 autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
-
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '\h\w*'
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " man.vim " {{{2
 runtime ftplugin/man.vim
