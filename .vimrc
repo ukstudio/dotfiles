@@ -199,6 +199,9 @@ autocmd MyAutoCmd FileType css call s:set_short_indent()
 autocmd MyAutoCmd FileType coffee call s:set_short_indent()
 autocmd MyAutoCmd FileType sh call s:set_short_indent()
 autocmd MyAutoCmd FileType javascript call s:set_short_indent()
+autocmd MyAutoCmd FileType rst  call s:set_short_indent()
+autocmd MyAutoCmd FileType modula2  call s:set_short_indent()
+autocmd MyAutoCmd FileType yaml call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
