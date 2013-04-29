@@ -7,7 +7,6 @@ augroup end
 set nocompatible
 syntax on
 filetype off
-
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
@@ -32,6 +31,7 @@ Bundle 'croaker/mustang-vim'
 Bundle 'tsaleh/vim-align'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
 Bundle 'vim-scripts/bufexplorer.zip'
+Bundle 'vim-ruby/vim-ruby'
 
 filetype plugin indent on
 
