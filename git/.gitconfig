@@ -1,0 +1,14 @@
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+[user]
+	name = AKAMATSU Yuki
+	email = y.akamatsu@ukstudio.jp
+[color]
+	ui = auto
+[core]
+	excludesfile = .gitignore_global
+	pager = less
+[include]
+	path = .gitconfig.local

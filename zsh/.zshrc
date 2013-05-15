@@ -61,11 +61,11 @@ unset RUBYOPT
 
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
-. /home/ukstudio/config/z.sh
+. $HOME/z.sh
 alias j=z
 
 # antigen
-. /home/ukstudio/config/.antigen.zsh
+. $HOME/.antigen.zsh
 antigen-lib
 
 antigen-bundle git

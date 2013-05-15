@@ -7,7 +7,7 @@ augroup end
 set nocompatible
 syntax on
 filetype off
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
