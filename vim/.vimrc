@@ -18,6 +18,7 @@ Bundle 'Shougo/vimproc'
 Bundle 'tpope/vim-rails'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/gitv'
 Bundle 'ukstudio/vim-ukstudio256'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
@@ -202,6 +203,7 @@ autocmd MyAutoCmd FileType javascript call s:set_short_indent()
 autocmd MyAutoCmd FileType rst  call s:set_short_indent()
 autocmd MyAutoCmd FileType modula2  call s:set_short_indent()
 autocmd MyAutoCmd FileType yaml call s:set_short_indent()
+autocmd MyAutoCmd FileType haml call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
