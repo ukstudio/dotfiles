@@ -27,7 +27,7 @@ myFocusFollowsMouse = True
 myBorderWidth   = 1
 myModMask       = mod1Mask
 myNumlockMask   = mod2Mask
-myWorkspaces    = ["terms","im","full","4","5","6","7","8","9"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
@@ -144,11 +144,7 @@ tailLayout = named "tail" $ avoidStruts $ basicLayout
 wideLayout = named "wide" $ avoidStruts $ Mirror basicLayout
 fullLayout = named "full" $ avoidStruts $ Full
 gridLayout = named "grid" $ avoidStruts $ magnifier (Grid False)
-imLayout   = avoidStruts $ withIM (1 / 10) (Role "im") (magnifier (Grid False))
-myLayout = fullscreen $ im $ tailLayout ||| wideLayout ||| gridLayout ||| fullLayout
-  where
-     fullscreen = onWorkspace "full" fullLayout
-     im         = onWorkspace "im" imLayout
+myLayout = tailLayout ||| wideLayout ||| gridLayout ||| fullLayout
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat

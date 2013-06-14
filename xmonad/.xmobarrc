@@ -1,4 +1,4 @@
-Config { font = "xft:Sans-9:bold"
+Config { font = "xft:monospace-9:Regular"
        , bgColor = "#000000"
        , fgColor = "grey"
        , lowerOnStart = True
