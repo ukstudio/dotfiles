@@ -23,7 +23,8 @@ import qualified Data.Map        as M
 myTerminal = "gnome-terminal --hide-menubar"
 
 scratchpads = [
-    NS "htop" "gnome-terminal -t 'htop'" (title =? "htop") defaultFloating
+    NS "htop" "gnome-terminal -t 'htop'" (title =? "htop") defaultFloating,
+    NS "notes" "gvim --role notes ~/Documents/notes.txt" (role =? "notes") defaultFloating
     ] where role = stringProperty "WM_WINDOW_ROLE"
 
 -- Whether focus follows the mouse pointer.
@@ -81,6 +82,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_p     ), shellPrompt defaultXPConfig)
     -- run scratchpad
     , ((modm .|. controlMask, xK_t   ), namedScratchpadAction scratchpads "htop")
+    , ((modm .|. controlMask, xK_n   ), namedScratchpadAction scratchpads "notes")
     ]
     ++
 
