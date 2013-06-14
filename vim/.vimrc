@@ -33,6 +33,8 @@ Bundle 'tsaleh/vim-align'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'chreekat/vim-instant-markdown'
+Bundle 'tpope/vim-markdown'
 
 filetype plugin indent on
 
