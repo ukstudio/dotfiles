@@ -324,6 +324,9 @@ nnoremap <Leader>l :TagbarToggle<CR>
 " rsense" {{{2
 let g:rsenseUseOmniFunc = 1
 let g:rsenseHome = "/home/ukstudio/local/rsense-0.3"
+
+" align.vim" {{{2
+let g:Align_xstrlen = 3
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
