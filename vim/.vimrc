@@ -92,7 +92,7 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 
 "changelog
 let g:changelog_timeformat = "%Y-%m-%d"
-let g:changelog_username = "Yuki Akamatsu(id:ukstudio) <yuki.0w0@gmail.com>"
+let g:changelog_username = "AKAMATSU Yuki(id:ukstudio) <y.akamatsu@ukstudio.jp>"
 
 function! s:set_short_indent()
   setlocal expandtab softtabstop=2 shiftwidth=2
@@ -206,6 +206,7 @@ autocmd MyAutoCmd FileType modula2  call s:set_short_indent()
 autocmd MyAutoCmd FileType yaml call s:set_short_indent()
 autocmd MyAutoCmd FileType haml call s:set_short_indent()
 autocmd MyAutoCmd FileType scss call s:set_short_indent()
+autocmd MyAutoCmd FileType changelog call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
