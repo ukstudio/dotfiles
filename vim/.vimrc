@@ -33,6 +33,7 @@ Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'chreekat/vim-instant-markdown'
 Bundle 'tpope/vim-markdown'
+Bundle 'itchyny/lightline.vim'
 
 filetype plugin indent on
 
@@ -290,6 +291,9 @@ let g:rsenseHome = "/home/ukstudio/local/rsense-0.3"
 
 " align.vim" {{{2
 let g:Align_xstrlen = 3
+
+" lightline.vim" {{{2
+let g:lightline = { 'colorscheme': 'wombat' }
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
