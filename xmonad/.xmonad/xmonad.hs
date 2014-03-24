@@ -20,7 +20,9 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-myTerminal = "gnome-terminal --hide-menubar"
+--myTerminal = "gnome-terminal --hide-menubar"
+-- myTerminal = "mate-terminal --hide-menubar"
+myTerminal = "lxterminal"
 
 scratchpads = [
     NS "htop" "gnome-terminal -t 'htop'" (title =? "htop") defaultFloating,
@@ -75,7 +77,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "killall trayer;killall xscreensaver; xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "killall trayer-srg;killall xscreensaver; xmonad --recompile; xmonad --restart")
     -- run GridSelect
     , ((modm              , xK_g     ), goToSelected defaultGSConfig)
     -- run shell
@@ -150,10 +152,10 @@ myStartupHook = return ()
 
 main :: IO()
 main = do
-    spawn "trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x000000 --height 20"
+    spawn "trayer-srg --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x000000 --height 20"
     spawn "xmodmap /home/ukstudio/.Xmodmap"
     spawn "xscreensaver"
-    spawn "uim-xim -d -x"
+    -- spawn "uim-xim -d -x"
     spawn "xsetroot -cursor_name top_left_arrow"
     xmproc <- spawnPipe "xmobar /home/ukstudio/.xmobarrc -x 1"
     xmonad $ defaultConfig
