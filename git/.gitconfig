@@ -2,6 +2,7 @@
 	st = status
 	ci = commit
 	co = checkout
+	g = grep --break --heading --line-number
 [user]
 	name = AKAMATSU Yuki
 	email = y.akamatsu@ukstudio.jp
@@ -13,3 +14,6 @@
 	excludesfile = /home/ukstudio/.gitignore_global
 [include]
 	path = .gitconfig.local
+[grep]
+	lineNumber = true
+	extendRegexp = true
