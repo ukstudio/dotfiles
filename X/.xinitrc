@@ -6,7 +6,4 @@ export LC_ALL=ja_JP.utf8
 
 nitrogen --restore &
 
-xcompmgr &
-
 xrdb -merge ~/.Xdefaults
-xmonad
