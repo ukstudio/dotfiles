@@ -7,3 +7,5 @@ doc/tags*
 .xmonad/xmonad.errors
 .xmonad/history
 *~
+vendor/bin
+.envrc

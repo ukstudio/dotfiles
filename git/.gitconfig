@@ -10,5 +10,6 @@
 [core]
 	excludesfile = .gitignore_global
 	pager = less
+	excludesfile = /home/ukstudio/.gitignore_global
 [include]
 	path = .gitconfig.local
