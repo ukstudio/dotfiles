@@ -13,7 +13,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'taichouchou2/vim-rsense'
-Bundle 'Shougo/vimproc'
 Bundle 'tpope/vim-rails'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-fugitive'
