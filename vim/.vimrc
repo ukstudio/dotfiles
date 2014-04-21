@@ -33,6 +33,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'chreekat/vim-instant-markdown'
 Bundle 'tpope/vim-markdown'
 Bundle 'itchyny/lightline.vim'
+Bundle 'slim-template/vim-slim'
 
 filetype plugin indent on
 
