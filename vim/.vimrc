@@ -34,6 +34,8 @@ Bundle 'chreekat/vim-instant-markdown'
 Bundle 'tpope/vim-markdown'
 Bundle 'itchyny/lightline.vim'
 Bundle 'slim-template/vim-slim'
+Bundle 'kannokanno/previm'
+Bundle 'tyru/open-browser.vim'
 
 filetype plugin indent on
 
