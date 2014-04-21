@@ -286,8 +286,19 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
 
 " tagbar " {{{2
-let g:tagbar_usearrows = 1
 nnoremap <Leader>l :TagbarToggle<CR>
+let g:tagbar_ctags_bin="/home/ukstudio/local/bin/ctags"
+let g:tagbar_usearrows = 1
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+\ }
 
 " rsense" {{{2
 let g:rsenseUseOmniFunc = 1
