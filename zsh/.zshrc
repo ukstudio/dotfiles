@@ -76,6 +76,7 @@ antigen-bundle gem
 antigen-bundle bundler
 antigen-bundle vi-mode
 antigen-bundle zsh-users/zsh-syntax-highlighting
+antigen-bundle rails
 
 antigen-theme gallois
 
