@@ -7,7 +7,7 @@
 	name = AKAMATSU Yuki
 	email = y.akamatsu@ukstudio.jp
 [color]
-	ui = auto
+	ui = true
 [core]
 	excludesfile = .gitignore_global
 	pager = less
@@ -17,3 +17,7 @@
 [grep]
 	lineNumber = true
 	extendRegexp = true
+[pager]
+	diff = diff-highlight | less
+	log = diff-highlight | less
+	show = diff-highlight |less
