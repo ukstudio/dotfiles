@@ -36,12 +36,13 @@ Bundle 'itchyny/lightline.vim'
 Bundle 'slim-template/vim-slim'
 Bundle 'kannokanno/previm'
 Bundle 'tyru/open-browser.vim'
+Bundle 'chriskempson/vim-tomorrow-theme'
 
 filetype plugin indent on
 
 set foldmethod=marker
 set t_Co=256
-colorscheme jellybeans
+colorscheme Tomorrow-Night
 set background=light
 
 set listchars=tab:>\
