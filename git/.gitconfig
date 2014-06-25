@@ -3,6 +3,9 @@
 	ci = commit
 	co = checkout
 	g = grep --break --heading --line-number
+	b = branch
+	m = checkout master
+	d = checkout develop
 [user]
 	name = AKAMATSU Yuki
 	email = y.akamatsu@ukstudio.jp
