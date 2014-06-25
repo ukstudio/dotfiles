@@ -7,10 +7,10 @@ augroup end
 set nocompatible
 syntax on
 filetype off
-set rtp+=~/.vim/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 
 Bundle 'taichouchou2/vim-rsense'
 Bundle 'tpope/vim-rails'
