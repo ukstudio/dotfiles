@@ -37,6 +37,7 @@ Bundle 'slim-template/vim-slim'
 Bundle 'kannokanno/previm'
 Bundle 'tyru/open-browser.vim'
 Bundle 'chriskempson/vim-tomorrow-theme'
+Bundle 'todesking/ruby_hl_lvar.vim'
 
 filetype plugin indent on
 
@@ -309,6 +310,7 @@ let g:Align_xstrlen = 3
 
 " lightline.vim" {{{2
 let g:lightline = { 'colorscheme': 'wombat' }
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
