@@ -10,6 +10,7 @@ import XMonad.Layout.Magnifier
 import XMonad.Layout.IM
 import XMonad.Layout.Named
 import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Spacing
 import XMonad.Util.NamedScratchpad
 
 import Data.Monoid
@@ -125,7 +126,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-basicLayout = Tall nmaster delta ratio
+basicLayout = spacing 2 $ Tall nmaster delta ratio
     where
         nmaster = 1
         ratio   = 1/2
