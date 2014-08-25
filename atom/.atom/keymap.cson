@@ -1,0 +1,19 @@
+'body':
+  'ctrl-s': 'core:save'
+  'ctrl-q': 'core:close'
+
+'.editor':
+  'ctrl-alt-a': 'atom-alignment:align'
+
+'.editor.vim-mode:not(.insert-mode)':
+  'ctrl-f': 'unset!'
+
+'.editor.vim-mode.insert-mode':
+  'ctrl-f': 'unset!'
+
+'.editor.vim-mode.command-mode':
+  'ctrl-r': 'unset!'
+
+'.editor:not(.mini)':
+  'shift-ctrl-e': 'easy-motion:start'
+  'shift-ctrl-y': 'easy-motion:start-reverse'

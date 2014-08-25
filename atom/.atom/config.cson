@@ -1,0 +1,29 @@
+'exception-reporting':
+  'userId': 'a728a2df-e4e2-5824-7979-921db0a48422'
+'welcome':
+  'showOnStartup': false
+'metrics':
+  'userId': '8ce6bdeb8d65c023344413a3a99bdfd8a000ddb9'
+'editor':
+  'showIndentGuide': true
+  'fontFamily': '"Anonymous Pro"'
+  'fontSize': 13
+'core':
+  'themes': [
+    'atom-dark-ui'
+    'monokai'
+  ]
+  'disabledPackages': [
+    'symbols-view'
+  ]
+'atom-lint':
+  'rubocop':
+    'path': '/home/ukstudio/.rbenv/.shims/rubocop'
+'tree-view':
+  'hideVcsIgnoredFiles': true
+'whitespace': {}
+'find-and-replace':
+  'openProjectFindResultsInRightPane': true
+  'focusEditorAfterSearch': true
+'recent-files':
+  'updated': false
