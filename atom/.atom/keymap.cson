@@ -9,6 +9,11 @@
   'ctrl-alt-p': 'atom-alignment:align'
   'ctrl-n': 'find-and-replace:find-next'
 
+  'alt-ctrl-k': 'pane-move:up'
+  'alt-ctrl-j': 'pane-move:down'
+  'alt-ctrl-h': 'pane-move:left'
+  'alt-ctrl-l': 'pane-move:right'
+
 '.editor.vim-mode:not(.insert-mode)':
   'ctrl-f': 'unset!'
 
