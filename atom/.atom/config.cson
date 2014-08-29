@@ -6,12 +6,12 @@
   'userId': '8ce6bdeb8d65c023344413a3a99bdfd8a000ddb9'
 'editor':
   'showIndentGuide': true
-  'fontFamily': '"Anonymous Pro"'
   'fontSize': 13
+  'fontFamily': '"DejaVu Sans Mono", Ricty'
 'core':
   'themes': [
-    'atom-dark-ui'
-    'monokai'
+    'solarized-dark-ui'
+    'solarized-dark-syntax'
   ]
   'disabledPackages': [
     'symbols-view'
