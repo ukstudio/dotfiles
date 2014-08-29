@@ -1,0 +1,14 @@
+.vertical {
+  .pane {
+    opacity:0.40;
+
+    &.active {
+      opacity: 1.0;
+    }
+  }
+
+  .panes .pane-row > *,
+  .panes .pane-column > * {
+    border-right: 1px solid rgba(150, 150, 150, 0.2);
+  }
+}
