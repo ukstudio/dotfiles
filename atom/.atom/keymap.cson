@@ -1,9 +1,13 @@
 'body':
   'ctrl-s': 'core:save'
   'ctrl-q': 'core:close'
+  'ctrl-shift-q': 'pane:close'
+  'ctrl-alt-p': 'git-diff:move-to-previous-diff'
+  'ctrl-alt-n': 'git-diff:move-to-next-diff'
 
 '.editor':
-  'ctrl-alt-a': 'atom-alignment:align'
+  'ctrl-alt-p': 'atom-alignment:align'
+  'ctrl-n': 'find-and-replace:find-next'
 
 '.editor.vim-mode:not(.insert-mode)':
   'ctrl-f': 'unset!'
@@ -17,3 +21,7 @@
 '.editor:not(.mini)':
   'shift-ctrl-e': 'easy-motion:start'
   'shift-ctrl-y': 'easy-motion:start-reverse'
+
+'.workspace .editor:not(.mini)':
+  'alt-ctrl--': 'resize-panes:shrink-active-pane'
+  'alt-ctrl-=': 'resize-panes:enlarge-active-pane'
