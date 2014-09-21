@@ -66,9 +66,18 @@ unset RUBYOPT
 . $HOME/z.sh
 alias j=z
 
+function ghn-open() {
+  local url=$(ghn list | peco --query "$LBUFFER")
+  if [ -n "$url" ]; then
+    xdg-open ${url}
+  fi
+}
+
+p() { peco | while read LINE; do $@ $LINE; done }
+
 # antigen
 . $HOME/.antigen.zsh
-antigen-lib
+antigen-use oh-my-zsh
 
 antigen-bundle git
 antigen-bundle gitfast
