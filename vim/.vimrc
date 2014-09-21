@@ -7,17 +7,16 @@ augroup end
 set nocompatible
 syntax on
 filetype off
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
 
-Bundle 'taichouchou2/vim-rsense'
 Bundle 'tpope/vim-rails'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
-Bundle 'ukstudio/vim-ukstudio256'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
@@ -37,7 +36,6 @@ Bundle 'slim-template/vim-slim'
 Bundle 'kannokanno/previm'
 Bundle 'tyru/open-browser.vim'
 Bundle 'chriskempson/vim-tomorrow-theme'
-Bundle 'todesking/ruby_hl_lvar.vim'
 
 filetype plugin indent on
 
@@ -118,6 +116,7 @@ autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 autocmd WinEnter * match WhitespaceEOL /\s\+$/
+
 
 "Syntax " {{{1
 autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
