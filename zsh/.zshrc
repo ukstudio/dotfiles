@@ -73,7 +73,18 @@ function ghn-open() {
   fi
 }
 
-p() { peco | while read LINE; do $@ $LINE; done }
+function p() { peco | while read LINE; do $@ $LINE; done }
+
+function pf() {
+  ${1:=$(pwd)}
+  local selected=$(find $1 -maxdepth 2 | peco)
+  if [[ -d $selected ]]; then
+    peco-search-file $selected
+  elif [[ -f $selected ]]; then
+    xdg-open $selected
+  fi
+}
+
 
 # antigen
 . $HOME/.antigen.zsh
