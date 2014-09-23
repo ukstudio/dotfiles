@@ -23,7 +23,7 @@ import qualified Data.Map        as M
 
 --myTerminal = "gnome-terminal --hide-menubar"
 -- myTerminal = "mate-terminal --hide-menubar"
-myTerminal = "lxterminal"
+myTerminal = "terminator"
 
 scratchpads = [
     NS "htop" "gnome-terminal -t 'htop'" (title =? "htop") defaultFloating,
