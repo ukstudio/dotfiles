@@ -340,10 +340,6 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
-" rsense" {{{2
-let g:rsenseUseOmniFunc = 1
-let g:rsenseHome = "/home/ukstudio/local/rsense-0.3"
-
 " align.vim" {{{2
 let g:Align_xstrlen = 3
 
