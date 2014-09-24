@@ -26,6 +26,7 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'matchit.zip'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/syntastic'
 Bundle 'slim-template/vim-slim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
@@ -345,6 +346,10 @@ let g:Align_xstrlen = 3
 
 " lightline.vim" {{{2
 let g:lightline = { 'colorscheme': 'wombat' }
+
+" syntastic " {{{2
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
