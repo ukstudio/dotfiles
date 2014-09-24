@@ -75,6 +75,8 @@ function ghn-open() {
 
 function p() { peco | while read LINE; do $@ $LINE; done }
 
+function gcd() { ghq list -p | p cd }
+
 function pf() {
   ${1:=$(pwd)}
   local selected=$(find $1 -maxdepth 2 | peco)
