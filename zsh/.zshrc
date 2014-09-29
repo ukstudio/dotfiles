@@ -15,9 +15,7 @@ alias gs='gem search -r'
 alias be='bundle exec '
 alias ro='grep -E "describe|context" '
 
-alias tmux-changekey='tmux set-option -ag prefix C-t'
-alias tmux-revertkey='tmux set-option -ag prefix C-a'
-alias tchdir='tmux set-option default-path $PWD'
+alias t='tmux new -s `basename \`pwd\``'
 
 export GREP_OPTIONS="--color=auto"
 
