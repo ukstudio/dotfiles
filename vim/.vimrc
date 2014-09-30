@@ -170,6 +170,11 @@ nnoremap <Leader>gc :<C-u>Gcommit -v<Cr>
 vnoremap < <gv
 vnoremap > >gv
 
+" from シングルページWebアプリケーション(オライリー)
+vmap <silent> ;h :s?^\(\s*\)+ '\([^']\+\)',*\s*$?\1\2?g<CR>
+vmap <silent> ;q :s?^\(\s*\)\(.*\)\s*$? \1 + '\2'?<CR>
+
+
 " autocmd "{{{1
 autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
 
