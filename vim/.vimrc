@@ -353,7 +353,7 @@ let g:Align_xstrlen = 3
 let g:lightline = { 'colorscheme': 'wombat' }
 
 " syntastic " {{{2
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [] }
 let g:syntastic_ruby_checkers = ['rubocop']
 
 "editing .vimrc " {{{1
