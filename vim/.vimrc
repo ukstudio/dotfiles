@@ -72,6 +72,7 @@ set ambiwidth=double
 set backspace=indent,eol,start
 
 let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"} %3l,%3c %3p%%'
+highlight Normal ctermbg=NONE
 
 ":TOhtml
 let g:use_xhtml = 1
