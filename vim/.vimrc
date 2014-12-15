@@ -19,6 +19,7 @@ Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'croaker/mustang-vim'
 Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'gregsexton/gitv'
+Bundle 'haya14busa/incsearch.vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'junegunn/vim-easy-align'
@@ -55,7 +56,7 @@ set fileencodings=utf-8,euc-jp,cp932,default,latin
 
 set nu
 set ruler
-set nocursorline
+set cursorline
 
 set wildmenu    "補完候補の一覧を表示
 set smartindent
@@ -359,6 +360,11 @@ let g:lightline = { 'colorscheme': 'wombat' }
 " syntastic " {{{2
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [] }
 let g:syntastic_ruby_checkers = ['rubocop']
+
+" incsearch.vim " {{{2
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
