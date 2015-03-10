@@ -1,32 +1,8 @@
 'body':
+  'ctrl-w s': 'pane:split-down'
+  'ctrl-w v': 'pane:split-right'
+  'ctrl-w l': 'widnow:focus-pane-on-right'
+  'ctrl-w h': 'window:focus-pane-on-left'
+  'ctrl-w j': 'window:focus-pane-below'
+  'ctrl-w k': 'window:focus-pane-above'
   'ctrl-s': 'core:save'
-  'ctrl-q': 'core:close'
-  'ctrl-shift-q': 'pane:close'
-  'ctrl-alt-p': 'git-diff:move-to-previous-diff'
-  'ctrl-alt-n': 'git-diff:move-to-next-diff'
-
-'.editor':
-  'ctrl-alt-p': 'atom-alignment:align'
-  'ctrl-n': 'find-and-replace:find-next'
-
-  'alt-ctrl-k': 'pane-move:up'
-  'alt-ctrl-j': 'pane-move:down'
-  'alt-ctrl-h': 'pane-move:left'
-  'alt-ctrl-l': 'pane-move:right'
-
-'.editor.vim-mode:not(.insert-mode)':
-  'ctrl-f': 'unset!'
-
-'.editor.vim-mode.insert-mode':
-  'ctrl-f': 'unset!'
-
-'.editor.vim-mode.command-mode':
-  'ctrl-r': 'unset!'
-
-'.editor:not(.mini)':
-  'shift-ctrl-e': 'easy-motion:start'
-  'shift-ctrl-y': 'easy-motion:start-reverse'
-
-'.workspace .editor:not(.mini)':
-  'alt-ctrl--': 'resize-panes:shrink-active-pane'
-  'alt-ctrl-=': 'resize-panes:enlarge-active-pane'
