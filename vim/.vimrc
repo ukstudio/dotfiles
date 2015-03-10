@@ -22,6 +22,7 @@ Bundle 'gregsexton/gitv'
 Bundle 'haya14busa/incsearch.vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'junegunn/vim-easy-align'
+Bundle 'justinmk/vim-dirvish'
 Bundle 'kana/vim-tabpagecd'
 Bundle 'kannokanno/previm'
 Bundle 'kchmck/vim-coffee-script'
@@ -42,6 +43,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'yuroyoro/vim-scala'
+
 filetype plugin indent on
 
 set foldmethod=marker
