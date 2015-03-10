@@ -16,6 +16,7 @@ alias be='bundle exec '
 alias ro='grep -E "describe|context" '
 
 alias t='tmux new -s `basename \`pwd\``'
+alias -g C='`git ls-files --cached | peco`'
 
 export GREP_OPTIONS="--color=auto"
 
@@ -30,7 +31,7 @@ setopt autopushd
 
 autoload -U compinit promptinit
 compinit
-promptinit; prompt gentoo
+#promptinit; prompt gentoo
 
 autoload colors; colors
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -67,8 +68,13 @@ alias j=z
 function ghn-open() {
   local url=$(ghn list | peco --query "$LBUFFER")
   if [ -n "$url" ]; then
-    xdg-open ${url}
+    open ${url}
   fi
+}
+
+function pivo-open() {
+  local url="$(pivo stories me $1 | peco --query "$LBUFFER" | awk '{print $NF}')"
+  open ${url}
 }
 
 function p() { peco | while read LINE; do $@ $LINE; done }
@@ -97,7 +103,7 @@ antigen-bundle bundler
 antigen-bundle vi-mode
 antigen-bundle zsh-users/zsh-syntax-highlighting
 
-antigen-theme bira
+antigen-theme steeef
 
 antigen-apply
 
