@@ -21,13 +21,13 @@ Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'gregsexton/gitv'
 Bundle 'haya14busa/incsearch.vim'
 Bundle 'itchyny/lightline.vim'
-Bundle 'jiangmiao/auto-pairs'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'kana/vim-tabpagecd'
 Bundle 'kannokanno/previm'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'matchit.zip'
+Bundle 'nelstrom/vim-qargs'
 Bundle 'rhysd/committia.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
@@ -42,7 +42,6 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'yuroyoro/vim-scala'
-
 filetype plugin indent on
 
 set foldmethod=marker
@@ -220,6 +219,7 @@ autocmd MyAutoCmd FileType rst  call s:set_short_indent()
 autocmd MyAutoCmd FileType modula2  call s:set_short_indent()
 autocmd MyAutoCmd FileType yaml call s:set_short_indent()
 autocmd MyAutoCmd FileType haml call s:set_short_indent()
+autocmd MyAutoCmd FileType slim call s:set_short_indent()
 autocmd MyAutoCmd FileType scss call s:set_short_indent()
 autocmd MyAutoCmd FileType changelog call s:set_short_indent()
 
@@ -338,7 +338,7 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
 " tagbar " {{{2
 nnoremap <Leader>l :TagbarToggle<CR>
-let g:tagbar_ctags_bin="/home/ukstudio/local/bin/ctags"
+let g:tagbar_ctags_bin="/usr/local/Cellar/ctags/5.8/bin/ctags"
 let g:tagbar_usearrows = 1
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
