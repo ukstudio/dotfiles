@@ -116,10 +116,6 @@ function! s:set_review_indent()
   setlocal noexpandtab
 endfunction
 
-" template
-autocmd! BufNewFile *.user.js 0r $HOME/.vim/template/greasemonkey.txt
-autocmd! BufNewFile *.html    0r $HOME/.vim/template/html.txt
-
 " 末尾のスペースをハイライト
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
