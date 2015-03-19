@@ -30,6 +30,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'matchit.zip'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'rhysd/committia.vim'
+Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'slim-template/vim-slim'
@@ -171,6 +172,10 @@ nnoremap <Leader>gc :<C-u>Gcommit -v<Cr>
 " reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
+
+" cwindow
+nnoremap <S-n> :<C-u>cnext<Cr>
+nnoremap <S-p> :<C-u>cprevious<Cr>
 
 " from シングルページWebアプリケーション(オライリー)
 vmap <silent> ;h :s?^\(\s*\)+ '\([^']\+\)',*\s*$?\1\2?g<CR>
