@@ -123,10 +123,6 @@ highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 autocmd WinEnter * match WhitespaceEOL /\s\+$/
 
-
-"Syntax " {{{1
-autocmd! BufRead,BufNewFile .vimperatorrc setfiletype vimperator
-
 "Key Mapping " {{{1
 
 let mapleader = " "
