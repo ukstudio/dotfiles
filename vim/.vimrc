@@ -59,7 +59,7 @@ set fileencodings=utf-8,euc-jp,cp932,default,latin
 
 set nu
 set ruler
-set cursorline
+set nocursorline
 
 set wildmenu    "補完候補の一覧を表示
 set smartindent
