@@ -16,8 +16,10 @@ Bundle 'gmarik/Vundle.vim'
 Bundle 'Shougo/neocomplete.vim'
 Bundle 'chreekat/vim-instant-markdown'
 Bundle 'chriskempson/vim-tomorrow-theme'
+Bundle 'christoomey/vim-tmux-runner'
 Bundle 'croaker/mustang-vim'
 Bundle 'ctrlpvim/ctrlp.vim'
+Bundle 'gabebw/vim-spec-runner'
 Bundle 'gregsexton/gitv'
 Bundle 'haya14busa/incsearch.vim'
 Bundle 'itchyny/lightline.vim'
@@ -366,6 +368,10 @@ map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
+" vim-tmux-runner" {{{2
+let g:VtrUseVtrMaps = 0
+let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
+map <Leader>rs <Plug>RunCurrentSpecFile
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
