@@ -91,6 +91,16 @@ function pf() {
   fi
 }
 
+function find-pr() {
+  local parent=$2||'master'
+  git log $1..$2 --merges --ancestry-path --reverse --oneline | head -n1
+}
+
+function find-pr-open() {
+  local pr="$(find-pr $1 $2 | awk '{print substr($5, 2)}')"
+  local br="$(git config --get remote.origin.url | sed 's/git@github.com://' | sed 's/\.git$//')"
+  open "https://github.com/${br}/pull/${pr}"
+}
 
 # antigen
 . $HOME/.antigen.zsh
