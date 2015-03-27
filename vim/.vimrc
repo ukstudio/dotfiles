@@ -14,6 +14,7 @@ call vundle#rc()
 Bundle 'gmarik/Vundle.vim'
 
 Bundle 'Shougo/neocomplete.vim'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'chreekat/vim-instant-markdown'
 Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'christoomey/vim-tmux-runner'
