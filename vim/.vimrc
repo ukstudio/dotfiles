@@ -225,6 +225,7 @@ autocmd MyAutoCmd FileType haml call s:set_short_indent()
 autocmd MyAutoCmd FileType slim call s:set_short_indent()
 autocmd MyAutoCmd FileType scss call s:set_short_indent()
 autocmd MyAutoCmd FileType changelog call s:set_short_indent()
+autocmd MyAutoCmd FileType json call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
