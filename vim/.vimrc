@@ -37,6 +37,7 @@ Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'slim-template/vim-slim'
+Bundle 'szw/vim-tags'
 Bundle 'thinca/vim-qfreplace'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
@@ -342,7 +343,6 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 
 " tagbar " {{{2
 nnoremap <Leader>l :TagbarToggle<CR>
-let g:tagbar_ctags_bin="/usr/local/Cellar/ctags/5.8/bin/ctags"
 let g:tagbar_usearrows = 1
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
@@ -375,6 +375,11 @@ let g:VtrUseVtrMaps = 0
 let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
+
+" vim-tags" {{{2
+let g:vim_tags_auto_generate = 1
+let g:vim_tags_ignore_files = ['*.js']
+
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
@@ -401,5 +406,3 @@ if executable('coffeetags')
         \ }
         \ }
 endif
-
-set tags=~/.tags,tags,coffee_tags
