@@ -374,6 +374,7 @@ map g/ <Plug>(incsearch-stay)
 let g:VtrUseVtrMaps = 0
 let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
+map <Leader>rt <Plug>RunFocusedSpec
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
