@@ -81,6 +81,8 @@ function p() { peco | while read LINE; do $@ $LINE; done }
 
 function gcd() { ghq list -p | p cd }
 
+function gem-jump { bundle show --paths | p cd }
+
 function pf() {
   ${1:=$(pwd)}
   local selected=$(find $1 -maxdepth 2 | peco)
