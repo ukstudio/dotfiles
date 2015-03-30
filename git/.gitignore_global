@@ -10,3 +10,4 @@ doc/tags*
 vendor/bin
 .envrc
 tags
+Gemfile.lock.tags
