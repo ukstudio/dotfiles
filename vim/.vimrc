@@ -377,8 +377,8 @@ map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
 
 " vim-tags" {{{2
-let g:vim_tags_auto_generate = 1
-let g:vim_tags_ignore_files = ['*.js']
+let g:vim_tags_ctags_binary="/usr/local/bin/ctags"
+let g:vim_tags_directories=[]
 
 "editing .vimrc " {{{1
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
