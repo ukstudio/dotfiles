@@ -1,8 +1,0 @@
-'body':
-  'ctrl-w s': 'pane:split-down'
-  'ctrl-w v': 'pane:split-right'
-  'ctrl-w l': 'widnow:focus-pane-on-right'
-  'ctrl-w h': 'window:focus-pane-on-left'
-  'ctrl-w j': 'window:focus-pane-below'
-  'ctrl-w k': 'window:focus-pane-above'
-  'ctrl-s': 'core:save'
