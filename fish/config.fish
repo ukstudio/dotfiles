@@ -27,3 +27,13 @@ function fish_user_key_bindings
   bind -M insert \cr 'peco_select_history (commandline -b)'
 end
 
+function find-pr
+  set -l range $argv
+  git log $range --merges --ancestry-path --reverse --oneline | head -n1
+end
+
+function find-pr-open
+  set -l pr (find-pr $argv | awk '{print substr($5, 2)}')
+  set -l repo (git config --get remote.origin.url | sed 's/git@github.com://' | sed 's/\.git$//')
+  open "https://github.com/$repo/pull/$pr"
+end

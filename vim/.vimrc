@@ -240,6 +240,7 @@ autocmd MyAutoCmd FileType ocaml call s:set_short_indent()
 autocmd MyAutoCmd FileType treetop call s:set_short_indent()
 autocmd MyAutoCmd FileType cucumber call s:set_short_indent()
 autocmd MyAutoCmd FileType arduino call s:set_short_indent()
+autocmd MyAutoCmd FileType fish call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
