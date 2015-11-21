@@ -73,7 +73,7 @@ function ghn-open() {
 }
 
 function pivo-open() {
-  local url="$(pivo stories me $1 | peco --query "$LBUFFER" | awk '{print $NF}')"
+  local url="$(pivo stories all $1 --mywork ukstudio| peco --query "$LBUFFER" | awk '{print $NF}')"
   open ${url}
 }
 
@@ -120,3 +120,6 @@ antigen-theme steeef
 antigen-apply
 
 unsetopt correct_all
+
+# OPAM configuration
+. /Users/ukstudio/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

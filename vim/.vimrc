@@ -1,5 +1,7 @@
 "Basic " {{{1
 
+set shell=bash " for fish
+
 augroup MyAutoCmd
   autocmd!
 augroup end
@@ -7,6 +9,8 @@ augroup end
 set nocompatible
 syntax on
 filetype off
+
+set clipboard=unnamed
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
@@ -20,6 +24,7 @@ Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'christoomey/vim-tmux-runner'
 Bundle 'croaker/mustang-vim'
 Bundle 'ctrlpvim/ctrlp.vim'
+Bundle 'dag/vim-fish'
 Bundle 'gabebw/vim-spec-runner'
 Bundle 'gregsexton/gitv'
 Bundle 'haya14busa/incsearch.vim'
@@ -48,14 +53,16 @@ Bundle 'tyru/open-browser.vim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
 Bundle 'vim-scripts/bufexplorer.zip'
+Bundle 'w0ng/vim-hybrid'
+Bundle 'wakatime/vim-wakatime'
 Bundle 'yuroyoro/vim-scala'
 
 filetype plugin indent on
 
 set foldmethod=marker
 set t_Co=256
-colorscheme Tomorrow-Night
-set background=light
+colorscheme hybrid
+set background=dark
 
 set listchars=tab:>\
 
@@ -208,6 +215,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
 autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
+autocmd MyAutoCmd BufNewFile,BufRead *.es6 set filetype=javascript
 
 autocmd MyAutoCmd FileType haskell call s:set_haskell_indent()
 autocmd MyAutoCmd FileType review call s:set_short_indent()
@@ -227,6 +235,11 @@ autocmd MyAutoCmd FileType slim call s:set_short_indent()
 autocmd MyAutoCmd FileType scss call s:set_short_indent()
 autocmd MyAutoCmd FileType changelog call s:set_short_indent()
 autocmd MyAutoCmd FileType json call s:set_short_indent()
+autocmd MyAutoCmd FileType markdown call s:set_short_indent()
+autocmd MyAutoCmd FileType ocaml call s:set_short_indent()
+autocmd MyAutoCmd FileType treetop call s:set_short_indent()
+autocmd MyAutoCmd FileType cucumber call s:set_short_indent()
+autocmd MyAutoCmd FileType arduino call s:set_short_indent()
 
 " ruby
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
@@ -314,7 +327,7 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^.*\t]\.\h\w*\|\h\w*::'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -329,6 +342,7 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType rspec setlocal omnifunc=rubycomplete#Complete
 autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
+autocmd FileType ocaml setlocal omnifunc=merlin#Complete
 
 " man.vim " {{{2
 runtime ftplugin/man.vim
@@ -355,6 +369,23 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+        \ 'ctagsbin' : 'coffeetags',
+        \ 'ctagsargs' : '',
+        \ 'kinds' : [
+        \ 'f:functions',
+        \ 'o:object',
+        \ ],
+        \ 'sro' : ".",
+        \ 'kind2scope' : {
+        \ 'f' : 'object',
+        \ 'o' : 'object',
+        \ }
+        \ }
+endif
+
+set tags+=coffeetags
 " align.vim" {{{2
 let g:Align_xstrlen = 3
 
@@ -380,7 +411,13 @@ map <Leader>rt <Plug>RunFocusedSpec
 let g:vim_tags_ctags_binary="/usr/local/bin/ctags"
 let g:vim_tags_directories=[]
 
-"editing .vimrc " {{{1
+" merlin {{{2
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+" ocp-indent {{{2
+execute ":source " . "/Users/ukstudio/.opam/system/share/vim/syntax/ocp-indent.vim"
+"editing .vimrc " {{{
 nmap <Space>. :<C-u>edit $MYVIMRC<CR>
 nmap <Space>s. :<C-u>source $MYVIMRC<CR>
 
@@ -391,18 +428,3 @@ else
   autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC |if has('gui_running') | source $MYGVIMRC
   autocmd MyAutoCmd BufWritePost $MYGVIMRC nested source $MYGVIMRC
 end
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-endif

@@ -10,4 +10,5 @@ doc/tags*
 vendor/bin
 .envrc
 tags
+coffeetags
 Gemfile.lock.tags

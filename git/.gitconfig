@@ -15,6 +15,9 @@
 	excludesfile = .gitignore_global
 	pager = less
 	excludesfile = /home/ukstudio/.gitignore_global
+	precomposeunicode = true
+	quotepath = false
+	excludesfile = /Users/ukstudio/.gitignore_global
 [include]
 	path = .gitconfig.local
 [grep]
@@ -24,3 +27,23 @@
 	diff = diff-highlight | less
 	log = diff-highlight | less
 	show = diff-highlight |less
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
+[diff]
+	algorithm = histogram
+[gh]
+	token = 66494e47ff2a06d737618768a3958f35457f818c
+[ghn]
+	token = 66494e47ff2a06d737618768a3958f35457f818c
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
