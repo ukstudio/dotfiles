@@ -1,0 +1,6 @@
+package peco
+package rbenv
+package z
+theme agnoster
+theme cbjohnson
+theme default
