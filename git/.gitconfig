@@ -29,7 +29,7 @@
 	show = diff-highlight |less
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
@@ -39,10 +39,6 @@
 	required = true
 [diff]
 	algorithm = histogram
-[gh]
-	token = 66494e47ff2a06d737618768a3958f35457f818c
-[ghn]
-	token = 66494e47ff2a06d737618768a3958f35457f818c
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
