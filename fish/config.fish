@@ -1,7 +1,13 @@
+set -U EDITOR /usr/local/bin/vim
+
 # Path to Oh My Fish install.
-set -gx PATH $PATH ~/.rbenv/bin
+set -gx PATH ~/.rbenv/bin ~/gocode/bin $PATH
 set -gx OMF_PATH /Users/ukstudio/.local/share/omf
 set -g Z_SCRIPT_PATH /usr/local/etc/profile.d/z.sh
+set -gx GOPATH $HOME/gocode
+set -gx NVM_DIR $HOME/.nvm
+
+set -gx PR_RELEASE_GITHUB_TOKEN 'dc22caeae596437a64d67492dbb77061ef7a9677'
 
 # Customize Oh My Fish configuration path.
 #set -gx OMF_CONFIG /Users/ukstudio/.config/omf
@@ -37,3 +43,5 @@ function find-pr-open
   set -l repo (git config --get remote.origin.url | sed 's/git@github.com://' | sed 's/\.git$//')
   open "https://github.com/$repo/pull/$pr"
 end
+
+eval (thefuck --alias | tr '\n' ';')

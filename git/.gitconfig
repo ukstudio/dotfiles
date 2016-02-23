@@ -18,6 +18,7 @@
 	precomposeunicode = true
 	quotepath = false
 	excludesfile = /Users/ukstudio/.gitignore_global
+	editor = vim
 [include]
 	path = .gitconfig.local
 [grep]

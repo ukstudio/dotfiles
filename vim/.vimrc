@@ -36,10 +36,12 @@ Bundle 'kannokanno/previm'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'matchit.zip'
+Bundle 'mxw/vim-jsx'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'rhysd/committia.vim'
 Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'slim-template/vim-slim'
 Bundle 'szw/vim-tags'
@@ -287,8 +289,9 @@ let g:ctrlp_prompt_mappings = {
 			\ 'OpenMulti()':          ['<c-o>'],
 			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
 			\ }
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*/node_modules/*
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = 'find %s -type f'
 
 " neocomplete.vim " {{{2
 
