@@ -22,6 +22,8 @@ alias gclean 'git fetch; and git branch --merged origin/master | grep -v "^\s*ma
 alias r rails
 alias be 'bundle exec'
 
+alias gcd 'ghq list -p | peco | read line ; cd $line'
+
 function cd
   builtin cd $argv
   ls -ah
