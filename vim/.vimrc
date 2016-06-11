@@ -374,23 +374,6 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-endif
-
-set tags+=coffeetags
 " align.vim" {{{2
 let g:Align_xstrlen = 3
 
