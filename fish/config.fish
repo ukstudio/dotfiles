@@ -6,7 +6,7 @@ set -gx OMF_PATH /Users/ukstudio/.local/share/omf
 set -g Z_SCRIPT_PATH /usr/local/etc/profile.d/z.sh
 set -gx GOPATH $HOME/gocode
 
-set -gx PR_RELEASE_GITHUB_TOKEN 'dc22caeae596437a64d67492dbb77061ef7a9677'
+source ~/.config/fish/config.local.fish
 
 # Customize Oh My Fish configuration path.
 #set -gx OMF_CONFIG /Users/ukstudio/.config/omf
