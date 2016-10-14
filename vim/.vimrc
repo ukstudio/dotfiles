@@ -17,7 +17,7 @@ call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
 
-Bundle 'Shougo/neocomplete.vim'
+Bundle 'Yggdroot/indentLine'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'chreekat/vim-instant-markdown'
 Bundle 'chriskempson/vim-tomorrow-theme'
@@ -34,6 +34,7 @@ Bundle 'justinmk/vim-dirvish'
 Bundle 'kana/vim-tabpagecd'
 Bundle 'kannokanno/previm'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'keith/rspec.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'matchit.zip'
 Bundle 'mxw/vim-jsx'
@@ -218,6 +219,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
 autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
 autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
 autocmd MyAutoCmd BufNewFile,BufRead *.es6 set filetype=javascript
+autocmd MyAutoCmd BufNewFile,BufRead *.slim set filetype=slim
 
 autocmd MyAutoCmd FileType haskell call s:set_haskell_indent()
 autocmd MyAutoCmd FileType review call s:set_short_indent()
@@ -249,7 +251,7 @@ autocmd MyAutoCmd FileType sql call s:set_short_indent()
 autocmd MyAutoCmd FileType ruby call s:set_short_indent()
 autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
 autocmd MyAutoCmd Filetype eruby set nowrap
-autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
+" autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
 
 
 function! s:set_filetype_ruby()
@@ -294,46 +296,6 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*/node_modules/*
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_user_command = 'find %s -type f'
 
-" neocomplete.vim " {{{2
-
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : ''
-\ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^.*\t]\.\h\w*\|\h\w*::'
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -363,16 +325,6 @@ let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
 " tagbar " {{{2
 nnoremap <Leader>l :TagbarToggle<CR>
 let g:tagbar_usearrows = 1
-let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
-        \ 'f:methods',
-        \ 'F:singleton methods'
-    \ ]
-\ }
 
 " align.vim" {{{2
 let g:Align_xstrlen = 3
@@ -381,7 +333,17 @@ let g:Align_xstrlen = 3
 let g:lightline = { 'colorscheme': 'wombat' }
 
 " syntastic " {{{2
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [] }
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map  = { 'mode': 'active' }
+
 let g:syntastic_ruby_checkers = ['rubocop']
 
 " incsearch.vim " {{{2
