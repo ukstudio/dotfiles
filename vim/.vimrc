@@ -1,380 +1,436 @@
-"Basic " {{{1
+"*****************************************************************************
+"" Vim-PLug core
+"*****************************************************************************
+if has('vim_starting')
+  set nocompatible               " Be iMproved
+endif
 
-set shell=bash " for fish
+let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
-augroup MyAutoCmd
-  autocmd!
-augroup end
+let g:vim_bootstrap_langs = "javascript,ruby,html"
+let g:vim_bootstrap_editor = "vim"				" nvim or vim
 
-set nocompatible
-syntax on
-filetype off
+if !filereadable(vimplug_exists)
+  echo "Installing Vim-Plug..."
+  echo ""
+  silent !\curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let g:not_finish_vimplug = "yes"
 
-set clipboard=unnamed
+  " Run shell script if exist on custom select language
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+  autocmd VimEnter * PlugInstall
+endif
 
-Bundle 'gmarik/Vundle.vim'
+" Required:
+call plug#begin(expand('~/.vim/plugged'))
 
-Bundle 'Yggdroot/indentLine'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'chreekat/vim-instant-markdown'
-Bundle 'chriskempson/vim-tomorrow-theme'
-Bundle 'christoomey/vim-tmux-runner'
-Bundle 'croaker/mustang-vim'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'dag/vim-fish'
-Bundle 'gabebw/vim-spec-runner'
-Bundle 'gregsexton/gitv'
-Bundle 'haya14busa/incsearch.vim'
-Bundle 'itchyny/lightline.vim'
-Bundle 'junegunn/vim-easy-align'
-Bundle 'justinmk/vim-dirvish'
-Bundle 'kana/vim-tabpagecd'
-Bundle 'kannokanno/previm'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'keith/rspec.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'matchit.zip'
-Bundle 'mxw/vim-jsx'
-Bundle 'nelstrom/vim-qargs'
-Bundle 'rhysd/committia.vim'
-Bundle 'rking/ag.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'slim-template/vim-slim'
-Bundle 'szw/vim-tags'
-Bundle 'thinca/vim-qfreplace'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-surround'
-Bundle 'tyru/open-browser.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/Colour-Sampler-Pack'
-Bundle 'vim-scripts/bufexplorer.zip'
-Bundle 'w0ng/vim-hybrid'
-Bundle 'wakatime/vim-wakatime'
-Bundle 'yuroyoro/vim-scala'
+"*****************************************************************************
+"" Plug install packages
+"*****************************************************************************
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-scripts/grep.vim'
+Plug 'vim-scripts/CSApprox'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'Raimondi/delimitMate'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
+Plug 'Yggdroot/indentLine'
 
+if v:version >= 704
+  Plug 'FelikZ/ctrlp-py-matcher'
+endif
+
+"" Color
+Plug 'tomasr/molokai'
+
+"" Custom bundles
+"" Javascript Bundle
+Plug 'jelera/vim-javascript-syntax'
+
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'thoughtbot/vim-rspec'
+Plug 'ecomba/vim-ruby-refactoring'
+
+"" HTML Bundle
+Plug 'amirh/HTML-AutoCloseTag'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'tpope/vim-haml'
+
+call plug#end()
+
+" Required:
 filetype plugin indent on
 
-set foldmethod=marker
-set t_Co=256
-colorscheme hybrid
-set background=dark
 
-set listchars=tab:>\
+"*****************************************************************************
+"" Basic Setup
+"*****************************************************************************"
+"" Encoding
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
 
-set fileencodings=utf-8,euc-jp,cp932,default,latin
-
-set nu
-set ruler
-set nocursorline
-
-set wildmenu    "補完候補の一覧を表示
-set smartindent
-set hlsearch
-set laststatus=2
-set textwidth=0
-
-set noswapfile
-set nobackup
-
-set ambiwidth=double
-"オートインデントの空白文字を<BS>で削除
-"前の行の改行文字を<BS>で削除し連結
-"最初からある文字(Ctrl+uやCtrl+wで入力した文字以外)を削除
+"" Fix backspace indent
 set backspace=indent,eol,start
 
-let &statusline = '%f%m%=%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"} %3l,%3c %3p%%'
-highlight Normal ctermbg=NONE
+"" Tabs. May be overriten by autocmd rules
+set tabstop=4
+set softtabstop=0
+set shiftwidth=4
+set expandtab
 
-":TOhtml
-let g:use_xhtml = 1
-let g:html_use_css = 1
+"" Map leader to ,
+let mapleader=','
 
-"文字コード
-command! -bang -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
-command! -bang -nargs=? Euc edit<bang> ++enc=euc-jp <args>
-command! -bang -nargs=? Sjis edit<bang> ++enc=Shift-jis <args>
-command! -bang -nargs=? Cp932 edit<bang> ++enc=Cp932<args>
+"" Enable hidden buffers
+set hidden
 
-"自動保存
-autocmd CursorHold * silent! wall
-autocmd CursorHoldI * silent! wall
+"" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
-"helpの言語の優先順位
-set helplang=ja,en
+"" Encoding
+set bomb
+set binary
+set ttyfast
+
+"" Directories for swp files
+set nobackup
+set noswapfile
+
+set fileformats=unix,dos,mac
+set showcmd
+set shell=/bin/sh
+
+"*****************************************************************************
+"" Visual Settings
+"*****************************************************************************
+syntax on
+set ruler
+set number
+
+let no_buffers_menu=1
+if !exists('g:not_finish_vimplug')
+  colorscheme molokai
+endif
+
+set mousemodel=popup
+set t_Co=256
+set guioptions=egmrti
+set gfn=Monospace\ 10
+
+if has("gui_running")
+  if has("gui_mac") || has("gui_macvim")
+    set guifont=Menlo:h12
+    set transparency=7
+  endif
+else
+  let g:CSApprox_loaded = 1
+
+  " IndentLine
+  let g:indentLine_enabled = 1
+  let g:indentLine_concealcursor = 0
+  let g:indentLine_char = '┆'
+  let g:indentLine_faster = 1
+
+
+  if $COLORTERM == 'gnome-terminal'
+    set term=gnome-256color
+  else
+    if $TERM == 'xterm'
+      set term=xterm-256color
+    endif
+  endif
+
+endif
+
+if &term =~ '256color'
+  set t_ut=
+endif
+
+"" Disable the blinking cursor.
+set gcr=a:blinkon0
+set scrolloff=3
+
+"" Status bar
+set laststatus=2
+
+"" Use modeline overrides
+set modeline
+set modelines=10
+
+set title
+set titleold="Terminal"
+set titlestring=%F
+
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+
+if exists("*fugitive#statusline")
+  set statusline+=%{fugitive#statusline()}
+endif
+
+" vim-airline
+let g:airline_theme = 'powerlineish'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
+
+"*****************************************************************************
+"" Abbreviations
+"*****************************************************************************
+
+"" NERDTree configuration
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+noremap <F3> :NERDTreeToggle<CR>
+
+" grep.vim
+nnoremap <silent> <leader>f :Rgrep<CR>
+let Grep_Default_Options = '-IR'
+let Grep_Skip_Files = '*.log *.db'
+let Grep_Skip_Dirs = '.git node_modules'
+
+"*****************************************************************************
+"" Functions
+"*****************************************************************************
+if !exists('*s:setupWrapping')
+  function s:setupWrapping()
+    set wrap
+    set wm=2
+    set textwidth=79
+  endfunction
+endif
+
+"*****************************************************************************
+"" Autocmd Rules
+"*****************************************************************************
+"" The PC is fast enough, do syntax highlight syncing from start
+augroup vimrc-sync-fromstart
+  autocmd!
+  autocmd BufEnter * :syntax sync fromstart
+augroup END
+
+"" Remember cursor position
+augroup vimrc-remember-cursor-position
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+"" txt
+augroup vimrc-wrapping
+  autocmd!
+  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+augroup END
+
+"" make/cmake
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
 
 set autoread
 
-"http://vim-users.jp/2009/11/hack104/
-"visual modeで選択した文字を検索する
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+"*****************************************************************************
+"" Mappings
+"*****************************************************************************
+"" Split
+noremap <Leader>h :<C-u>split<CR>
+noremap <Leader>v :<C-u>vsplit<CR>
 
-"changelog
-let g:changelog_timeformat = "%Y-%m-%d"
-let g:changelog_username = "AKAMATSU Yuki(id:ukstudio) <y.akamatsu@ukstudio.jp>"
+"" Git
+noremap <Leader>ga :Gwrite<CR>
+noremap <Leader>gc :Gcommit<CR>
+noremap <Leader>gsh :Gpush<CR>
+noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
 
-function! s:set_short_indent()
-  setlocal expandtab softtabstop=2 shiftwidth=2
-endfunction
+" session management
+nnoremap <leader>so :OpenSession<Space>
+nnoremap <leader>ss :SaveSession<Space>
+nnoremap <leader>sd :DeleteSession<CR>
+nnoremap <leader>sc :CloseSession<CR>
 
-function! s:set_haskell_indent()
-  setlocal expandtab softtabstop=4 shiftwidth=4
-endfunction
+"" Tabs
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
+nnoremap <silent> <S-t> :tabnew<CR>
 
-function! s:set_review_indent()
-  setlocal noexpandtab
-endfunction
+"" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
 
-" 末尾のスペースをハイライト
-highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
-autocmd WinEnter * match WhitespaceEOL /\s\+$/
+"" Opens an edit command with the path of the currently edited file filled in
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-"Key Mapping " {{{1
+"" Opens a tab edit command with the path of the currently edited file filled
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-let mapleader = " "
+"" ctrlp.vim
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
+let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
+let g:ctrlp_use_caching = 1
 
-" write/quit
-nnoremap <Leader>w :<C-u>write<CR>
-nnoremap <Leader>q :<C-u>quit<CR>
+" The Silver Searcher
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
 
-"行移動
-nnoremap j gj
-nnoremap k gk
+cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+noremap <leader>b :CtrlPBuffer<CR>
+let g:ctrlp_map = '<leader>e'
+let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
-"window操作
-nnoremap wh <C-w>h
-nnoremap wj <C-w>j
-nnoremap wk <C-w>k
-nnoremap wl <C-w>l
+" syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors = 1
 
-"Tab操作
-nnoremap tn :<C-u>tabnew<Cr>
-nnoremap th :<C-u>tabprev<Cr>
-nnoremap tl :<C-u>tabnext<Cr>
-nnoremap tc :<C-u>tabclose<Cr>
+" Tagbar
+nmap <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
 
-"Windowサイズ
-nnoremap + 4<C-w>+
-nnoremap - 4<C-w>-
-nnoremap { 4<C-w><
-nnoremap } 4<C-w>>
+" Disable visualbell
+set noerrorbells visualbell t_vb=
+if has('autocmd')
+  autocmd GUIEnter * set visualbell t_vb=
+endif
 
-"cd
-nnoremap <silent> cd :<C-u>cd %:h<Cr>
+"" Copy/Paste/Cut
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
 
-"ファイルを行ったりきたり
-nnoremap <Leader>b <C-^>
+noremap YY "+y<CR>
+noremap <leader>p "+gP<CR>
+noremap XX "+x<CR>
 
-" 検索結果のハイライトを消す
-noremap <Leader> <C-l> :nohl<CR><C-l>
+if has('macunix')
+  " pbcopy for OSX copy/paste
+  vmap <C-x> :!pbcopy<CR>
+  vmap <C-c> :w !pbcopy<CR><CR>
+endif
 
-" for vim-fugitive
-nnoremap <Leader>ga :<C-u>Gwrite<Cr>
-nnoremap <Leader>gc :<C-u>Gcommit -v<Cr>
+"" Open current line on GitHub
+nnoremap <Leader>o :.Gbrowse<CR>
 
-" reselect visual block after indent/outdent
-vnoremap < <gv
-vnoremap > >gv
+"" Custom configs
 
-" cwindow
-nnoremap <S-n> :<C-u>cnext<Cr>
-nnoremap <S-p> :<C-u>cprevious<Cr>
+let g:javascript_enable_domhtmlcss = 1
 
-" from シングルページWebアプリケーション(オライリー)
-vmap <silent> ;h :s?^\(\s*\)+ '\([^']\+\)',*\s*$?\1\2?g<CR>
-vmap <silent> ;q :s?^\(\s*\)\(.*\)\s*$? \1 + '\2'?<CR>
-
-
-" autocmd "{{{1
-autocmd MyAutoCmd FileType vim nnoremap ,s :<C-u>source %<Cr>
-
-autocmd MyAutoCmd BufNewFile * call s:create_missing_directory()
-function! s:create_missing_directory()
- let dir = expand("<afile>:p:h")
-  if !isdirectory(dir) && confirm("Create a new directory [".dir."]?", "&Yes\n&No") == 1
-    call mkdir(dir, "p")
-    " Reset fullpath of the buffer in order to avoid problems when using autochdir.
-    file %
-  endif
-endfunction
-
-function! s:delete_eol_spaces()
-  :%s/\s\+$//e
-endfunction
-" 末尾のスペース削除
-autocmd MyAutoCmd BufWrite * call s:delete_eol_spaces()
-
-" filetype "{{{2
-autocmd MyAutoCmd BufNewFile,BufRead *.txt set filetype=text
-autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
-autocmd MyAutoCmd BufNewFile,BufRead *.less set filetype=css
-autocmd MyAutoCmd BufNewFile,BufRead __EVERVIM_NOTE__ set filetype=html
-autocmd MyAutoCmd BufNewFile,BufRead *.watchr set filetype=ruby
-autocmd MyAutoCmd BufNewFile,BufRead *.es6 set filetype=javascript
-autocmd MyAutoCmd BufNewFile,BufRead *.slim set filetype=slim
-
-autocmd MyAutoCmd FileType haskell call s:set_haskell_indent()
-autocmd MyAutoCmd FileType review call s:set_short_indent()
-autocmd MyAutoCmd FileType html call s:set_short_indent()
-autocmd MyAutoCmd FileType eruby call s:set_short_indent()
-autocmd MyAutoCmd FileType text call s:set_short_indent()
-autocmd MyAutoCmd FileType scala call s:set_short_indent()
-autocmd MyAutoCmd FileType css call s:set_short_indent()
-autocmd MyAutoCmd FileType coffee call s:set_short_indent()
-autocmd MyAutoCmd FileType sh call s:set_short_indent()
-autocmd MyAutoCmd FileType javascript call s:set_short_indent()
-autocmd MyAutoCmd FileType rst  call s:set_short_indent()
-autocmd MyAutoCmd FileType modula2  call s:set_short_indent()
-autocmd MyAutoCmd FileType yaml call s:set_short_indent()
-autocmd MyAutoCmd FileType haml call s:set_short_indent()
-autocmd MyAutoCmd FileType slim call s:set_short_indent()
-autocmd MyAutoCmd FileType scss call s:set_short_indent()
-autocmd MyAutoCmd FileType changelog call s:set_short_indent()
-autocmd MyAutoCmd FileType json call s:set_short_indent()
-autocmd MyAutoCmd FileType markdown call s:set_short_indent()
-autocmd MyAutoCmd FileType ocaml call s:set_short_indent()
-autocmd MyAutoCmd FileType treetop call s:set_short_indent()
-autocmd MyAutoCmd FileType cucumber call s:set_short_indent()
-autocmd MyAutoCmd FileType arduino call s:set_short_indent()
-autocmd MyAutoCmd FileType fish call s:set_short_indent()
-autocmd MyAutoCmd FileType sql call s:set_short_indent()
-
-" ruby
-autocmd MyAutoCmd FileType ruby call s:set_short_indent()
-autocmd MyAutoCmd FileType ruby call s:set_filetype_ruby()
-autocmd MyAutoCmd Filetype eruby set nowrap
-" autocmd MyAutoCmd BufWritePost *.rb :!ruby -c %
+" vim-javascript
+augroup vimrc-javascript
+  autocmd!
+  autocmd FileType javascript set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4 smartindent
+augroup END
 
 
-function! s:set_filetype_ruby()
-  nmap ,r :<C-u>!ruby %<CR>
-  nmap ,s :<C-u>!spec %<CR>
-endfunction
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+
+augroup vimrc-ruby
+  autocmd!
+  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
+  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
+augroup END
+
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+\ }
+
+" Ruby refactory
+nnoremap <leader>rap  :RAddParameter<cr>
+nnoremap <leader>rcpc :RConvertPostConditional<cr>
+nnoremap <leader>rel  :RExtractLet<cr>
+vnoremap <leader>rec  :RExtractConstant<cr>
+vnoremap <leader>relv :RExtractLocalVariable<cr>
+nnoremap <leader>rit  :RInlineTemp<cr>
+vnoremap <leader>rrlv :RRenameLocalVariable<cr>
+vnoremap <leader>rriv :RRenameInstanceVariable<cr>
+vnoremap <leader>rem  :RExtractMethod<cr>
 
 
-"Plugin " {{{1
+"" Include user's local vim config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
 
-" ctrlp. " {{{2
-let g:ctrlp_prompt_mappings = {
-			\ 'PrtBS()':              ['<bs>'],
-			\ 'PrtDelete()':          ['<del>'],
-			\ 'PrtDeleteWord()':      ['<c-w>'],
-			\ 'PrtClear()':           ['<c-u>'],
-			\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-			\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-			\ 'PrtHistory(-1)':       [],
-			\ 'PrtHistory(1)':        [],
-			\ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-			\ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
-			\ 'AcceptSelection("t")': ['<c-t>', '<MiddleMouse>'],
-			\ 'AcceptSelection("v")': ['<c-v>', '<c-q>', '<RightMouse>'],
-			\ 'ToggleFocus()':        ['<tab>'],
-			\ 'ToggleRegex()':        ['<c-r>'],
-			\ 'ToggleByFname()':      ['<c-d>'],
-			\ 'ToggleType(1)':        ['<c-f>', '<c-up>'],
-			\ 'ToggleType(-1)':       ['<c-b>', '<c-down>'],
-			\ 'PrtCurStart()':        ['<c-a>'],
-			\ 'PrtCurEnd()':          ['<c-e>'],
-			\ 'PrtCurLeft()':         ['<c-h>', '<left>'],
-			\ 'PrtCurRight()':        ['<c-l>', '<right>'],
-			\ 'PrtClearCache()':      ['<F5>'],
-			\ 'PrtDeleteMRU()':       ['<F7>'],
-			\ 'CreateNewFile()':      ['<c-y>'],
-			\ 'MarkToOpen()':         ['<c-z>'],
-			\ 'OpenMulti()':          ['<c-o>'],
-			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
-			\ }
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*/node_modules/*
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = 'find %s -type f'
+"*****************************************************************************
+"" Convenience variables
+"*****************************************************************************
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c setlocal omnifunc=ccomplete#Complete
-autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType rspec setlocal omnifunc=rubycomplete#Complete
-autocmd FileType sql setlocal omnifunc=sqlcomplete#Complete
-autocmd FileType ocaml setlocal omnifunc=merlin#Complete
+" vim-airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 
-" man.vim " {{{2
-runtime ftplugin/man.vim
-
-" vimclojure " {{{2
-let clj_highlight_builtins = 1
-let clj_highlight_contrib = 1
-let clj_paren_rainbow = 1
-let clj_want_gorilla = 1
-let vimclojure#NailgunClient = "/Users/akamatsu/.clojure/vimclojure/ng"
-
-
-" tagbar " {{{2
-nnoremap <Leader>l :TagbarToggle<CR>
-let g:tagbar_usearrows = 1
-
-" align.vim" {{{2
-let g:Align_xstrlen = 3
-
-" lightline.vim" {{{2
-let g:lightline = { 'colorscheme': 'wombat' }
-
-" syntastic " {{{2
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map  = { 'mode': 'active' }
-
-let g:syntastic_ruby_checkers = ['rubocop']
-
-" incsearch.vim " {{{2
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-" vim-tmux-runner" {{{2
-let g:VtrUseVtrMaps = 0
-let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
-map <Leader>rs <Plug>RunCurrentSpecFile
-map <Leader>rt <Plug>RunFocusedSpec
-
-" vim-tags" {{{2
-let g:vim_tags_ctags_binary="/usr/local/bin/ctags"
-let g:vim_tags_directories=[]
-
-" merlin {{{2
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-
-" ocp-indent {{{2
-execute ":source " . "/Users/ukstudio/.opam/system/share/vim/syntax/ocp-indent.vim"
-"editing .vimrc " {{{
-nmap <Space>. :<C-u>edit $MYVIMRC<CR>
-nmap <Space>s. :<C-u>source $MYVIMRC<CR>
-
-"vimrc自動読み込み
-if !has('gui_running')
-  autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC
+if !exists('g:airline_powerline_fonts')
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  let g:airline_left_sep          = '▶'
+  let g:airline_left_alt_sep      = '»'
+  let g:airline_right_sep         = '◀'
+  let g:airline_right_alt_sep     = '«'
+  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+  let g:airline#extensions#readonly#symbol   = '⊘'
+  let g:airline#extensions#linecolumn#prefix = '¶'
+  let g:airline#extensions#paste#symbol      = 'ρ'
+  let g:airline_symbols.linenr    = '␊'
+  let g:airline_symbols.branch    = '⎇'
+  let g:airline_symbols.paste     = 'ρ'
+  let g:airline_symbols.paste     = 'Þ'
+  let g:airline_symbols.paste     = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
 else
-  autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC |if has('gui_running') | source $MYGVIMRC
-  autocmd MyAutoCmd BufWritePost $MYGVIMRC nested source $MYGVIMRC
-end
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+endif
