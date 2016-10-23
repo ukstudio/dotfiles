@@ -254,30 +254,29 @@ set autoread
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-"" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
 
-"" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
+noremap <Leader>w :<C-u>write<Cr>
+noremap <Leader>q :<C-u>quit<Cr>
 
-" session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
+noremap j gj
+noremap k gk
 
-"" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
-nnoremap <silent> <S-t> :tabnew<CR>
+noremap wh <C-w>h
+noremap wj <C-w>j
+noremap wk <C-w>k
+noremap wl <C-w>l
+
+noremap tn :<C-u>tabnew<Cr>
+noremap th :<C-u>tabprev<Cr>
+noremap tl :<C-u>tabnext<Cr>
+noremap tc :<C-u>tabclose<Cr>
+
+noremap + 4<C-w>+
+noremap - 4<C-w>-
+noremap { 4<C-w><
+noremap } 4<C-w>>
+
+noremap <Leader>b <C-^>
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
