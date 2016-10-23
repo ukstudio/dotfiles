@@ -27,22 +27,22 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'scrooloose/nerdtree'
+Plug 'Raimondi/delimitMate'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-Plug 'Yggdroot/indentLine'
+Plug 'vim-scripts/grep.vim'
 
 if v:version >= 704
   Plug 'FelikZ/ctrlp-py-matcher'
@@ -247,6 +247,11 @@ augroup vimrc-make-cmake
   autocmd!
   autocmd FileType make setlocal noexpandtab
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
+
+augroup vimrc-autoreload
+  autocmd!
+  autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
 augroup END
 
 set autoread
