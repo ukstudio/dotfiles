@@ -69,8 +69,9 @@ Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
 
 "" Git
-Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
