@@ -67,6 +67,7 @@ Plug 'amirh/HTML-AutoCloseTag'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
+Plug 'slim-template/vim-slim'
 
 "" Git
 Plug 'gregsexton/gitv'
