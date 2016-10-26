@@ -31,6 +31,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'christoomey/vim-tmux-runner'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'majutsushi/tagbar'
@@ -38,7 +39,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
@@ -55,16 +55,22 @@ Plug 'tomasr/molokai'
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
 
+"" Rails
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'thoughtbot/vim-rspec'
 Plug 'ecomba/vim-ruby-refactoring'
+Plug 'gabebw/vim-spec-runner'
 
 "" HTML Bundle
 Plug 'amirh/HTML-AutoCloseTag'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
+
+"" Git
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
 
 call plug#end()
 
@@ -309,7 +315,6 @@ if executable('ag')
 endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
@@ -333,10 +338,7 @@ if has('autocmd')
   autocmd GUIEnter * set visualbell t_vb=
 endif
 
-"" Copy/Paste/Cut
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-endif
+set clipboard=unnamed,unnamedplus
 
 noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
@@ -394,6 +396,11 @@ vnoremap <leader>rrlv :RRenameLocalVariable<cr>
 vnoremap <leader>rriv :RRenameInstanceVariable<cr>
 vnoremap <leader>rem  :RExtractMethod<cr>
 
+"" vim-tmux-runner
+let g:VtrUseVtrMaps = 0
+let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
+map <Leader>rs <Plug>RunCurrentSpecFile
+map <Leader>rt <Plug>RunFOcusedSpec
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
