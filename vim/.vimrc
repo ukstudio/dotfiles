@@ -427,7 +427,7 @@ vnoremap <leader>rem  :RExtractMethod<cr>
 let g:VtrUseVtrMaps = 0
 let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
-map <Leader>rt <Plug>RunFOcusedSpec
+map <Leader>rt <Plug>RunFocusedSpec
 
 "" neomake
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
