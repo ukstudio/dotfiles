@@ -309,6 +309,36 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|gi
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
 let g:ctrlp_use_caching = 1
 
+let g:ctrlp_prompt_mappings = {
+			\ 'PrtBS()':              ['<bs>'],
+			\ 'PrtDelete()':          ['<del>'],
+			\ 'PrtDeleteWord()':      ['<c-w>'],
+			\ 'PrtClear()':           ['<c-u>'],
+			\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+			\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+			\ 'PrtHistory(-1)':       [],
+			\ 'PrtHistory(1)':        [],
+			\ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+			\ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
+			\ 'AcceptSelection("t")': ['<c-t>', '<MiddleMouse>'],
+			\ 'AcceptSelection("v")': ['<c-v>', '<c-q>', '<RightMouse>'],
+			\ 'ToggleFocus()':        ['<tab>'],
+			\ 'ToggleRegex()':        ['<c-r>'],
+			\ 'ToggleByFname()':      ['<c-d>'],
+			\ 'ToggleType(1)':        ['<c-f>', '<c-up>'],
+			\ 'ToggleType(-1)':       ['<c-b>', '<c-down>'],
+			\ 'PrtCurStart()':        ['<c-a>'],
+			\ 'PrtCurEnd()':          ['<c-e>'],
+			\ 'PrtCurLeft()':         ['<c-h>', '<left>'],
+			\ 'PrtCurRight()':        ['<c-l>', '<right>'],
+			\ 'PrtClearCache()':      ['<F5>'],
+			\ 'PrtDeleteMRU()':       ['<F7>'],
+			\ 'CreateNewFile()':      ['<c-y>'],
+			\ 'MarkToOpen()':         ['<c-z>'],
+			\ 'OpenMulti()':          ['<c-o>'],
+			\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
+			\ }
+
 " The Silver Searcher
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
