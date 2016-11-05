@@ -270,6 +270,11 @@ augroup neomake
 	autocmd BufWritePost * Neomake
 augroup END
 
+augroup vim-trailing-whitespace
+  autocmd!
+  autocmd BufWritePre * :FixWhitespace
+augroup END
+
 set autoread
 
 "*****************************************************************************
