@@ -297,6 +297,9 @@ noremap th :<C-u>tabprev<Cr>
 noremap tl :<C-u>tabnext<Cr>
 noremap tc :<C-u>tabclose<Cr>
 
+noremap bh :<C-u>bprev<Cr>
+noremap bl :<C-u>bnext<Cr>
+
 noremap + 4<C-w>+
 noremap - 4<C-w>-
 noremap { 4<C-w><
