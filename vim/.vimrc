@@ -46,8 +46,9 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
 Plug 'vim-scripts/grep.vim'
 
-if v:version >= 704
-  Plug 'FelikZ/ctrlp-py-matcher'
+if v:version >= 704 && has('python')
+  Plug 'nixprime/cpsm'
+  let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 endif
 
 "" Color
