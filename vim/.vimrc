@@ -58,11 +58,12 @@ Plug 'tomasr/molokai'
 Plug 'jelera/vim-javascript-syntax'
 
 "" Rails
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'thoughtbot/vim-rspec'
+Plug 'danchoi/ruby_bashrockets.vim'
 Plug 'ecomba/vim-ruby-refactoring'
 Plug 'gabebw/vim-spec-runner'
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
 
 "" HTML Bundle
 Plug 'amirh/HTML-AutoCloseTag'
