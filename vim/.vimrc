@@ -113,7 +113,7 @@ set ignorecase
 set smartcase
 
 "" Encoding
-set bomb
+set nobomb
 set binary
 set ttyfast
 
