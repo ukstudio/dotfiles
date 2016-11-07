@@ -443,6 +443,15 @@ map <Leader>rt <Plug>RunFocusedSpec
 "" neomake
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
+let g:neomake_open_list = 2
+let g:neomake_echo_current_error = 1
+
+let g:neomake_ruby_ctags_maker = {
+  \ 'exe': 'ctags',
+  \ 'args': ['-R'],
+  \ 'errorformat': '%f:%l:%c: %m'
+\ }
+let g:neomake_ruby_enabled_makers = ['rubocop', 'rubylint', 'reek', 'ctags']
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
