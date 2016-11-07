@@ -52,6 +52,7 @@ if v:version >= 704 && has('python')
 endif
 
 "" Color
+Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 
 "" Custom bundles
@@ -124,6 +125,8 @@ set fileformats=unix,dos,mac
 set showcmd
 set shell=/bin/sh
 
+set termguicolors
+
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -133,7 +136,7 @@ set number
 
 let no_buffers_menu=1
 if !exists('g:not_finish_vimplug')
-  colorscheme molokai
+  colorscheme gruvbox
 endif
 
 set mousemodel=popup
@@ -192,7 +195,7 @@ if exists("*fugitive#statusline")
 endif
 
 " vim-airline
-let g:airline_theme = 'powerlineish'
+let g:airline_theme = 'gruvbox'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
