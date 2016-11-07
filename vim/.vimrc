@@ -45,6 +45,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
 Plug 'vim-scripts/grep.vim'
+Plug 'wakatime/vim-wakatime'
 
 if v:version >= 704 && has('python')
   Plug 'nixprime/cpsm'
