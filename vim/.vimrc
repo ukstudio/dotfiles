@@ -40,7 +40,9 @@ Plug 'majutsushi/tagbar'
 Plug 'neomake/neomake'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
+Plug 'szw/vim-tags'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
@@ -372,7 +374,7 @@ let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 " Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
+nnoremap <leader>l :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 " Disable visualbell
@@ -449,13 +451,6 @@ let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_open_list = 2
 let g:neomake_echo_current_error = 1
-
-let g:neomake_ruby_ctags_maker = {
-  \ 'exe': 'ctags',
-  \ 'args': ['-R'],
-  \ 'errorformat': '%f:%l:%c: %m'
-\ }
-let g:neomake_ruby_enabled_makers = ['rubocop', 'rubylint', 'reek', 'ctags']
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
