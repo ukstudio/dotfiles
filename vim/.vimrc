@@ -57,6 +57,7 @@ endif
 "" Color
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
+Plug 'w0ng/vim-hybrid'
 
 "" Custom bundles
 "" Javascript Bundle
@@ -139,7 +140,9 @@ set number
 
 let no_buffers_menu=1
 if !exists('g:not_finish_vimplug')
-  colorscheme gruvbox
+  let g:hybrid_custom_term_colors = 1
+  set background=dark
+  colorscheme hybrid
 endif
 
 set mousemodel=popup
