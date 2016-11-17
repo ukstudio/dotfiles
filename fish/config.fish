@@ -33,6 +33,7 @@ end
 
 alias gfixup 'git-hash | read line; git commit --fixup=$line'
 alias grebase 'git-hash | read line; git rebase -i $line^ --autosquash'
+alias gco 'git branch -r | peco --query "$LBUFFER" | awk -F/ \'{print $2}\' | read b; and git checkout -b $b origin/$b'
 
 function cd
   builtin cd $argv
