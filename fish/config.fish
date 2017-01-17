@@ -62,7 +62,7 @@ end
 
 function find-pr-open
   set -l pr (find-pr $argv | awk '{print substr($5, 2)}')
-  set -l repo (git config --get remote.origin.url | sed 's/git@github.com://' | sed 's/\.git$//')
+  set -l repo (git config --get remote.origin.url | sed 's/.*github.com//' | sed 's/\.git$//')
   open "https://github.com/$repo/pull/$pr"
 end
 
