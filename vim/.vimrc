@@ -437,15 +437,21 @@ augroup vimrc-ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
+let g:vim_tags_ctags_binary = '/usr/local/bin/ctags'
+
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
         \ 'm:modules',
         \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
+        \ 'C:rspec context',
+        \ 'd:rspec describe',
         \ 'f:methods',
         \ 'F:singleton methods'
-    \ ]
+    \ ],
+    \ 'kind2scope' : {
+      \ 'd' : 'classes',
+      \ 'C' : 'methods',
+    \ }
 \ }
 
 " Ruby refactory
