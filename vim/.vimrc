@@ -278,9 +278,9 @@ augroup vimrc-autoreload
   autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
 augroup END
 
-augroup neomake
+augroup vim-neomake
   autocmd!
-  autocmd BufWritePost * Neomake
+  autocmd BufRead,BufWritePost * :Neomake
 augroup END
 
 augroup vim-trailing-whitespace
@@ -467,7 +467,7 @@ map <Leader>rt <Plug>RunFocusedSpec
 "" neomake
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
-let g:neomake_open_list = 2
+let g:neomake_open_list = 0
 let g:neomake_echo_current_error = 1
 
 "" Include user's local vim config
