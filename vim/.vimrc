@@ -33,6 +33,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'fatih/vim-go'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-slash'
@@ -282,6 +283,12 @@ augroup END
 augroup vim-trailing-whitespace
   autocmd!
   autocmd BufWritePre * :FixWhitespace
+augroup END
+
+augroup vimrc-go
+  autocmd!
+  autocmd FileType go set tabstop=4|set shiftwidth=4|set noexpandtab
+  autocmd BufNewFile,BufRead,BufWritePost *.go :GoFmt
 augroup END
 
 set autoread
