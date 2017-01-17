@@ -18,6 +18,7 @@ set -gx OMF_PATH "/Users/ukstudio/.local/share/omf"
 source $OMF_PATH/init.fish
 
 alias t tmux
+alias tc 'tmux list-sessions | peco | awk -F: \'{print $1}\' | read s; and tmux switch-client -t $s'
 
 alias g git
 alias gclean 'git fetch; and git branch --merged origin/master | grep -v "^\s*master" | grep -v "^*" | xargs git branch -D'
