@@ -55,6 +55,7 @@ if v:version >= 704 && has('python')
 endif
 
 "" Color
+Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
