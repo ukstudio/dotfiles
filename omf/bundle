@@ -1,8 +1,0 @@
-package foreign-env
-package nvm
-package peco
-package rbenv
-package z
-theme agnoster
-theme cbjohnson
-theme default

@@ -2,20 +2,10 @@ set -U EDITOR /usr/local/bin/vim
 
 # Path to Oh My Fish install.
 set -gx PATH ~/.rbenv/bin ~/gocode/bin ~/local/bin $PATH
-set -gx OMF_PATH /Users/ukstudio/.local/share/omf
 set -g Z_SCRIPT_PATH /usr/local/etc/profile.d/z.sh
 set -gx GOPATH $HOME/gocode
 
 source ~/.config/fish/config.local.fish
-
-# Path to Oh My Fish install.
-set -gx OMF_PATH "/Users/ukstudio/.local/share/omf"
-
-# Customize Oh My Fish configuration path.
-#set -gx OMF_CONFIG "/Users/ukstudio/.config/omf"
-
-# Load oh-my-fish configuration.
-source $OMF_PATH/init.fish
 
 alias t tmux
 alias tc 'tmux list-sessions | peco | awk -F: \'{print $1}\' | read s; and tmux switch-client -t $s'
