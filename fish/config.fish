@@ -1,11 +1,4 @@
-set -U EDITOR /usr/local/bin/vim
-
-# Path to Oh My Fish install.
-set -gx PATH ~/.rbenv/bin ~/gocode/bin ~/local/bin $PATH
-set -g Z_SCRIPT_PATH /usr/local/etc/profile.d/z.sh
-set -gx GOPATH $HOME/gocode
-
-source ~/.config/fish/config.local.fish
+set -g fish_key_bindings fish_hybrid_key_bindings
 
 alias t tmux
 alias tc 'tmux list-sessions | peco | awk -F: \'{print $1}\' | read s; and tmux switch-client -t $s'
@@ -41,7 +34,6 @@ function peco_select_history
 end
 
 function fish_user_key_bindings
-  fish_vi_key_bindings
   bind -M insert \cr 'peco_select_history (commandline -b)'
 end
 
