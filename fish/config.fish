@@ -9,6 +9,8 @@ alias gclean 'git fetch; and git branch --merged origin/master | grep -v "^\s*ma
 alias r rails
 alias be 'bundle exec'
 
+alias dc docker-compose
+
 alias gcd 'ghq list -p | peco | read line ; cd $line'
 
 function git-hash
@@ -48,3 +50,42 @@ function find-pr-open
   open "https://github.com/$repo/pull/$pr"
 end
 
+function rails
+  docker-compose config --services >/dev/null ^/dev/null
+  switch $status
+    case 0
+      docker-compose exec app rails $argv
+    case '*'
+      bin/rails $argv
+  end
+end
+
+function rake
+  docker-compose config --services >/dev/null ^/dev/null
+  switch $status
+    case 0
+      docker-compose exec app rake $argv
+    case '*'
+      bin/rake $argv
+  end
+end
+
+function rspec
+  docker-compose config --services >/dev/null ^/dev/null
+  switch $status
+    case 0
+      docker-compose run app rspec $argv
+    case '*'
+      bin/rspec $argv
+  end
+end
+
+function spring
+  docker-compose config --services >/dev/null ^/dev/null
+  switch $status
+    case 0
+      docker-compose exec app spring $argv
+    case '*'
+      bin/spring $argv
+  end
+end
