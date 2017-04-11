@@ -451,6 +451,8 @@ vnoremap <leader>rem  :RExtractMethod<cr>
 
 "" vim-tmux-runner
 let g:VtrUseVtrMaps = 0
+
+"" vim-spec-runner
 let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
