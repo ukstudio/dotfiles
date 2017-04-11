@@ -56,17 +56,12 @@ function rails
     case 0
       docker-compose exec app rails $argv
     case '*'
-      bin/rails $argv
-  end
-end
-
-function rake
-  docker-compose config --services >/dev/null ^/dev/null
-  switch $status
-    case 0
-      docker-compose exec app rake $argv
-    case '*'
-      bin/rake $argv
+      if test -d bin
+        bin/rails $argv
+      else
+        set -l rails_cmd (which rails)
+        eval "$rails_cmd $argv"
+      end
   end
 end
 
@@ -74,9 +69,14 @@ function rspec
   docker-compose config --services >/dev/null ^/dev/null
   switch $status
     case 0
-      docker-compose run app rspec $argv
+      docker-compose exec app rspec $argv
     case '*'
-      bin/rspec $argv
+      if test -d bin
+        bin/rspec $argv
+      else
+        set -l rspec_cmd (which rspec)
+        eval "$rspec_cmd $argv"
+      end
   end
 end
 
@@ -86,6 +86,11 @@ function spring
     case 0
       docker-compose exec app spring $argv
     case '*'
-      bin/spring $argv
+      if test -d bin
+        bin/spring $argv
+      else
+        set -l spring_cmd (which spring)
+        eval "$spring_cmd $argv"
+      end
   end
 end
