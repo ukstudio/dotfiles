@@ -136,9 +136,8 @@ set number
 
 let no_buffers_menu=1
 if !exists('g:not_finish_vimplug')
-  let g:hybrid_custom_term_colors = 1
   set background=dark
-  colorscheme hybrid
+  colorscheme gruvbox
 endif
 
 set mousemodel=popup
