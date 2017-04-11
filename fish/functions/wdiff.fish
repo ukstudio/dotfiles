@@ -1,0 +1,1 @@
+/Users/ukstudio/.config/fisherman/grc/functions/wdiff.fish

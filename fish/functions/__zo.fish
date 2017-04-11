@@ -1,0 +1,1 @@
+/Users/ukstudio/.config/fisherman/z/functions/__zo.fish
