@@ -38,7 +38,6 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-slash'
 Plug 'majutsushi/tagbar'
-Plug 'neomake/neomake'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -48,6 +47,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
+Plug 'w0rp/ale'
 Plug 'wakatime/vim-wakatime'
 
 "" Color
@@ -190,12 +190,6 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
 " vim-airline
 let g:airline_theme = 'gruvbox'
 let g:airline#extensions#branch#enabled = 1
@@ -272,11 +266,6 @@ augroup END
 augroup vimrc-autoreload
   autocmd!
   autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
-augroup END
-
-augroup vim-neomake
-  autocmd!
-  autocmd BufRead,BufWritePost * :Neomake
 augroup END
 
 augroup vim-trailing-whitespace
@@ -467,11 +456,11 @@ let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
 
-"" neomake
-let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
-let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
-let g:neomake_open_list = 0
-let g:neomake_echo_current_error = 1
+"" ale
+let g:ale_sign_column_alywas = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_open_list = 1
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
