@@ -50,11 +50,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
 Plug 'wakatime/vim-wakatime'
 
-if v:version >= 704 && has('python')
-  Plug 'nixprime/cpsm'
-  let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-endif
-
 "" Color
 Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
