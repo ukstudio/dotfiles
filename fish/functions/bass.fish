@@ -1,1 +1,0 @@
-/Users/ukstudio/.config/fisherman/bass/functions/bass.fish

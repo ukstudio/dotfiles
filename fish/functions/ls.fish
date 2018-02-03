@@ -1,1 +1,0 @@
-/Users/ukstudio/.config/fisherman/grc/functions/ls.fish

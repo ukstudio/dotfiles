@@ -1,1 +1,0 @@
-/Users/ukstudio/.config/fisherman/nvm/yarn.fish

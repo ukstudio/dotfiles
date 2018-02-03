@@ -1,1 +1,0 @@
-/Users/ukstudio/.config/fisherman/rbenv/functions/rbenv.fish

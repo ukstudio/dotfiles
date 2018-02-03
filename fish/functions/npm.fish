@@ -1,1 +1,0 @@
-/Users/ukstudio/.config/fisherman/nvm/npm.fish
