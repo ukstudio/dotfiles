@@ -36,14 +36,15 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-slash'
 Plug 'majutsushi/tagbar'
+Plug 'nixprime/cpsm'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'szw/vim-tags'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tyru/eskk.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
@@ -69,10 +70,10 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 
 "" HTML Bundle
-Plug 'amirh/HTML-AutoCloseTag'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'tpope/vim-haml'
 Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-haml'
+Plug 'vim-scripts/HTML-AutoCloseTag'
 
 "" Git
 Plug 'gregsexton/gitv'
@@ -126,6 +127,9 @@ set showcmd
 set shell=/bin/sh
 
 set termguicolors
+
+set lazyredraw
+set ttyfast
 
 "*****************************************************************************
 "" Visual Settings
@@ -332,6 +336,7 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
 let g:ctrlp_use_caching = 1
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 let g:ctrlp_prompt_mappings = {
       \ 'PrtBS()':              ['<bs>'],
@@ -417,7 +422,7 @@ let g:rubycomplete_rails = 1
 
 augroup vimrc-ruby
   autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
+  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec,*.jb setlocal filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
@@ -461,7 +466,11 @@ map <Leader>rt <Plug>RunFocusedSpec
 let g:ale_sign_column_alywas = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
-let g:ale_open_list = 1
+let g:ale_open_list = 0
+let g:ale_lint_on_text_changed = 'never'
+
+"" eskk.vim
+let g:eskk#large_dictionary = { 'path': "~/.eskk/dict/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp' }
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
