@@ -13,7 +13,7 @@
 	ui = true
 [core]
 	excludesfile = .gitignore_global
-	pager = less
+	pager = diff-so-fancy | less --tabs=2 -RFX
 	excludesfile = /home/ukstudio/.gitignore_global
 	precomposeunicode = true
 	quotepath = false
@@ -24,10 +24,6 @@
 [grep]
 	lineNumber = true
 	extendRegexp = true
-[pager]
-	diff = diff-highlight | less
-	log = diff-highlight | less
-	show = diff-highlight | less
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
