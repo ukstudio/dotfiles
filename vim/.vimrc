@@ -49,7 +49,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CSApprox'
 Plug 'w0rp/ale'
-Plug 'wakatime/vim-wakatime'
 
 "" Color
 Plug 'dracula/vim'
