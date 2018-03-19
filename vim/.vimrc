@@ -60,6 +60,9 @@ Plug 'w0ng/vim-hybrid'
 "" Custom bundles
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+Plug 'Quramy/tsuquyomi'
 
 "" Rails
 Plug 'danchoi/ruby_bashrockets.vim'
@@ -409,6 +412,7 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "" Custom configs
 
 let g:javascript_enable_domhtmlcss = 1
+let g:tsuquyomi_disable_quickfix = 1
 
 " vim-javascript
 augroup vimrc-javascript
@@ -468,7 +472,7 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 let g:ale_open_list = 1
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'javascript': ['prettier']}
+let g:ale_fixers = {'javascript': ['prettier'], 'typescript': ['prettier']}
 let g:ale_fix_on_save = 1
 
 "" eskk.vim
