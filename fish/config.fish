@@ -49,3 +49,5 @@ function find-pr-open
   set -l repo (git config --get remote.origin.url | sed 's/.*github.com//' | sed 's/\.git$//')
   open "https://github.com/$repo/pull/$pr"
 end
+
+eval (direnv hook fish)
