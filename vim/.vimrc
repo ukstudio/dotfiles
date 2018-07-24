@@ -36,9 +36,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go'
 Plug 'google/vim-jsonnet'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jparise/vim-graphql'
 Plug 'junegunn/vim-easy-align'
 Plug 'majutsushi/tagbar'
-Plug 'nixprime/cpsm'
+" Plug 'nixprime/cpsm'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -59,10 +60,11 @@ Plug 'w0ng/vim-hybrid'
 
 "" Custom bundles
 "" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
-Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
 Plug 'Quramy/tsuquyomi'
+Plug 'ianks/vim-tsx'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'jparise/vim-graphql'
+Plug 'leafgarland/typescript-vim'
 
 "" Rails
 Plug 'danchoi/ruby_bashrockets.vim'
@@ -339,7 +341,7 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
 let g:ctrlp_use_caching = 1
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 let g:ctrlp_prompt_mappings = {
       \ 'PrtBS()':              ['<bs>'],
@@ -413,6 +415,7 @@ nnoremap <Leader>o :.Gbrowse<CR>
 
 let g:javascript_enable_domhtmlcss = 1
 let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_completion_detail = 1
 
 " vim-javascript
 augroup vimrc-javascript
@@ -426,11 +429,12 @@ let g:rubycomplete_rails = 1
 
 augroup vimrc-ruby
   autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec,*.jb setlocal filetype=ruby
+  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec,*.jb,Schemafile,*.schema setlocal filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
-let g:vim_tags_ctags_binary = '/usr/local/bin/ctags'
+" let g:vim_tags_ctags_binary = '/usr/local/bin/ctags'
+let g:vim_tags_ctags_binary = '/opt/brew/bin/ctags'
 
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
@@ -467,12 +471,12 @@ map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
 
 "" ale
-let g:ale_sign_column_alywas = 1
+let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'javascript': ['prettier'], 'typescript': ['prettier']}
+let g:ale_fixers = {'javascript': ['prettier'], 'typescript': ['tslint']}
 let g:ale_fix_on_save = 1
 
 "" eskk.vim
@@ -482,6 +486,7 @@ let g:eskk#large_dictionary = { 'path': "~/.eskk/dict/SKK-JISYO.L", 'sorted': 1,
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
 
 "*****************************************************************************
 "" Convenience variables
@@ -522,3 +527,5 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
+
+autocmd FileType typescript setlocal omnifunc=javascriptcomplete#CompleteJS
