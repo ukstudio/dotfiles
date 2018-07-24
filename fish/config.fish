@@ -1,3 +1,5 @@
+set -gx LC_ALL ja_JP.UTF-8
+set -gx LANG ja_JP.UTF-8
 set -g fish_key_bindings fish_hybrid_key_bindings
 
 alias t tmux
@@ -21,8 +23,8 @@ alias gfixup 'git-hash | read line; git commit --fixup=$line'
 alias grebase 'git-hash | read line; git rebase -i $line^ --autosquash'
 alias gco 'git branch -r | peco --query "$LBUFFER" | awk -F/ \'{print $2}\' | read b; and git checkout -b $b origin/$b'
 
-function cd
-  builtin cd $argv
+function chpwd --on-variable PWD
+  status --is-command-substitution; and return;
   ls -ah
 end
 
