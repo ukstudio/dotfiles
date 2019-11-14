@@ -27,30 +27,24 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+" Plug 'nixprime/cpsm'
 Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
-Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'christoomey/vim-tmux-runner'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go'
 Plug 'google/vim-jsonnet'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
-" Plug 'nixprime/cpsm'
 Plug 'rking/ag.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
-Plug 'szw/vim-tags'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'tyru/eskk.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/CSApprox'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "" Color
 Plug 'dracula/vim'
@@ -68,7 +62,6 @@ Plug 'leafgarland/typescript-vim'
 
 "" Rails
 Plug 'danchoi/ruby_bashrockets.vim'
-Plug 'ecomba/vim-ruby-refactoring'
 Plug 'gabebw/vim-spec-runner'
 Plug 'thoughtbot/vim-rspec'
 Plug 'tpope/vim-rails'
@@ -84,6 +77,8 @@ Plug 'vim-scripts/HTML-AutoCloseTag'
 Plug 'gregsexton/gitv'
 Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
+
+Plug 'wakatime/vim-wakatime'
 
 call plug#end()
 
@@ -135,6 +130,12 @@ set termguicolors
 
 set lazyredraw
 set ttyfast
+
+set updatetime=300
+
+set nocursorline
+set signcolumn=yes
+set cmdheight=2
 
 "*****************************************************************************
 "" Visual Settings
@@ -202,7 +203,6 @@ set titlestring=%F
 let g:airline_theme = 'gruvbox'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#bufferline#enabled = 0
 let g:airline_skip_empty_sections = 1
 
@@ -335,61 +335,6 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 nnoremap <Leader>. :<C-u>edit $MYVIMRC<Cr>
 
-"" ctrlp.vim
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
-let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 1
-" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-
-let g:ctrlp_prompt_mappings = {
-      \ 'PrtBS()':              ['<bs>'],
-      \ 'PrtDelete()':          ['<del>'],
-      \ 'PrtDeleteWord()':      ['<c-w>'],
-      \ 'PrtClear()':           ['<c-u>'],
-      \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-      \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-      \ 'PrtHistory(-1)':       [],
-      \ 'PrtHistory(1)':        [],
-      \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-      \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
-      \ 'AcceptSelection("t")': ['<c-t>', '<MiddleMouse>'],
-      \ 'AcceptSelection("v")': ['<c-v>', '<c-q>', '<RightMouse>'],
-      \ 'ToggleFocus()':        ['<tab>'],
-      \ 'ToggleRegex()':        ['<c-r>'],
-      \ 'ToggleByFname()':      ['<c-d>'],
-      \ 'ToggleType(1)':        ['<c-f>', '<c-up>'],
-      \ 'ToggleType(-1)':       ['<c-b>', '<c-down>'],
-      \ 'PrtCurStart()':        ['<c-a>'],
-      \ 'PrtCurEnd()':          ['<c-e>'],
-      \ 'PrtCurLeft()':         ['<c-h>', '<left>'],
-      \ 'PrtCurRight()':        ['<c-l>', '<right>'],
-      \ 'PrtClearCache()':      ['<F5>'],
-      \ 'PrtDeleteMRU()':       ['<F7>'],
-      \ 'CreateNewFile()':      ['<c-y>'],
-      \ 'MarkToOpen()':         ['<c-z>'],
-      \ 'OpenMulti()':          ['<c-o>'],
-      \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
-      \ }
-
-" The Silver Searcher
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPBuffer'
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-
-" Tagbar
-nnoremap <leader>l :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -423,44 +368,11 @@ augroup vimrc-javascript
   autocmd FileType javascript set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
 augroup vimrc-ruby
   autocmd!
   autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec,*.jb,Schemafile,*.schema setlocal filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
-
-" let g:vim_tags_ctags_binary = '/usr/local/bin/ctags'
-let g:vim_tags_ctags_binary = '/opt/brew/bin/ctags'
-
-let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'C:rspec context',
-        \ 'd:rspec describe',
-        \ 'f:methods',
-        \ 'F:singleton methods'
-    \ ],
-    \ 'kind2scope' : {
-      \ 'd' : 'classes',
-      \ 'C' : 'methods',
-    \ }
-\ }
-
-" Ruby refactory
-nnoremap <leader>rap  :RAddParameter<cr>
-nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel  :RExtractLet<cr>
-vnoremap <leader>rec  :RExtractConstant<cr>
-vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit  :RInlineTemp<cr>
-vnoremap <leader>rrlv :RRenameLocalVariable<cr>
-vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem  :RExtractMethod<cr>
 
 "" vim-tmux-runner
 let g:VtrUseVtrMaps = 0
@@ -470,23 +382,45 @@ let g:spec_runner_dispatcher = 'VtrSendCommand! {command}'
 map <Leader>rs <Plug>RunCurrentSpecFile
 map <Leader>rt <Plug>RunFocusedSpec
 
-"" ale
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_open_list = 0
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'javascript': ['prettier'], 'typescript': ['tslint']}
-let g:ale_fix_on_save = 1
-
-"" eskk.vim
-let g:eskk#large_dictionary = { 'path': "~/.eskk/dict/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp' }
-
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+"" coc.nvim
+nnoremap <silent> <C-p> :<C-u>CocList files<cr>
+nmap <Leader>rn <Plug>(coc-rename)
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> cl <PLug>(coc-codelens-action)
+
+"" ALE
+let g:ale_completion_enabled = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
 "*****************************************************************************
 "" Convenience variables

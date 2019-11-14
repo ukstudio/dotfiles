@@ -1,6 +1,8 @@
 set -gx LC_ALL ja_JP.UTF-8
 set -gx LANG ja_JP.UTF-8
 set -g fish_key_bindings fish_hybrid_key_bindings
+set -gx SOLARGRAPH_GLOBAL_CONFIG ~/.config/solargraph/config.yml
+
 
 alias t tmux
 alias tc 'tmux list-sessions | peco | awk -F: \'{print $1}\' | read s; and tmux switch-client -t $s'

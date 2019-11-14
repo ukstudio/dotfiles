@@ -1,0 +1,1 @@
+/Users/yuki-akamatsu/.config/fisherman/rbenv/conf.d/rbenv.fish
