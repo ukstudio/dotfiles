@@ -42,7 +42,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'dense-analysis/ale'
+Plug 'dmerejkowsky/vim-ale'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -52,6 +52,8 @@ Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
 
+Plug 'ap/vim-css-color'
+
 "" Custom bundles
 "" Javascript Bundle
 Plug 'Quramy/tsuquyomi'
@@ -59,6 +61,7 @@ Plug 'ianks/vim-tsx'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'jparise/vim-graphql'
 Plug 'leafgarland/typescript-vim'
+Plug 'kchmck/vim-coffee-script'
 
 "" Rails
 Plug 'danchoi/ruby_bashrockets.vim'
@@ -79,6 +82,8 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
 
 Plug 'wakatime/vim-wakatime'
+
+Plug 'chr4/nginx.vim'
 
 call plug#end()
 
@@ -133,9 +138,11 @@ set ttyfast
 
 set updatetime=300
 
-set nocursorline
+set cursorline
 set signcolumn=yes
 set cmdheight=2
+
+set regexpengine=1
 
 "*****************************************************************************
 "" Visual Settings
@@ -421,6 +428,10 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
+
+let g:ale_linters = {
+      \ 'proto': ['protoc-gen-lint'],
+      \}
 
 "*****************************************************************************
 "" Convenience variables
