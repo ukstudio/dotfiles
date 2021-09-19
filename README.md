@@ -1,15 +1,10 @@
 # dotfiles
 
-## install
+This repo is heavily inspired by https://github.com/k0kubun/dotfiles
 
-need stow([http://www.gnu.org/software/stow/](http://www.gnu.org/software/stow/ "stow")
-
-```
-make
-```
-
-## uninstall
+## Usage
 
 ```
-make clean
+./install.sh -n # dry-run
+./install.sh    # apply
 ```
