@@ -1,0 +1,32 @@
+#!/bin/sh
+set -e
+
+mitamae_version="1.12.7"
+mitamae_darwin_sha256="c593b5b9ab34308c99cc3961609ff8d6685336a6665dfe831a4458cc7889169f"
+
+mitamae_cache="mitamae-${mitamae_version}"
+if ! [ -f "bin/${mitamae_cache}" ]; then
+  case "$(uname)" in
+  "Darwin")
+    mitamae_bin="mitamae-x86_64-darwin"
+    mitamae_sha256="$mitamae_darwin_sha256"
+    ;;
+  *)
+    echo "unexpected uname: $(uname)";
+    exit 1;
+    ;;
+  esac
+
+  curl -o "bin/${mitamae_bin}.tar.gz" -fL "https://github.com/itamae-kitchen/mitamae/releases/download/v${mitamae_version}/${mitamae_bin}.tar.gz"
+  sha256="$(/usr/bin/openssl dgst -sha256 "bin/${mitamae_bin}.tar.gz" | cut -d" " -f2)"
+  if [ "$mitamae_sha256" != "$sha256" ]; then
+    echo "checksum verficaton failed!\nexpected: ${mitamae_sha256}\n actual: ${sha256}"
+    exit 1
+  fi
+  tar xvzf "bin/${mitamae_bin}.tar.gz"
+
+  rm "bin/${mitamae_bin}.tar.gz"
+  mv "${mitamae_bin}" "bin/${mitamae_cache}"
+  chmod +x "bin/${mitamae_cache}"
+fi
+ln -sf "${mitamae_cache}" bin/mitamae

@@ -1,3 +1,4 @@
+bin/mitamae*
 vim/.vim/autoload/plug.vim
 vim/.vim/plugged
 vim/.vim/.netrwhist
