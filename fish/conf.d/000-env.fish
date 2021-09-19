@@ -1,3 +1,3 @@
-set -U EDITOR /usr/local/bin/vim
+set -U EDITOR /opt/brew/bin/vim
 source ~/.config/fish/config.local.fish
 
