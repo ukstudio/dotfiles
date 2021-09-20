@@ -81,8 +81,6 @@ Plug 'gregsexton/gitv'
 Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
 
-Plug 'wakatime/vim-wakatime'
-
 Plug 'chr4/nginx.vim'
 
 call plug#end()
