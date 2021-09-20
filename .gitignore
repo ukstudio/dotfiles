@@ -1,13 +1,3 @@
 bin/mitamae*
-vim/.vim/autoload/plug.vim
-vim/.vim/plugged
-vim/.vim/.netrwhist
-vim/.vim/simplenoterc
-vim/.vim/doc/tags*
-xmonad/.xmonad/xmonad.o
-xmonad/.xmonad/xmonad.hi
-xmonad/.xmonad/xmonad-x86_64-linux
-xmonad/.xmonad/xmonad.errors
-xmonad/.xmonad/history
-atom/.atom/.apm
-*~
+config/.vim/.netrwhist
+config/.vim/plugged
