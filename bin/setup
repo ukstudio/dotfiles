@@ -3,13 +3,22 @@ set -e
 
 mitamae_version="1.12.7"
 mitamae_darwin_sha256="c593b5b9ab34308c99cc3961609ff8d6685336a6665dfe831a4458cc7889169f"
+mitamae_darwin_aarch64_sha256="b2e7062e089bd52dbe55eaf08ce3fd8aa071aaebc6b11f3f2d870ca5339b056d"
 
 mitamae_cache="mitamae-${mitamae_version}"
 if ! [ -f "bin/${mitamae_cache}" ]; then
   case "$(uname)" in
   "Darwin")
-    mitamae_bin="mitamae-x86_64-darwin"
-    mitamae_sha256="$mitamae_darwin_sha256"
+    case "$(uname -m)" in
+    "x86_64")
+      mitamae_bin="mitamae-x86_64-darwin"
+      mitamae_sha256="$mitamae_darwin_sha256"
+      ;;
+    "arm64")
+      mitamae_bin="mitamae-aarch64-darwin"
+      mitamae_sha256="$mitamae_darwin_aarch64_sha256"
+      ;;
+    esac
     ;;
   *)
     echo "unexpected uname: $(uname)";
