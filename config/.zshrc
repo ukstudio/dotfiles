@@ -22,6 +22,13 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^R' peco-select-history
 
+function git-hash() {
+  git log --oneline | peco | awk '{print $1}'
+}
+
+alias gfixup='git commit --fixup=$(git-hash)'
+alias grebase='git rebase -i $(git-hash)^ --autosquash'
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
