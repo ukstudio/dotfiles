@@ -12,22 +12,12 @@
 [color]
 	ui = true
 [core]
-	excludesfile = .gitignore_global
-	excludesfile = /home/ukstudio/.gitignore_global
 	precomposeunicode = true
 	quotepath = false
-	excludesfile = /Users/ukstudio/.gitignore_global
 	editor = vim
-[include]
-	path = .gitconfig.local
 [grep]
 	lineNumber = true
 	extendRegexp = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [filter "media"]
 	clean = git media clean %f
@@ -40,3 +30,4 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+
