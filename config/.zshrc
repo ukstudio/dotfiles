@@ -14,14 +14,6 @@ alias t=tmux
 alias g=git
 alias gcd='cd $(ghq list -p | peco)'
 
-function peco-select-history() {
-  BUFFER=`history -n 1 | awk '!a[$0]++' | peco`
-  CURSOR=$#BUFFER
-  zle reset-prompt
-}
-zle -N peco-select-history
-bindkey '^R' peco-select-history
-
 function git-hash() {
   git log --oneline | peco | awk '{print $1}'
 }
@@ -42,10 +34,12 @@ source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
+zinit ice wait='1'; zinit light zdharma/history-search-multi-word
 zinit ice depth=1; zinit light romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
