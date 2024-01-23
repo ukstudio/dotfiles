@@ -14,7 +14,7 @@
 [core]
 	precomposeunicode = true
 	quotepath = false
-	editor = vim
+	editor = nvim
 [grep]
 	lineNumber = true
 	extendRegexp = true

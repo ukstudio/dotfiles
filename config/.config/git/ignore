@@ -12,3 +12,4 @@ vendor/bin
 tags
 coffeetags
 Gemfile.lock.tags
+.DS_Store
