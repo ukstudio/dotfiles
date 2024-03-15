@@ -20,6 +20,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'APZelos/blamer.nvim'
 Plug 'jparise/vim-graphql'
 Plug 'github/copilot.vim'
+Plug 'google/vim-jsonnet'
 call plug#end()
 
 filetype plugin indent on
@@ -83,6 +84,7 @@ noremap <Leader>b <C-^>
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
 
 noremap tn :<C-u>tabnew<Cr>
 noremap th :<C-u>tabprev<Cr>
@@ -126,7 +128,7 @@ augroup END
 augroup vimrc-auto-mkdir
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
-  
+
   function! s:auto_mkdir(dir, force)
     if !isdirectory(a:dir) && (a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
       call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
