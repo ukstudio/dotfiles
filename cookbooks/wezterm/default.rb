@@ -1,2 +1,2 @@
-package 'wez/wezterm/wezterm'
+package 'wezterm'
 dotfile '.config/wezterm'
