@@ -24,6 +24,9 @@ function git-hash() {
   git log --oneline | peco | awk '{print $1}'
 }
 
+autoload -Uz compinit && compinit
+zstyle ':completion:*:default' menu select=1
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/yuki-akamatsu/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
