@@ -18,9 +18,12 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "neovim/nvim-lspconfig",
+  "zbirenbaum/copilot.lua",
+  "zbirenbaum/copilot-cmp",
 })
 
 require("lspconfig").ruby_ls.setup {}
+require("lspconfig").rubocop.setup {}
 
 local cmp = require("cmp")
 cmp.setup({
@@ -34,6 +37,7 @@ cmp.setup({
     ["<Cr>"] = cmp.mapping.confirm { select = true },
   }),
   sources = cmp.config.sources({
+    { name = "copilot" },
     { name = 'nvim_lsp' },
   }, {
     { name = 'buffer' },
@@ -87,4 +91,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format { async = true }
     end, opts)
   end,
+})
+
+require("copilot_cmp").setup()
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
 })
