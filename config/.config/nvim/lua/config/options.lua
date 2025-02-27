@@ -1,4 +1,4 @@
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme tokyonight")
 
 vim.cmd("filetype plugin indent on")
 vim.cmd("syntax enable")
